@@ -6,3 +6,14 @@ from New Zealand's National Climate Database via CliFlo, and reading it into
 into an **R** session, available for plotting, analysis and/or export.
 The *clifro* package requires the user to have a current CliFlo account, 
 available from http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro.
+
+To install `clifro` into R: 
+
+`install.packages("devtools")`
+`library(devtools)`
+`install_github(username = "blasee", repo = "clifro", build_vignettes = FALSE)`
+
+To get started with `clifro`:
+`library(clifro)`
+`vignette("clifro")`
+`demo(clifro)`
