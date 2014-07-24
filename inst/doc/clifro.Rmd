@@ -1,0 +1,217 @@
+---
+title: 'From CliFlo to clifro: An Introduction'
+author: "Blake Seers"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    highlight: haddock
+    theme: readable
+---
+
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Choosing a clifro station}
+-->
+
+```{r, echo=FALSE}
+library(clifro)
+source("myCreds.R")
+```
+
+# Introduction
+The National Climate Database holds climate data from around 6,500 climate 
+stations around New Zealand including some offshore and Pacific Islands. Over
+600 stations are currently active and are still receiving valuable climate data.
+[CliFlo](http://cliflo.niwa.co.nz/) is a web interface to the database managed 
+by [NIWA](http://www.niwa.co.nz/), allowing users to submit queries and retrieve 
+ten-minute, hourly, daily or summary data. The use of CliFlo is free given that 
+the user has [subscribed](http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro) and 
+accepted NIWA's [terms and conditions](http://cliflo.niwa.co.nz/doc/terms.html).
+
+The `clifro` package is designed to make CliFlo queries much simpler and
+provide extensions that are currenly not offered by CliFlo. The intention is 
+to simplify the data extraction, manipulation, exploration and visualisation
+processes and easily create publication-worthy graphics for some of the primary 
+datatypes, especially for users with limited or non-existent previous R 
+experience. Experienced useRs will also find this package helpful for maximising
+efficiency of climate data integration with R for further analysis, modelling or 
+export.
+
+This vignette provides an introduction to the `clifro` package demonstrating the
+primary functionality by way of example. For more information on any of the 
+functions in the `clifro` package the user is referred to the help index for
+the `clifro` package, `help(package = "clifro")`.
+
+# Create a clifro User
+As stated above, if the intention is to extract data from any station other than
+Reefton Ews (subscription-free) and to maximise the potential of `clifro`, a 
+valid [subscription](http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro) is 
+needed.
+
+The `cf.user` function is all that is required to create a valid `clifro` user,
+
+```{r,eval=FALSE}
+me = cf.user("username", "password")
+```
+
+where `username` and `password` is substituted for the user's CliFlo 
+credentials.
+
+# Create clifro Datatypes
+
+Once the user has been authenticated, the next step is to choose the datatypes
+of interest, see the [choose datatypes vignette][chooseDatatype] for details on
+choosing datatypes. For this example we are interested in daily MSL atmospheric 
+pressure, minimum and maximum temperature extremes (deg C), daily rainfall (mm)
+and daily surface wind.
+(m/s).
+
+```{r}
+my.dts = cf.datatype(select_1 =     c(7,  4,  3,  2), 
+                     select_2 =     c(1,  2,  1,  1), 
+                     check_box = list(3,  1,  1,  4), 
+                     combo_box =    c(NA, NA, NA, 1))
+my.dts
+```
+
+# Create clifro Stations
+
+The third requisite for a valid \code{clifro} query is the station where the
+data has been collected. If the agent numbers of the required CliFlo stations
+are known, the only function needed to create a clifro station \code{cfStation} 
+object is \code{cf.station}. See the [choose station vignette][chooseStation]
+for help with choosing stations when the agent numbers are unknown, and the 
+[working with clifro stations vignette][clifrostation] for further information
+and methods on \code{cfStation} objects.
+
+For this example we are interested in assessing how these datatypes differ in
+various parts of the country by taking a selection of stations from various
+regions. These include a station from Invercargill (5814), Nelson (4241), 
+Hamilton (2112) and Auckland (1962)
+
+```{r}
+my.stations = cf.station(5814, 4241, 2112, 1962)
+my.stations[, 1:5]
+```
+
+# Retrieve the CliFlo Data
+
+Now that we have a valid `clifro` user and the datatypes and stations of 
+interest, a `clifro` query can be conducted using the `cf.query` function. We
+are interested in all available data from 2012 to 2014.
+
+```{r,message=FALSE,cache=TRUE}
+cf.datalist = cf.query(user = me, 
+                       datatype = my.dts, 
+                       station = my.stations, 
+                       start_date = "2012-01-01 00", 
+                       end_date = "2014-01-01 00")
+cf.datalist
+```
+
+We can see that the pressure and surface wind data only span one year.
+
+# Plot the CliFlo Data
+
+There is now a list of 4 dataframes in R containing all the available data for
+each of the stations and datatypes chosen above. The plotting is simply done 
+with a call to `plot`, the type of plot and plotting options depends on the 
+datatype. See `?'plot,cfData-method'` for more details. The following are
+examples of some of the plots possible with `clifro`, note how the optional 
+`ggtheme`argument changes the look of the plots.
+
+## MSL Atmospheric Pressure
+
+```{r,fig.width=11, fig.height=10}
+plot(cf.datalist, which = 1, ggtheme = "bw")
+
+# Equivalent to 
+# plot(cf.datalist[1], ggtheme = "bw")
+```
+
+Since the plot method returns a `ggplot` object, we can easily modify the plots 
+using [ggplot2](http://ggplot2.org/).
+
+```{r,warning=FALSE,message=FALSE,fig.width=11, fig.height=10}
+# Load the ggplot2 library
+library(ggplot2)
+
+# Add a loess smoother with a span of a third of the window
+plot(cf.datalist, which = 1, ggtheme = "bw",
+     strip.text = element_text(size = 14)) + 
+  geom_smooth(method = "loess", span = 1/3)
+```
+
+## Daily Temperature Extremes
+
+```{r,fig.width=11, fig.height=10}
+plot(cf.datalist, which = 2, ggtheme = "linedraw")
+```
+
+## Rain
+
+```{r,fig.width=11, fig.height=11}
+plot(cf.datalist, which = 3, ggtheme = "light")
+
+# Don't plot the soil deficit and runoff
+plot(cf.datalist, which = 3, include_runoff = FALSE, ggtheme = "light")
+```
+
+## Wind
+
+There are three types of plots available for wind data in `clifro`. The default
+is to plot a windrose displaying wind speed and directions of the full time 
+series at each station. The `windrose` function in `clifro` is also available 
+for the user to plot their own directional data. The other two optional plots 
+for wind data in `clifro` are the wind speed and wind direction plots. These 
+plots display wind speed and direction patterns through time, adding valuable 
+temporal information that is not portrayed in the windroses.
+
+### Windrose
+
+```{r,fig.width=11, fig.height=11}
+# Defaults to windrose
+plot(cf.datalist, which = 4)
+```
+
+### Wind Speeds
+
+```{r,fig.width=11, fig.height=10}
+# Plot the wind speeds through time
+plot(cf.datalist, which = 4, wind_plot = "speed", ggtheme = "classic")
+```
+
+### Wind Directions
+
+```{r,fig.width=11, fig.height=12}
+# Plot wind direction contours
+plot(cf.datalist, which = 4, wind_plot = "direction", contours = 10, ggtheme = "light")
+```
+
+# Export
+
+```{r,eval=FALSE}
+# Export the data as separate CSV files to the current working directory
+getwd()
+for (i in seq_along(cf.datalist))
+  write.csv(cf.datalist[i], 
+            file = tempfile(paste0(cf.datalist[i]@dt_name, "_"), 
+                            tmpdir = normalizePath("."), 
+                            fileext = ".csv"))
+```
+
+
+# Summary
+
+The primary aim of this package is to make the substantial amount of climate 
+data residing within the National Climate Database more accessible and easier
+to work with. The `clifro` package has many advantages over using the CliFlo 
+web portal including conducting searches much more efficiently, examining the
+spatial extent of the stations and enabling high quality plots to aid the data
+exploration and analysis stage.
+
+[chooseStation]: choose-station.html
+[chooseDatatype]: choose-datatype.html
+[clifrostation]: cfStation.html

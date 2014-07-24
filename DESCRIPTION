@@ -1,0 +1,42 @@
+Package: clifro
+Type: Package
+Title: Import data from CliFlo to R
+Version: 0.1-0
+Date: 2013-09-02
+Authors@R: person("Blake", "Seers", role = c("aut", "cre"),
+    email = "blake.seers@gmail.com")
+Author: Blake Seers
+Maintainer: Blake Seers <blake.seers@gmail.com>
+VignetteBuilder: knitr
+Imports:
+    methods,
+    lubridate,
+    XML,
+    selectr,
+    RCurl,
+    utils,
+    ggplot2,
+    plyr,
+    scales,
+    RColorBrewer,
+    reshape2
+Suggests:
+    knitr,
+    ggmap
+Description: This package is designed to minimise the hassle in downloading data
+    from New Zealand's National Climate Database via CliFlo, and reading it into
+    \R. It allows the user to login, select the data and download it efficiently
+    into an \R session, available for plotting, analysis and/or export.
+    Clifro requires the user to have a current CliFlo account.
+URL: http://cliflo.niwa.co.nz/
+License: GPL-2
+Collate:
+    'dataFrame.R'
+    'cfStation.R'
+    'cfData.R'
+    'cfDataList.R'
+    'cfData-plotMethods.R'
+    'cfDatatype.R'
+    'cfQuery.R'
+    'cfUser.R'
+    'findStations.R'

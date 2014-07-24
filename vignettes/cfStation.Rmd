@@ -1,0 +1,122 @@
+---
+title: "Working with clifro stations"
+author: "Blake Seers"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    highlight: haddock
+    theme: readable
+---
+
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Working with clifro stations}
+-->
+
+```{r, echo=FALSE}
+library(clifro)
+```
+
+There are two functions available in `clifro` to create requisite `cfStation`
+objects to send queries to retrieve data via `clifro`. The first one is to 
+search for stations using the `cf.find.station` function as detailed in the 
+[choose stations vignette][chooseStations]. The other function that creates
+`cfStation` objects is the `cf.station` function that requires comma separated 
+agent numbers as the only input. This vignette covers the construction of a 
+`cfStation`  object via the `cf.station` function, and then shows examples of 
+plotting and visualising the station's locations using KML files or within R
+using the [ggmap](http://cran.r-project.org/web/packages/ggmap/index.html)
+package.
+
+# Creating a cfStation object from agent numbers
+
+This is the simplest method to create a `cfStation` object, simply supply the 
+`cf.station` function the comma separated agent numbers. The following stations 
+are (or were) located around Lake Tekapo in Canterbury, in the South Island of 
+New Zealand:
+
+1. Coal (Ski Field)
+2. Macaulay (Mt Gerald)
+3. South Opua
+4. Mount John
+5. Lake Tekapo Ews
+6. Godley Peaks
+7. Lilybank
+
+```{r}
+lake.tekapo.df = cf.station(12709, 35567, 39557, 4630, 24945, 4616, 4602)
+lake.tekapo.df[, c("name", "agent", "start", "end", "open")]
+```
+
+## Adding more stations
+To add more stations to this list the addition sign is used. Any repeated 
+stations are removed and the resulting list is ordered by the end dates first 
+and then by the stations' start dates.
+
+```{r}
+added.stations.df = lake.tekapo.df + cf.station() + cf.find.station("lighthouse", status = "all")
+added.stations.df[, c("name", "agent", "start", "end", "open")]
+```
+
+The above code chunk adds the 7 stations around Lake Tekapo, the 
+subscription-free reefton EWS station (`cf.station()`), and all stations located 
+(currently or historically) on a lighthouse. Allowing multiple searches is not
+currently available on CliFlo but the above code demonstrates how easy it can be
+in `clifro`.
+
+# Visualising the station locations
+CliFlo does not currently have any visualisation tools to aid in the selection 
+of stations which can make the task of choosing geographically suitable stations
+a hard one.
+
+## Using KML files
+The `cf.save.kml` functionality was introduced in the 
+[choose stations vignette][chooseStations] and this function can be used on any 
+`cfStation` object. To return a KML file showing all the stations within our
+`added.stations.df` object we just run `cf.save.kml(added.stations.df)` in R
+and the KML file is returned.
+
+## Showing station locations within R
+Many useRs may prefer to plot the locations directly in R, or 
+export the station information for use in another software. The 
+`as(object, "data.frame")` function call is used for returning the station 
+information as an R dataframe that can then be used for plotting or exporting.
+
+This example is only one of the many ways to plot GIS data in R, and the 
+[ggmap](http://cran.r-project.org/web/packages/ggmap/index.html)
+package is chosen for it's usability and quality plots. In this example we will 
+plot all the past and present Auckland climate stations to assess the density 
+across the region.
+
+```{r,message=FALSE,fig.width=9,fig.height=9, cache=TRUE}
+library(ggmap)
+
+# Conduct the search
+auckland.df = cf.find.station("auckland", search = "region", status = "all")
+
+# Add a column to colour the open and closed stations
+auckland.df$colour = factor(auckland.df$open, labels = c("Closed", "Open"))
+
+# Reverse the dataframe rows so the open stations get plotted on top of the
+# closed stations
+auckland.df = auckland.df[nrow(auckland.df):1, ]
+
+# Obtain the map of the greater Auckland suitably scaled to fit the stations
+auckland.map = ggmap(get_map("Auckland", maptype = "hybrid", zoom = 8))
+
+# Plot the resulting map with the stations and station density
+auckland.map %+% auckland.df + 
+  stat_density2d(aes(colour = colour), alpha = .8) +
+  geom_point(aes(colour = colour), alpha = .5) +
+  scale_colour_discrete("Status", c("Closed", "Open")) +
+  theme(legend.title = element_text(face = "bold"))
+```
+
+Remembering that closed stations in clifro are the ones that have end dates 
+over four weeks ago. It appears that the open stations are reasonably confined 
+to the city centre, whereas the more historic stations were placed further out
+in the rural areas.
+
+[chooseStations]: choose-station.html

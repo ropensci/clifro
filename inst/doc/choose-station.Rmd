@@ -1,0 +1,231 @@
+---
+title: "Choosing a clifro station"
+author: "Blake Seers"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    highlight: haddock
+    theme: readable
+---
+
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Choosing a clifro station}
+-->
+
+```{r, echo=FALSE}
+library(clifro)
+```
+
+Choosing `clifro` stations is made easy with the single `cf.find.station`
+function. This function is all that is required to find clifro stations. This
+function is equivalent to conducting the same search on the 
+[find stations](http://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html) page when 
+conducting a query online at CliFlo, except without some of the errors and bugs. 
+This means that the searches and the types of searches possible are exactly the 
+same however, `clifro` extends functionality to exploring the spatial nature of 
+stations via KML files that can be opened by Google Earth(TM), or plotting 
+directly in R. This is the main advantage in searching for stations using 
+`clifro` as locating suitable stations on a map is generally the preferred 
+search tool.
+
+There are four possible types of searches:
+
+* A search based on pattern matching the station name
+* A search based on pattern matching the network ID
+* A search based on region
+* A search based on the vicinity of a given location
+
+For each of these searches either all, open or closed stations may be returned
+and these searches also may only return stations where given datatypes are
+available. The primary goal in searching for stations is to find the 
+unique station agent number required to create a `cfStation` object. This 
+vignette details the various search options in `clifro` and ways to find these
+requisite agent numbers, primarily by way of example.
+
+# Ignoring datatypes
+The following examples detail how to use the `cf.find.station` search function
+ignoring any datatypes.
+
+## Station name search
+Both of these searches use pattern matching to find the appropriate stations. 
+The station name search is useful for searching stations in certain towns or
+suburbs or maybe even streets and parks. The network ID is a number that is 
+assigned to the stations which makes this search useful to look up stations 
+where these are known.
+
+These searches are used when part or all of the station name or netword ID is 
+known. For example, consider we are looking for open stations located in Takaka, 
+at the southeastern end of Golden Bay at the northern end of the South Island, 
+New Zealand. The default for the `cf.find.station` function is to search *open* 
+station names matching the string.
+
+At the time of writing this, CliFlo ignores the status argument in the name and 
+network ID search whereas `clifro` does not. Searching open stations with the
+station name matching "takaka" on CliFlo will return these stations.
+
+```{r}
+# Equivalent to searching for status = "open" on CliFro
+# Note the search string is not case sensitive
+cf.find.station("takaka", status = "all")
+```
+
+This shows that 8 of these 12 stations are closed. The search in `clifro` does 
+not ignore the station status.
+
+```{r}
+cf.find.station("takaka", status = "open")
+```
+
+Stations are considered open in `clifro` if the final date returned from the
+search is within four weeks of the current date. This gives the user a better
+idea on the stations that are currently collecting data. 
+
+## Station network ID search
+The same can be done for searching stations using network ID although 
+`search = "network"` needs to be added to the function call. Assume we knew
+that the only stations we were interested in were the open stations whose 
+network ID's match `F028`.
+
+```{r}
+cf.find.station("f028", search = "network", status = "all")
+```
+
+Notice that the resulting dataframes in all of these searches are first ordered
+by the date they last received data then by the date they opened to give the
+longest-running open stations first and the most historic, closed stations last.
+
+## Return all stations within a region
+This broad search returns all, open or closed stations within one of the 29 
+preselected New Zealand regions (note that stations can belong to more than
+one region). The `search = "region"` argument must be 
+added to the `cf.find.station` function to conduct these searches. If the region 
+is unknown then the search argument may be missing which brings up an 
+interactive menu of the 29 regions for the user to select 
+(`cf.find.station(search = "region")`), otherwise partial matching is used.
+
+```{r}
+# Partial match for the Queenstown region
+open.queenstown.stations = cf.find.station("queen", search = "region")
+```
+
+Typing `open.queenstown.stations` into R will then return all the 
+`r nrow(open.queenstown.stations)` open Queenstown stations. This 
+is clearly a burden to choose stations based on a large list of numbers hence 
+plotting them on a map (covered below) to assess their spatial extent will make 
+this task much easier.
+
+Conducting this same search on CliFlo returns 476 stations where some of these
+'open' stations haven't had any data input since November 2001.
+If these stations are of interest then add the `status = "all"` argument 
+to the `cf.find.station` function call.
+
+## Return all stations within the vicinity of a given location
+This location based search is conducted by including the 
+`search = "latlong"` argument to the `cf.find.station` function. There are 
+three parameters needed for this search; latitude, longitude and radius 
+(kilometres). Just like any other function in R, if these arguments aren't 
+named then the order matters and should be written in the order specified above.
+The latitude and longitude must be given in decimal degrees.
+
+We are (still) interested in finding all open stations around the small town of
+Takaka. From 
+[GeoHack](http://tools.wmflabs.org/geohack/geohack.php?pagename=Takaka%2C_New_Zealand&params=40_51_S_172_48_E_type:city%281149%29_region:NZ) 
+we can see that the latitude is -40.85 and the longitude is 172.8. We are 
+interested in all open stations within a 10km radius of the main township.
+
+```{r}
+takaka.town.st = cf.find.station(lat = -40.85, long = 172.8, rad = 10, search = "latlong")
+takaka.town.st[, -c(8, 9)]
+
+# We may rather order the stations by distance from the township
+takaka.town.st[order(takaka.town.st$distance), -c(8, 9)]
+```
+
+# Searches based on datatypes
+
+All the above searches did not include a datatype therefore they ignore the 
+datatypes available at these stations. Imagine we are looking for 
+hourly rain data at an open station in Takaka (using any of the aforementioned
+searches), we would need to include the hourly rain datatype in the search for 
+it to return a suitable station.
+
+### Note
+Unless the Reefton EWS station is the only CliFlo station of interest, the user 
+will need a [CliFlo account](http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro)
+to get data from other stations.
+
+```{r}
+# Create a clifro datatype for hourly rain
+hourly.rain.dt = cf.datatype(3, 1, 2)
+hourly.rain.dt
+
+# Conduct the search
+cf.find.station("takaka", datatype = hourly.rain.dt)
+```
+
+This tells us that the only *open* station in Takaka where hourly rain data 
+is available is at the Takaka Ews station. 
+
+# More than one search at a time
+Since the `cf.find.station` function returns `cfStation` objects, any of these 
+methods work on objects created from the `cf.station` function (see the 
+[working with clifro stations vignette][clifrostation] for more details). We can 
+conduct two or more seaches at a time using the addition sign, just like we did 
+for `cfDatatype`s (see the [choose datatypes vignette][chooseDatatype]).
+
+We would like to return all open stations within a 10km radius of the Takaka 
+township in the South Island, and the open stations in Kaitaia, in the North 
+Island that collect hourly rain data.
+
+```{r}
+my.composite.search = takaka.town.st + cf.find.station("kaitaia", 
+                                                       search = "region", 
+                                                       datatype = hourly.rain.dt)
+my.composite.search
+
+# How long have these stations been open for?
+transform(my.composite.search, ndays = round(end - start))[, c(1, 10)]
+```
+
+
+# So where are these stations?
+
+Up until now there probably hasn't been any good reason to choose clifro to 
+search for stations instead of the 
+['Choose Stations' form on CliFlo](http://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html). 
+However, the real advantage of using clifro is to visualise the station 
+locations on a map by returning a KML file, particularly when there are lots of 
+stations returned by the search. This Keyhole Markup Language 
+([KML](http://resources.arcgis.com/en/help/main/10.1/index.html#//00s20000000m000000)) 
+is an XML-based language provided by Google(TM) for defining the graphic display 
+of spatial data in applications such as Google Earth(TM) and Google Maps(TM).
+
+To return the stations as a KML file simply use the `cf.save.kml` function on 
+any `cfStation` object. The `cf.find.station` function returns `cfStation` 
+objects therefore it's very easy to plot these on a map. To assess the 
+geographic extent of the Auckland stations we can return a KML file from the 
+search and open it using our preferred KML-friendly software.
+
+```{r,message=FALSE}
+# First, search for the stations
+all.auckland.st = cf.find.station("auckland", search = "region", status = "all")
+
+# Then save these as a KML
+cf.save.kml(all.auckland.st, file_name = "all_auckland_stations")
+```
+
+Now `all.auckland.st` contains all the `r nrow(all.auckland.st)` 
+Auckland stations where data have been recorded on CliFlo. The blue markers 
+represent the open stations and the red markers indicate closed stations. The 
+resulting KML file is saved to the current R session's working directory by 
+default. Have a look at the [clifro station vignette][clifrostation] for more 
+methods and plotting of `cfStation` objects.
+
+![auckland stations][allAucklandStations]
+
+[chooseDatatype]: choose-datatype.html
+[clifrostation]: cfStation.html
+[allAucklandStations]: figures/map.png "All Auckland Stations"
