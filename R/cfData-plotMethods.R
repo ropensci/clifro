@@ -283,7 +283,7 @@ speed_plot = function(df, y_lab, ggtheme = "grey", free_y = FALSE,
   
   include_sd = !is.na(match("spd.sd", names(df)))
   if (include_sd)
-    include_sd = include_sd && all(!is.na(df$spd.sd))
+    include_sd = include_sd && any(!is.na(df$spd.sd))
   
   p = ggplot(data = df, aes(x = date))
   if (include_sd)
