@@ -17,7 +17,6 @@ output:
 
 ```{r, echo=FALSE}
 library(clifro)
-source("myCreds.R")
 ```
 
 # Introduction
@@ -102,13 +101,22 @@ Now that we have a valid `clifro` user and the datatypes and stations of
 interest, a `clifro` query can be conducted using the `cf.query` function. We
 are interested in all available data from 2012 to 2014.
 
-```{r,message=FALSE,cache=TRUE}
+```{r,eval=FALSE}
 cf.datalist = cf.query(user = me, 
                        datatype = my.dts, 
                        station = my.stations, 
                        start_date = "2012-01-01 00", 
                        end_date = "2014-01-01 00")
 cf.datalist
+```
+
+```
+## List containing clifro data frames:
+##               data      type              start                end rows
+## df 1)     Pressure  9am only (2012-01-01  8:00) (2013-01-01  8:00) 1468
+## df 2)      Max_min     Daily (2012-01-01  8:00) (2013-12-31  8:00) 2923
+## df 3)         Rain     Daily (2012-01-01  8:00) (2013-12-31  8:00) 2923
+## df 4) Surface Wind  9am only (2012-01-01  8:00) (2013-01-01  8:00) 1468
 ```
 
 We can see that the pressure and surface wind data only span one year.
@@ -124,17 +132,20 @@ examples of some of the plots possible with `clifro`, note how the optional
 
 ## MSL Atmospheric Pressure
 
-```{r,fig.width=11, fig.height=10}
+```{r,eval=FALSE}
 plot(cf.datalist, which = 1, ggtheme = "bw")
 
 # Equivalent to 
 # plot(cf.datalist[1], ggtheme = "bw")
 ```
 
-Since the plot method returns a `ggplot` object, we can easily modify the plots 
-using [ggplot2](http://ggplot2.org/).
+![atmospheric pressure][mslAtmosPress]
 
-```{r,warning=FALSE,message=FALSE,fig.width=11, fig.height=10}
+The `which` argument tells `clifro` which of the four dataframes to plot. Since 
+the plot method returns a `ggplot` object, we can easily modify the plots using 
+[ggplot2](http://ggplot2.org/).
+
+```{r,eval=FALSE}
 # Load the ggplot2 library
 library(ggplot2)
 
@@ -144,20 +155,33 @@ plot(cf.datalist, which = 1, ggtheme = "bw",
   geom_smooth(method = "loess", span = 1/3)
 ```
 
+![atmospheric pressure][mslAtmosPress2]
+
 ## Daily Temperature Extremes
 
-```{r,fig.width=11, fig.height=10}
+```{r,eval=FALSE}
 plot(cf.datalist, which = 2, ggtheme = "linedraw")
 ```
 
+![temperature extremes][temperature]
+
 ## Rain
 
-```{r,fig.width=11, fig.height=11}
-plot(cf.datalist, which = 3, ggtheme = "light")
+Currently there are two possible default plots available for rainfall; with or
+without soil deficit/runoff.
 
+```{r,eval=FALSE}
+plot(cf.datalist, which = 3, ggtheme = "light")
+```
+
+![rain and runoff][rainRunoff]
+
+```{r, eval=FALSE}
 # Don't plot the soil deficit and runoff
 plot(cf.datalist, which = 3, include_runoff = FALSE, ggtheme = "light")
 ```
+
+![rain amount][rain]
 
 ## Wind
 
@@ -171,24 +195,30 @@ temporal information that is not portrayed in the windroses.
 
 ### Windrose
 
-```{r,fig.width=11, fig.height=11}
+```{r,eval=FALSE}
 # Defaults to windrose
 plot(cf.datalist, which = 4)
 ```
 
+![windrose][windrose]
+
 ### Wind Speeds
 
-```{r,fig.width=11, fig.height=10}
+```{r,eval=FALSE}
 # Plot the wind speeds through time
 plot(cf.datalist, which = 4, wind_plot = "speed", ggtheme = "classic")
 ```
 
+![wind speed][windSpeed]
+
 ### Wind Directions
 
-```{r,fig.width=11, fig.height=12}
+```{r,eval=FALSE}
 # Plot wind direction contours
 plot(cf.datalist, which = 4, wind_plot = "direction", contours = 10, ggtheme = "light")
 ```
+
+![wind direction][windDir]
 
 # Export
 
@@ -215,3 +245,12 @@ exploration and analysis stage.
 [chooseStation]: choose-station.html
 [chooseDatatype]: choose-datatype.html
 [clifrostation]: cfStation.html
+
+[mslAtmosPress]: figures/atmospress.png "MSL Atmospheric Pressure"
+[mslAtmosPress2]: figures/atmospress2.png "Improved MSL Atmospheric Pressure"
+[temperature]: figures/temperature.png "Temperature Extremes"
+[rainRunoff]: figures/rainRunoff.png "Rain with Soil Deficit and Runoff"
+[rain]: figures/rain.png "Rain Amount"
+[windrose]: figures/windrose.png "Windrose"
+[windSpeed]: figures/windspeed.png "Wind Speed"
+[windDir]: figures/winddir.png "Wind Direction"
