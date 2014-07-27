@@ -423,7 +423,7 @@ screenobs_plot = function(df, ggtheme = "grey", free_y = FALSE, ...){
 #' 
 #' @usage plot(x, ggtheme = "grey", free_y = FALSE, ...)
 #' 
-#' @importFrom ggplot2 ggplot aes geom_polygon facet_wrap geom_line ylab theme
+#' @importFrom ggplot2 ggplot geom_ribbon aes facet_wrap geom_line ylab theme
 #' theme_grey theme_bw theme_classic theme_gray theme_linedraw theme_light 
 #' theme_minimal
 #' 
@@ -449,7 +449,7 @@ maxmin_plot = function(df, ggtheme = "grey", free_y = FALSE, ...){
   ))
   
   p = ggplot(df, aes(x = date)) + 
-    #geom_polygon(data = max_min_df, aes(y = outline), alpha = .4) +
+    geom_ribbon(aes(ymax = Maximum, ymin = Minimum), alpha = .3) +
     geom_line(data = max_min_df, aes(y = outline, colour = max_min_fac))
   
   if (free_y)
