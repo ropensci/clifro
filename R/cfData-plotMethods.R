@@ -148,11 +148,11 @@ windrose = function(speed, direction, facet, calm_wind = 0,
   
   ## Create a factor variable for wind speed intervals
   if (!missing(spd_cuts)){
-    if (spd_cuts[1] > min(speed))
+    if (spd_cuts[1] > min(speed, na.rm = TRUE))
       spd_cuts = c(0, spd_cuts)
     
-    if (tail(spd_cuts, 1) < max(speed))
-      spd_cuts = c(spd_cuts, max(speed))
+    if (tail(spd_cuts, 1) < max(speed, na.rm = TRUE))
+      spd_cuts = c(spd_cuts, max(speed, na.rm = TRUE))
     spd_bin = cut(speed, spd_cuts)
   } else
     spd_bin = cut_interval(speed, n_speeds)
