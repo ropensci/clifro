@@ -10,7 +10,7 @@ available from http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro.
 
 To install `clifro` into R: 
 
-```
+```R
 install.packages("devtools")
 library(devtools)
 install_github(username = "blasee", repo = "clifro", build_vignettes = FALSE)
@@ -18,7 +18,7 @@ install_github(username = "blasee", repo = "clifro", build_vignettes = FALSE)
 
 To get started with `clifro`:
 
-```
+```R
 library(clifro)
 vignette("clifro")
 demo(clifro)
