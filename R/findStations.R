@@ -275,7 +275,7 @@ cf.save.kml = function(station, file_name = "my_stations_",
 #' \code{latlong} indicating the type of search to be conducted.
 #' @param datatype \code{cfDatatype} object for when the search is based on 
 #' datatypes.
-#' @param combine character string \code{"and"} or \code{"or"} indicating if the 
+#' @param combine character string \code{"all"} or \code{"any"} indicating if the 
 #' stations contain all or any of the selected datatypes for when the search is 
 #' based on datatypes.
 #' @param status character string indicating \code{"open"}, \code{"closed"} or 

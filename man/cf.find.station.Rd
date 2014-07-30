@@ -17,7 +17,7 @@ cf.find.station(..., search = c("name", "region", "network", "latlong"),
 \item{datatype}{\code{cfDatatype} object for when the search is based on
 datatypes.}
 
-\item{combine}{character string \code{"and"} or \code{"or"} indicating if the
+\item{combine}{character string \code{"all"} or \code{"any"} indicating if the
 stations contain all or any of the selected datatypes for when the search is
 based on datatypes.}
 
