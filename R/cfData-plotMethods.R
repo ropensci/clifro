@@ -79,7 +79,8 @@ windrose = function(speed, direction, facet, calm_wind = 0,
     facet = factor(facet)
   
   if (any(
-    (direction > 360 | direction < 0) & (direction != variable_wind))
+    (direction > 360 | direction < 0) & (direction != variable_wind),
+    na.rm = TRUE)
   )
     stop("wind directions can't be outside the interval [0, 360]")
   
