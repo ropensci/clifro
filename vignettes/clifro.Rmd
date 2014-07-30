@@ -12,7 +12,7 @@ output:
 
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{Choosing a clifro station}
+%\VignetteIndexEntry{Introduction to clifro}
 -->
 
 ```{r, echo=FALSE}
@@ -77,13 +77,13 @@ my.dts
 
 # Create clifro Stations
 
-The third requisite for a valid \code{clifro} query is the station where the
+The third requisite for a valid `clifro` query is the station where the
 data has been collected. If the agent numbers of the required CliFlo stations
-are known, the only function needed to create a clifro station \code{cfStation} 
-object is \code{cf.station}. See the [choose station vignette][chooseStation]
+are known, the only function needed to create a clifro station `cfStation` 
+object is `cf.station`. See the [choose station vignette][chooseStation]
 for help with choosing stations when the agent numbers are unknown, and the 
 [working with clifro stations vignette][clifrostation] for further information
-and methods on \code{cfStation} objects.
+and methods on `cfStation` objects.
 
 For this example we are interested in assessing how these datatypes differ in
 various parts of the country by taking a selection of stations from various
