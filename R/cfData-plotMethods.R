@@ -258,7 +258,7 @@ direction_plot = function(df, ggtheme = "grey", contours = 10, n_col = 1, y_lab,
 #' @usage plot(x, wind_plot = "speed", ggtheme = "grey", free_y = FALSE, ...)
 #' 
 #' @importFrom lubridate ymd_hm
-#' @importFrom ggplot2 ggplot geom_polygon geom_line facet_wrap xlab ylab theme
+#' @importFrom ggplot2 ggplot geom_ribbon geom_line facet_wrap xlab ylab theme
 #' aes element_blank theme_grey theme_bw theme_classic theme_gray theme_linedraw 
 #' theme_light theme_minimal
 #' 
@@ -284,25 +284,21 @@ speed_plot = function(df, y_lab, ggtheme = "grey", free_y = FALSE,
   
   include_sd = !is.na(match("spd.sd", names(df)))
   if (include_sd)
-    include_sd = include_sd && all(!is.na(df$spd.sd))
-    
+    include_sd = include_sd && any(!is.na(df$spd.sd))
+  
+  p = ggplot(data = df, aes(x = date))
   if (include_sd)
-    wind_polygon = with(df, data.frame(
-      date = c(date, rev(date)), 
-      speed = c(speed - spd.sd, rev(speed + spd.sd)), 
-      station = factor(c(as.character(station), rev(as.character(station))))
-    ))
-  else  
+    p = p + geom_ribbon(aes(ymin = speed - spd.sd, 
+                             ymax = speed + spd.sd), 
+                         alpha = .2)
+  else
     message("unable to plot the standard deviation region due to lack of data")
   
-  p = ggplot()
-  if (include_sd)
-    p = p + geom_polygon(data = wind_polygon, aes(date, speed), alpha = .2)
-  
-  p = p + geom_line(data = df, aes(date, speed), colour = "#0066CC") +
+  p = p + geom_line(aes(y = speed), colour = "#0066CC") +
     eval(call(paste0("theme_", ggtheme))) + 
     ylab(y_lab) +
-    theme(axis.title.x = element_blank(), ...)
+    theme(axis.title.x = element_blank(), 
+          ...)
   
   if (free_y)
     p = p + facet_wrap(~station, scales = "free_y")
@@ -321,7 +317,7 @@ speed_plot = function(df, y_lab, ggtheme = "grey", free_y = FALSE,
 #' 
 #' @usage plot(x, include_runoff = TRUE, ggtheme = "grey", free_y = FALSE, ...)
 #' 
-#' @importFrom ggplot2 ggplot aes facet_wrap geom_bar scale_fill_discrete ylab
+#' @importFrom ggplot2 ggplot aes facet_wrap geom_ribbon scale_fill_discrete ylab
 #' geom_line geom_point scale_colour_manual theme theme_grey theme_bw 
 #' theme_classic theme_gray theme_linedraw theme_light theme_minimal
 #' 
@@ -348,22 +344,21 @@ rain_plot = function(df, include_runoff = TRUE, ggtheme = "grey", free_y = FALSE
   include_runoff = "deficit" %in% names(df) && include_runoff
   
   if (include_runoff){
-    df$rnf_dct = with(df, runoff - deficit)
-    df$fill = factor(df$rnf_dct > 0, 
-                     labels = c("Soil deficit (AWC)", "Soil runoff"))
-    df$colour = factor(rep("Rain", nrow(df)))
+    df$deficit = -df$deficit
+    df = melt(df[, c("station", "date", "amount", "runoff", "deficit")], 
+              id = c("date", "station"))
+    df$variable = factor(df$variable, 
+                         labels = c("Rain", "Soil runoff", "Soil deficit (AWC)"))
   }
   
-  p = ggplot(df, aes(date, amount))
+  p = ggplot(df, aes(date))
   
   if (include_runoff)
     p = p + 
-    geom_bar(stat = "identity", aes(fill = colour), size = 2) + 
-    geom_bar(aes(fill = fill, y = rnf_dct), stat = "identity", 
-             position = "identity", alpha = .6)  +
+    geom_ribbon(aes(ymin = 0, ymax = value, fill = variable), alpha = .5) +
     ylab("Amount (mm)")
   else
-    p = p + geom_bar(stat = "identity") +
+    p = p + geom_ribbon(aes(ymin = 0, ymax = amount)) +
     ylab("Rain (mm)")
   
   if (free_y)
@@ -429,7 +424,7 @@ screenobs_plot = function(df, ggtheme = "grey", free_y = FALSE, ...){
 #' 
 #' @usage plot(x, ggtheme = "grey", free_y = FALSE, ...)
 #' 
-#' @importFrom ggplot2 ggplot aes geom_polygon facet_wrap geom_line ylab theme
+#' @importFrom ggplot2 ggplot geom_ribbon aes facet_wrap geom_line ylab theme
 #' theme_grey theme_bw theme_classic theme_gray theme_linedraw theme_light 
 #' theme_minimal
 #' 
@@ -455,7 +450,7 @@ maxmin_plot = function(df, ggtheme = "grey", free_y = FALSE, ...){
   ))
   
   p = ggplot(df, aes(x = date)) + 
-    #geom_polygon(data = max_min_df, aes(y = outline), alpha = .4) +
+    geom_ribbon(aes(ymax = Maximum, ymin = Minimum), alpha = .3) +
     geom_line(data = max_min_df, aes(y = outline, colour = max_min_fac))
   
   if (free_y)

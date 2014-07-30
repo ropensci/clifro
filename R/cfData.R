@@ -53,7 +53,7 @@ cf_label = function(object){
   stopifnot(is(object, "cfData"))
   
   data_label = paste(object@dt_type, tolower(object@dt_name))
-  
+  object@dt_type = gsub("^ *", "", object@dt_type)
   ## Wind
   if (tolower(object@dt_name) %in% c("surface wind", "max gust")){
     
