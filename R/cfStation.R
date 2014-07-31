@@ -164,7 +164,7 @@ cf.station = function(...){
   
   open_station = end_date == "-"
   final_date = rep(with_tz(round_date(now(), "month"), 
-                           tz = "Pacific/Auckland"), length(station_details))
+                           tzone = "Pacific/Auckland"), length(station_details))
   
   if (any(!open_station))
     final_date[!open_station] = dmy(end_date[!open_station], 

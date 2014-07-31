@@ -41,8 +41,10 @@ ensures the user provides exactly one username and password - except for
 'public' users.
 }
 \examples{
+\dontrun{
 cf.user("public")                    # Returns a valid object
 cf.user("bad_name", "bad_password")    # Bad Login
+}
 }
 \keyword{internal}
 

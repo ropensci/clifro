@@ -5,8 +5,6 @@ Version: 0.1-0
 Date: 2013-09-02
 Authors@R: person("Blake", "Seers", role = c("aut", "cre"),
     email = "blake.seers@gmail.com")
-Author: Blake Seers
-Maintainer: Blake Seers <blake.seers@gmail.com>
 VignetteBuilder: knitr
 Imports:
     methods,
