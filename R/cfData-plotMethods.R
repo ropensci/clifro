@@ -56,7 +56,7 @@ NULL
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom scales percent_format
 #' @importFrom plyr ddply .
-#' @importFrom ggplot2 ggplot coord_polar geom_bar cut_interval aes 
+#' @importFrom ggplot2 ggplot coord_polar geom_bar cut_interval aes_string
 #' scale_x_discrete scale_fill_manual theme_grey theme_bw theme_classic 
 #' theme_gray theme_linedraw theme_light theme_minimal element_blank 
 #' element_text
@@ -181,7 +181,8 @@ windrose = function(speed, direction, facet, calm_wind = 0,
   }
   
   ## (gg)Plot me
-  ggplot(data = ggplot_df, aes(x = dir_bin, fill = spd_bin, y = proportion)) + 
+  ggplot(data = ggplot_df, 
+         aes_string(x = "dir_bin", fill = "spd_bin", y = "proportion")) + 
     geom_bar(stat = "identity") + 
     scale_x_discrete(breaks = levels(ggplot_df$dir_bin)[seq(1, n_directions, 
                                                             n_directions / 4)],
@@ -211,8 +212,8 @@ windrose = function(speed, direction, facet, calm_wind = 0,
 #' 
 #' @importFrom lubridate ymd_hm
 #' @importFrom ggplot2 ggplot stat_density2d scale_y_continuous facet_wrap
-#' ylab scale_alpha_continuous theme aes theme_grey theme_bw theme_classic 
-#' theme_gray theme_linedraw theme_light theme_minimal
+#' ylab scale_alpha_continuous theme aes_string theme_grey theme_bw 
+#' theme_classic theme_gray theme_linedraw theme_light theme_minimal
 #' @param x a cfData object containing wind data
 #' @param wind_plot either \code{windrose}, \code{speed} or \code{direction} 
 #' depending on the type of wind plot
@@ -233,8 +234,8 @@ direction_plot = function(df, ggtheme = "grey", contours = 10, n_col = 1, y_lab,
   if (!is.numeric(contours) || length(contours) != 1)
     stop("contours must be a single number")
   
-  ggplot(df, aes(x = date, y = direction)) + 
-    stat_density2d(aes(alpha = ..level..), 
+  ggplot(df, aes_string(x = "date", y = "direction")) + 
+    stat_density2d(aes_string(alpha = "..level.."), 
                    bins = contours, size = 1) + 
     scale_y_continuous(limits = c(0, 360), 
                        breaks = seq(0, 360, 90), 
@@ -317,9 +318,10 @@ speed_plot = function(df, y_lab, ggtheme = "grey", free_y = FALSE,
 #' 
 #' @usage plot(x, include_runoff = TRUE, ggtheme = "grey", free_y = FALSE, ...)
 #' 
-#' @importFrom ggplot2 ggplot aes facet_wrap geom_ribbon scale_fill_discrete ylab
-#' geom_line geom_point scale_colour_manual theme theme_grey theme_bw 
-#' theme_classic theme_gray theme_linedraw theme_light theme_minimal
+#' @importFrom ggplot2 ggplot aes_string facet_wrap geom_ribbon 
+#' scale_fill_discrete ylab geom_line geom_point scale_colour_manual theme 
+#' theme_grey theme_bw theme_classic theme_gray theme_linedraw theme_light 
+#' theme_minimal
 #' 
 #' @param x a cfData object containing rain data.
 #' @param include_runoff a logical indicating whether to plot the soil moisture
@@ -350,15 +352,17 @@ rain_plot = function(df, include_runoff = TRUE, ggtheme = "grey", free_y = FALSE
     df$variable = factor(df$variable, 
                          labels = c("Rain", "Soil runoff", "Soil deficit (AWC)"))
   }
+  df$zero = 0
   
-  p = ggplot(df, aes(date))
+  p = ggplot(df, aes_string(x = "date"))
   
   if (include_runoff)
     p = p + 
-    geom_ribbon(aes(ymin = 0, ymax = value, fill = variable), alpha = .5) +
+    geom_ribbon(aes_string(ymin = "zero", ymax = "value", fill = "variable"), 
+                alpha = .5) +
     ylab("Amount (mm)")
   else
-    p = p + geom_ribbon(aes(ymin = 0, ymax = amount)) +
+    p = p + geom_ribbon(aes_string(ymin = "zero", ymax = "amount")) +
     ylab("Rain (mm)")
   
   if (free_y)
@@ -381,8 +385,9 @@ rain_plot = function(df, include_runoff = TRUE, ggtheme = "grey", free_y = FALSE
 #' @usage plot(x, ggtheme = "grey", free_y = FALSE, ...)
 #' 
 #' @importFrom reshape2 melt
-#' @importFrom ggplot2 ggplot aes geom_line ylab theme facet_wrap theme_grey 
-#' theme_bw theme_classic theme_gray theme_linedraw theme_light theme_minimal
+#' @importFrom ggplot2 ggplot aes_string geom_line ylab theme facet_wrap 
+#' theme_grey theme_bw theme_classic theme_gray theme_linedraw theme_light 
+#' theme_minimal
 #' 
 #' @param x a cfData object containing screen observations data.
 #' @param ggtheme character string indicating the \code{\link[ggplot2]{ggtheme}} 
@@ -401,7 +406,7 @@ screenobs_plot = function(df, ggtheme = "grey", free_y = FALSE, ...){
   
   clifro_df = melt(df, id.vars = 1:2, measure.vars = c(3, 4, 6))
 
-  p = ggplot(clifro_df, aes(date, value))
+  p = ggplot(clifro_df, aes_string(x = "date", y = "value"))
   
   if (free_y)
     p = p + facet_wrap(~station, scales = "free_y")
@@ -409,7 +414,7 @@ screenobs_plot = function(df, ggtheme = "grey", free_y = FALSE, ...){
     p = p + facet_wrap(~station)
   
   p = p + 
-    geom_line(aes(colour = variable), size = 1, alpha = .7) +
+    geom_line(aes_string(colour = "variable"), size = 1, alpha = .7) +
     ylab(expression("Temperature ("*degree*"C)")) +
     eval(call(paste0("theme_", ggtheme))) + 
     theme(axis.title.x = element_blank(),
@@ -424,9 +429,9 @@ screenobs_plot = function(df, ggtheme = "grey", free_y = FALSE, ...){
 #' 
 #' @usage plot(x, ggtheme = "grey", free_y = FALSE, ...)
 #' 
-#' @importFrom ggplot2 ggplot geom_ribbon aes facet_wrap geom_line ylab theme
-#' theme_grey theme_bw theme_classic theme_gray theme_linedraw theme_light 
-#' theme_minimal
+#' @importFrom ggplot2 ggplot geom_ribbon aes_string facet_wrap geom_line ylab 
+#' theme theme_grey theme_bw theme_classic theme_gray theme_linedraw theme_light 
+#' theme_minimal aes
 #' 
 #' @param x a cfData object containing max/min temperature data.
 #' @param ggtheme character string indicating the \code{\link[ggplot2]{ggtheme}} 
@@ -449,9 +454,10 @@ maxmin_plot = function(df, ggtheme = "grey", free_y = FALSE, ...){
     max_min_fac = rep(c("Maximum", "Minimum"), each = nrow(df))
   ))
   
-  p = ggplot(df, aes(x = date)) + 
-    geom_ribbon(aes(ymax = Maximum, ymin = Minimum), alpha = .3) +
-    geom_line(data = max_min_df, aes(y = outline, colour = max_min_fac))
+  p = ggplot(df, aes_string(x = "date")) + 
+    geom_ribbon(aes_string(ymax = "Maximum", ymin = "Minimum"), alpha = .3) +
+    geom_line(data = max_min_df, 
+              aes_string(y = "outline", colour = "max_min_fac"))
   
   if (free_y)
     p = p + 
@@ -480,9 +486,9 @@ maxmin_plot = function(df, ggtheme = "grey", free_y = FALSE, ...){
 #' 
 #' @usage plot(x, ggtheme = "grey", free_y = FALSE, ...)
 #' 
-#' @importFrom ggplot2 ggplot aes geom_line ylab theme element_blank theme_grey 
-#' theme_bw theme_classic theme_gray theme_linedraw theme_light theme_minimal
-#' facet_wrap
+#' @importFrom ggplot2 ggplot aes_string geom_line ylab theme element_blank 
+#' theme_grey theme_bw theme_classic theme_gray theme_linedraw theme_light 
+#' theme_minimal facet_wrap
 #' 
 #' @param x a cfData object containing earth temperature data.
 #' @param ggtheme character string indicating the \code{\link[ggplot2]{ggtheme}} 
@@ -502,7 +508,7 @@ earthtemp_plot = function(df, ggtheme = "grey", free_y = FALSE, y_lab, ...){
   if (!is.character(ggtheme) || length(ggtheme) != 1)
     stop("ggtheme must be a single character string")
   
-  p = ggplot(df, aes(date, temp)) + 
+  p = ggplot(df, aes_string(x = "date", y = "temp")) + 
     geom_line(colour = "#0066CC", size = 1) +
     eval(call(paste0("theme_", ggtheme))) + 
     ylab(y_lab) +
@@ -525,9 +531,9 @@ earthtemp_plot = function(df, ggtheme = "grey", free_y = FALSE, y_lab, ...){
 #' 
 #' @usage plot(x, ggtheme = "grey", free_y = FALSE, ...)
 #' 
-#' @importFrom ggplot2 ggplot aes geom_line ylab theme element_blank theme_grey 
-#' theme_bw theme_classic theme_gray theme_linedraw theme_light theme_minimal
-#' facet_wrap
+#' @importFrom ggplot2 ggplot aes_string geom_line ylab theme element_blank 
+#' theme_grey theme_bw theme_classic theme_gray theme_linedraw theme_light 
+#' theme_minimal facet_wrap
 #' 
 #' @param x a cfData object containing sunshine data.
 #' @param ggtheme character string indicating the \code{\link[ggplot2]{ggtheme}} 
@@ -547,7 +553,7 @@ sunshine_plot = function(df, ggtheme = "grey", free_y = FALSE, y_lab, ...){
   if (!is.character(ggtheme) || length(ggtheme) != 1)
     stop("ggtheme must be a single character string")
   
-  p = ggplot(df, aes(date, amount)) +
+  p = ggplot(df, aes_string(x = "date", y = "amount")) +
     geom_line(colour = "#0066CC", size = 1) +
     eval(call(paste0("theme_", ggtheme))) + 
     ylab(y_lab) +
@@ -569,9 +575,9 @@ sunshine_plot = function(df, ggtheme = "grey", free_y = FALSE, y_lab, ...){
 #' 
 #' @usage plot(x, ggtheme = "grey", free_y = FALSE, ...)
 #' 
-#' @importFrom ggplot2 ggplot aes geom_line ylab theme element_blank theme_grey 
-#' theme_bw theme_classic theme_gray theme_linedraw theme_light theme_minimal
-#' facet_wrap
+#' @importFrom ggplot2 ggplot aes_string geom_line ylab theme element_blank 
+#' theme_grey theme_bw theme_classic theme_gray theme_linedraw theme_light 
+#' theme_minimal facet_wrap
 #' 
 #' @param x a cfData object containing pressure data.
 #' @param ggtheme character string indicating the \code{\link[ggplot2]{ggtheme}} 
@@ -591,7 +597,7 @@ pressure_plot = function(df, ggtheme = "grey", free_y = FALSE, y_lab, ...){
   if (!is.character(ggtheme) || length(ggtheme) != 1)
     stop("ggtheme must be a single character string")
   
-  p = ggplot(df, aes(date, pressure)) +
+  p = ggplot(df, aes_string(x = "date", y = "pressure")) +
     geom_line() +
     eval(call(paste0("theme_", ggtheme))) + 
     ylab(y_lab) +
