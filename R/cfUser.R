@@ -71,8 +71,10 @@ NULL
 #' @name valid_cfuser
 #' @rdname valid_cfuser
 #' @examples
+#' \dontrun{
 #' cf.user("public")                    # Returns a valid object
 #' cf.user("bad_name", "bad_password")    # Bad Login
+#' }
 
 cf_login = function(object){
   cookies = file.path(tempdir(), object@username)

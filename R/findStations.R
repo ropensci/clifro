@@ -437,7 +437,7 @@ cf.find.station = function(...,
   which_are_also_dates = start_end == "-"
   start_end = dmy(start_end, quiet = TRUE, tz = "Pacific/Auckland")
   start_end[which_are_also_dates] = with_tz(round_date(now(), "month"),
-                                            tz = "Pacific/Auckland")
+                                            tzone = "Pacific/Auckland")
   start_end = na.exclude(start_end)
   
   if (include_distances)

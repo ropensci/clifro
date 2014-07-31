@@ -158,7 +158,7 @@ cf.query = function(user, datatype, station, start_date, end_date = now(tz),
   data_list = lapply(table_limits, 
                      function(x) 
                        read.table(textConnection(all_lines[(x[1] + 2):(x[2] - 1)]), 
-                                  sep = "\t", head = TRUE, na.strings = "-",
+                                  sep = "\t", header = TRUE, na.strings = "-",
                                   check.names = FALSE))
   nrows = sapply(data_list, nrow)
   data_list = data_list[nrows != 0]
