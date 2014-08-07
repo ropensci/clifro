@@ -1,6 +1,6 @@
 # Enhancing the National Climate Database with clifro
 
-[![Build Status](https://travis-ci.org/blasee/clifro.svg)](https://travis-ci.org/blasee/clifro)
+[![Build Status](https://travis-ci.org/ropensci/clifro.svg)](https://travis-ci.org/ropensci/clifro)
 
 This package is designed to minimise the hassle in downloading data
 from New Zealand's National Climate Database via 
