@@ -18,7 +18,7 @@ valid_cfuser(object)
 \code{TRUE}.}
 }
 \description{
-These internal functions are used by the \code{\link{cf.user}} constructor
+These internal functions are used by the \code{\link{cf_user}} constructor
 function to ensure the user has a valid subscription to CliFlo.
 }
 \details{
@@ -42,8 +42,8 @@ ensures the user provides exactly one username and password - except for
 }
 \examples{
 \dontrun{
-cf.user("public")                    # Returns a valid object
-cf.user("bad_name", "bad_password")    # Bad Login
+cf_user("public")                    # Returns a valid object
+cf_user("bad_name", "bad_password")    # Bad Login
 }
 }
 \keyword{internal}

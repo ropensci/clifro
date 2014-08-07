@@ -11,7 +11,7 @@
 
 <meta name="author" content="Blake Seers" />
 
-<meta name="date" content="2014-07-23" />
+<meta name="date" content="2014-08-08" />
 
 <title>Choosing a clifro datatype</title>
 
@@ -62,7 +62,7 @@ code > span.er { font-weight: bold; }
 <div id="header">
 <h1 class="title">Choosing a clifro datatype</h1>
 <h4 class="author"><em>Blake Seers</em></h4>
-<h4 class="date"><em>2014-07-23</em></h4>
+<h4 class="date"><em>2014-08-08</em></h4>
 </div>
 
 <div id="TOC">
@@ -86,17 +86,17 @@ code > span.er { font-weight: bold; }
 %\VignetteIndexEntry{Choosing a clifro datatype}
 -->
 
-<p>The <code>cf.datatype</code> function is all that is required to select <code>clifro</code> datatypes. This function can be called without any arguments that takes the user through interactive menus, otherwise the datatypes may be chosen programatically if the menu options are known in advance. Whether the intention is to choose one datatype or many, this vignette details the various methods in choosing them.</p>
+<p>The <code>cf_datatype</code> function is all that is required to select <code>clifro</code> datatypes. This function can be called without any arguments that takes the user through interactive menus, otherwise the datatypes may be chosen programatically if the menu options are known in advance. Whether the intention is to choose one datatype or many, this vignette details the various methods in choosing them.</p>
 <div id="using-the-menus-interactively-to-choose-a-datatype" class="section level1">
 <h1>Using the menus interactively to choose a datatype</h1>
-<p>Those familiar with the cliflo <a href="http://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1">datatype selection menu</a> will recall the myriad datatypes and options available in the National Climate Database. Selection of a datatype requires navigation through trees of menus, check boxes and combo boxes. The <code>cf.datatype</code> function mimics this (tedious) behaviour by default, i.e. when no arguments are passed to the function and the datatypes, menus and options are all identical to (actually scraped from) the datatype selection menu.</p>
+<p>Those familiar with the cliflo <a href="http://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1">datatype selection menu</a> will recall the myriad datatypes and options available in the National Climate Database. Selection of a datatype requires navigation through trees of menus, check boxes and combo boxes. The <code>cf_datatype</code> function mimics this (tedious) behaviour by default, i.e. when no arguments are passed to the function and the datatypes, menus and options are all identical to (actually scraped from) the datatype selection menu.</p>
 <div id="a-minimal-example" class="section level2">
 <h2>A minimal example</h2>
 <p>Let’s say the datatype we are interested in is 9am surface wind in knots.</p>
-<pre class="sourceCode r"><code class="sourceCode r">surfaceWind.dt =<span class="st"> </span><span class="kw">cf.datatype</span>()
+<pre class="sourceCode r"><code class="sourceCode r">surfaceWind.dt =<span class="st"> </span><span class="kw">cf_datatype</span>()
 
 <span class="co"># If you prefer pointing and clicking - turn the graphics option on:</span>
-surfaceWind.dt =<span class="st"> </span><span class="kw">cf.datatype</span>(<span class="dt">graphics =</span> <span class="ot">TRUE</span>)</code></pre>
+surfaceWind.dt =<span class="st"> </span><span class="kw">cf_datatype</span>(<span class="dt">graphics =</span> <span class="ot">TRUE</span>)</code></pre>
 <div id="daily-and-hourly-observations" class="section level3">
 <h3>Daily and Hourly Observations</h3>
 <pre><code>## Daily and Hourly Observations
@@ -155,8 +155,8 @@ surfaceWind.dt =<span class="st"> </span><span class="kw">cf.datatype</span>(<sp
 <p>The bold numbers in the minimal example above are emphasised specifically to show the menu order and selections needed to choose the strength of the 9am surface wind in knots datatype, i.e. <strong>2</strong> –&gt; <strong>1</strong> –&gt; <strong>4</strong> –&gt; <strong>3</strong>. In genreal, if we know the selections needed for each of the four menus then we can choose any datatype without using the menus making datatype selection a lot faster and a much less tedious.</p>
 <div id="a-minimal-example-1" class="section level2">
 <h2>A minimal example</h2>
-<p>To repeat our minimal example without the use of the menus we would just pass them as arguments to the <code>cf.datatype</code> function. These arguments are the selections of each of the four menus (in order) separated by a comma.</p>
-<pre class="sourceCode r"><code class="sourceCode r">surfaceWind.dt =<span class="st"> </span><span class="kw">cf.datatype</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">3</span>)
+<p>To repeat our minimal example without the use of the menus we would just pass them as arguments to the <code>cf_datatype</code> function. These arguments are the selections of each of the four menus (in order) separated by a comma.</p>
+<pre class="sourceCode r"><code class="sourceCode r">surfaceWind.dt =<span class="st"> </span><span class="kw">cf_datatype</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">3</span>)
 surfaceWind.dt</code></pre>
 <pre><code>##     dt.name      dt.type dt.options dt.combo
 ## dt1    Wind Surface wind  [9amWind]    knots</code></pre>
@@ -164,7 +164,7 @@ surfaceWind.dt</code></pre>
 <div id="selecting-more-than-one-option-for-a-given-datatype" class="section level2">
 <h2>Selecting more than one option for a given datatype</h2>
 <p>Recall that we may choose more than one option at the third menu, equivalent to the check boxes on the cliflo <a href="http://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1">database query form</a>. Using the menu to choose more than one option is an iterative process however we can just update our third function argument to deal with this in a more time-efficient manner.</p>
-<pre class="sourceCode r"><code class="sourceCode r">surfaceWind.dt =<span class="st"> </span><span class="kw">cf.datatype</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="dv">3</span>)
+<pre class="sourceCode r"><code class="sourceCode r">surfaceWind.dt =<span class="st"> </span><span class="kw">cf_datatype</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="dv">3</span>)
 surfaceWind.dt</code></pre>
 <pre><code>##     dt.name      dt.type        dt.options dt.combo
 ## dt1    Wind Surface wind [HlyWind,9amWind]    knots</code></pre>
@@ -179,16 +179,16 @@ surfaceWind.dt</code></pre>
 <p>Let us consider an application where we are now interested in hourly and 9am surface wind along with hourly and daily rainfall, hourly counts of lightning flashes and daily and hourly grass temperature extremes.</p>
 <p>There are a few ways to choose all of these datatypes. Firstly, you could go through the menu options one by one, selecting the corresponding datatypes and options and saving the resulting datatypes as different R objects. A less laborious alternative is to create each of these datatypes without the menus. This does of course assume we know the selections at each branch of the <a href="http://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1">datatype selection menus</a>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Hourly and 9am surface wind (knots)</span>
-surfaceWind.dt =<span class="st"> </span><span class="kw">cf.datatype</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="dv">3</span>)
+surfaceWind.dt =<span class="st"> </span><span class="kw">cf_datatype</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="dv">3</span>)
 
 <span class="co"># Hourly and daily rainfall</span>
-rainfall.dt =<span class="st"> </span><span class="kw">cf.datatype</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+rainfall.dt =<span class="st"> </span><span class="kw">cf_datatype</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 
 <span class="co"># Hourly counts of lightning flashes</span>
-lightning.dt =<span class="st"> </span><span class="kw">cf.datatype</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">1</span>)
+lightning.dt =<span class="st"> </span><span class="kw">cf_datatype</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">1</span>)
 
 <span class="co"># Daily and hourly grass temperature extremes</span>
-temperatureExtremes.dt =<span class="st"> </span><span class="kw">cf.datatype</span>(<span class="dv">4</span>, <span class="dv">2</span>, <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">6</span>))
+temperatureExtremes.dt =<span class="st"> </span><span class="kw">cf_datatype</span>(<span class="dv">4</span>, <span class="dv">2</span>, <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">6</span>))
 
 <span class="co"># Note: only the surface wind datatype requires combo options</span></code></pre>
 <p>This results in 4 separate objects in R containing the datatypes and their corresponding options. If we were wanting to submit a query using all of these datatypes at once, having four separate datatypes is less than optimal. The following table shows the options for each of the menus that we are interested in.</p>
@@ -233,8 +233,8 @@ temperatureExtremes.dt =<span class="st"> </span><span class="kw">cf.datatype</s
 </tr>
 </tbody>
 </table>
-<p>We can read across the columns to see the selections that are needed to return an R object containing the datatypes we are interested in. We can then just pass these values into the <code>cf.datatype</code> function to return a single R object containing all of our datatypes and options.</p>
-<pre class="sourceCode r"><code class="sourceCode r">query1.dt =<span class="st"> </span><span class="kw">cf.datatype</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">4</span>), 
+<p>We can read across the columns to see the selections that are needed to return an R object containing the datatypes we are interested in. We can then just pass these values into the <code>cf_datatype</code> function to return a single R object containing all of our datatypes and options.</p>
+<pre class="sourceCode r"><code class="sourceCode r">query1.dt =<span class="st"> </span><span class="kw">cf_datatype</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">4</span>), 
                         <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>),
                         <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">1</span>, <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">6</span>)),
                         <span class="kw">c</span>(<span class="dv">3</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>))
@@ -267,20 +267,20 @@ query1.dt</code></pre>
 <div id="extras" class="section level2">
 <h2>Extras</h2>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># To add another datatype using the menu:</span>
-query1.dt +<span class="st"> </span><span class="kw">cf.datatype</span>()
+query1.dt +<span class="st"> </span><span class="kw">cf_datatype</span>()
 
 <span class="co"># Is equivalent to:</span>
-query1.dt +<span class="st"> </span><span class="kw">cf.datatype</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>)
+query1.dt +<span class="st"> </span><span class="kw">cf_datatype</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>)
 
 <span class="co"># Therefore is equivalent to adding a column of NA's to the above table:</span>
-query1.dt =<span class="st"> </span><span class="kw">cf.datatype</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="ot">NA</span>), 
+query1.dt =<span class="st"> </span><span class="kw">cf_datatype</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="ot">NA</span>), 
                               <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>),
                               <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">1</span>, <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">6</span>), <span class="ot">NA</span>),
                               <span class="kw">c</span>(<span class="dv">3</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>))
 
 <span class="co"># Half an unknown wind datatype i.e. we know first selection = 2 but nothing </span>
 <span class="co"># further:</span>
-rain.dt =<span class="st"> </span><span class="kw">cf.datatype</span>(<span class="dv">2</span>) <span class="co"># 0r cf.datatype(2, NA, NA, NA)</span></code></pre>
+rain.dt =<span class="st"> </span><span class="kw">cf_datatype</span>(<span class="dv">2</span>) <span class="co"># 0r cf_datatype(2, NA, NA, NA)</span></code></pre>
 </div>
 </div>
 

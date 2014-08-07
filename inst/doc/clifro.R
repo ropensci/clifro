@@ -2,21 +2,21 @@
 library(clifro)
 
 ## ----,eval=FALSE---------------------------------------------------------
-#  me = cf.user("username", "password")
+#  me = cf_user("username", "password")
 
 ## ------------------------------------------------------------------------
-my.dts = cf.datatype(select_1 =     c(7,  4,  3,  2), 
+my.dts = cf_datatype(select_1 =     c(7,  4,  3,  2), 
                      select_2 =     c(1,  2,  1,  1), 
                      check_box = list(3,  1,  1,  4), 
                      combo_box =    c(NA, NA, NA, 1))
 my.dts
 
 ## ------------------------------------------------------------------------
-my.stations = cf.station(5814, 4241, 2112, 1962)
+my.stations = cf_station(5814, 4241, 2112, 1962)
 my.stations[, 1:5]
 
 ## ----,eval=FALSE---------------------------------------------------------
-#  cf.datalist = cf.query(user = me,
+#  cf.datalist = cf_query(user = me,
 #                         datatype = my.dts,
 #                         station = my.stations,
 #                         start_date = "2012-01-01 00",

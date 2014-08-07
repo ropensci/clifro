@@ -17,7 +17,7 @@ rot <- function(ch, k) {
 #' extraction, formatting and visualisation from the CliFlo web portal. It 
 #' requires the user to build a query consisting of 3 main components; the user, 
 #' the datatype(s) and the station(s). These are
-#' then combined using the \code{\link{cf.query}} function which sends the query 
+#' then combined using the \code{\link{cf_query}} function which sends the query 
 #' to the CliFlo database and returns the results that can easily be plotted
 #' using the \code{\link[clifro]{plot}} function.
 #' 
@@ -37,7 +37,7 @@ NULL
 
 #' Validation Functions For The \code{cfUser} Class
 #' 
-#' These internal functions are used by the \code{\link{cf.user}} constructor 
+#' These internal functions are used by the \code{\link{cf_user}} constructor 
 #' function to ensure the user has a valid subscription to CliFlo.
 #' 
 #' \code{cf_login} initiates a curl handle storing the cookies in the current 
@@ -72,8 +72,8 @@ NULL
 #' @rdname valid_cfuser
 #' @examples
 #' \dontrun{
-#' cf.user("public")                    # Returns a valid object
-#' cf.user("bad_name", "bad_password")    # Bad Login
+#' cf_user("public")                    # Returns a valid object
+#' cf_user("bad_name", "bad_password")    # Bad Login
 #' }
 
 cf_login = function(object){
@@ -171,7 +171,7 @@ valid_cfuser = function(object){
 
 #' @rdname cfUser-class
 #' @name cfUser-class
-#' @aliases cf.user
+#' @aliases cf_user
 #' @importFrom methods setClass
 setClass("cfUser",
          representation = representation(username = "character",
@@ -183,7 +183,7 @@ setClass("cfUser",
 #' Allow the user to log into cliflo from \R to build their query.
 #' 
 #' An object inheriting from the cfUser class is created by the constructor 
-#' function \code{cf.user}. The user must have an active subscription to cliflo 
+#' function \code{cf_user}. The user must have an active subscription to cliflo 
 #' in order to create a valid object, unless a 'public' user is sought. 
 #' Visit \url{http://cliflo.niwa.co.nz/} for more information and to subscribe 
 #' to cliflo.
@@ -203,9 +203,9 @@ setClass("cfUser",
 #' @seealso \code{\link{valid_cfuser}} for details on the validation of cfUser
 #' and \code{\link[clifro]{summary}} to summarise user information.
 #' @examples
-#' public.cfuser = cf.user(username = "public")
+#' public.cfuser = cf_user(username = "public")
 #' public.cfuser
-cf.user = function(username = "public", password = character()){
+cf_user = function(username = "public", password = character()){
   new("cfUser", username = username, password = password)
 }
 

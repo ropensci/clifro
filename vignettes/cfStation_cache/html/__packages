@@ -1,6 +1,12 @@
 base
 clifro
+datasets
 ggmap
 ggplot2
+graphics
+grDevices
 mapproj
 maps
+methods
+stats
+utils

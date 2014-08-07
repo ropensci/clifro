@@ -2,7 +2,7 @@
 
 #' @rdname cfDatatype-class
 #' @name cfDatatype-class
-#' @aliases cf.datatype
+#' @aliases cf_datatype
 #' @importFrom methods setClass
 setClass(Class = "cfDatatype",
          slots = c(
@@ -101,8 +101,8 @@ dt_href = function(doc, ...){
 
 # Return the href and datatype name from the first stage datatype selection
 # 
-# This function is only intended for use within the cf.datatype function.
-# The arguments are passed from the cf.datatype arguments to this function.
+# This function is only intended for use within the cf_datatype function.
+# The arguments are passed from the cf_datatype arguments to this function.
 #
 # selection: passed from the select_1 argument
 # g        : logical passed to the graphics argument of the menu function
@@ -131,8 +131,8 @@ first_stage_selection = function(selection, g, iter){
 
 # Return the href and datatype type from the second stage datatype selection
 # 
-# This function is only intended for use within the cf.datatype function. The 
-# arguments are passed from the cf.datatype arguments to this function.
+# This function is only intended for use within the cf_datatype function. The 
+# arguments are passed from the cf_datatype arguments to this function.
 #
 # href_1    : href from the first stage selection
 # selection : second stage selection passed from the select_2 argument
@@ -191,8 +191,8 @@ choose_dt_options = function(datatype_name, datatype_options, g){
 
 # Return all other options to produce an instance of the cfDatatype class
 # 
-# This function is only intended for use within the cf.datatype function. The 
-# arguments are passed from the cf.datatype arguments to this function.
+# This function is only intended for use within the cf_datatype function. The 
+# arguments are passed from the cf_datatype arguments to this function.
 #
 # href_2          : href from the second stage selection
 # selection_check : the users check box selections passed from check_box
@@ -282,7 +282,7 @@ option_selections = function(href_2, selection_check, selection_combo,
 # object : a cfDatatype object
 # user   : a cfUser object
 #' @importFrom RCurl getCurlHandle getForm
-cf_update_dt = function(object, user = cf.user()){
+cf_update_dt = function(object, user = cf_user()){
   cookies = file.path(tempdir(), user@username)
   curl = getCurlHandle(followlocation = TRUE,
                        timeout = 100, 
@@ -325,7 +325,7 @@ cf_update_dt = function(object, user = cf.user()){
 #' Select one or more daily or hourly datatypes to build the \pkg{clifro} query.
 #' 
 #' An object inheriting from the \code{cfDatatype} class is created by the 
-#' constructor function \code{cf.datatype}. The function allows the user to 
+#' constructor function \code{cf_datatype}. The function allows the user to 
 #' choose datatype(s) interactively (if no arguments are given), or to create 
 #' datatypes programatically if the tree menu nodes are known (see examples). 
 #' This function uses the same nodes, check box and combo box options as CliFlo 
@@ -352,12 +352,12 @@ cf_update_dt = function(object, user = cf.user()){
 #' @name cfDatatype-class
 #' @aliases cfDatatype
 #' @export
-#' @seealso \code{\link{cf.user}} to create a \pkg{clifro} user and 
+#' @seealso \code{\link{cf_user}} to create a \pkg{clifro} user and 
 #' \code{vignette("choose-datatype")} for help choosing \code{cfDatatype}s.
 #' @examples
 #' \dontrun{
 #' # Select the surface wind datatype manually
-#' hourly.wind.dt = cf.datatype()
+#' hourly.wind.dt = cf_datatype()
 #' # 2 --> Datatype:       Wind
 #' # 1 --> Datatype 2:     Surface Wind
 #' # 2 --> Options:        Hourly Wind
@@ -366,8 +366,8 @@ cf_update_dt = function(object, user = cf.user()){
 #' hourly.wind.dt
 #' }
 #' # Or select the datatype programatically
-#' hourly.wind.dt = cf.datatype(2, 1, 2, 3)
-cf.datatype = function(select_1 = NA, 
+#' hourly.wind.dt = cf_datatype(2, 1, 2, 3)
+cf_datatype = function(select_1 = NA, 
                        select_2 = NA, 
                        check_box = NA,
                        combo_box = NA, 

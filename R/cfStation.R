@@ -85,8 +85,8 @@ setMethod("initialize", "cfStation", function(.Object, df){
 #' Create a \code{cfStation} object containing the station information.
 #' 
 #' A \pkg{clifro} station object is created by the constructor function 
-#' \code{cf.station}. The unique agent numbers of the stations are all that is 
-#' required to create a \code{cfStation} object using the \code{cf.station} 
+#' \code{cf_station}. The unique agent numbers of the stations are all that is 
+#' required to create a \code{cfStation} object using the \code{cf_station} 
 #' function as the rest of the information is scraped from CliFlo.
 #' 
 #' @param ... comma separated agent numbers
@@ -95,27 +95,27 @@ setMethod("initialize", "cfStation", function(.Object, df){
 #' @importFrom XML xmlValue htmlParse
 #' @importFrom methods new
 #' @importFrom lubridate dmy with_tz round_date now
-#' @rdname cf.station
-#' @name cf.station
+#' @rdname cf_station
+#' @name cf_station
 #' @aliases cfStation-class
 #' @aliases cfStation
 #' @return \code{cfStation} object
 #' @export
-#' @seealso \code{\link{cf.find.station}} for creating \code{cfStation} objects
+#' @seealso \code{\link{cf_find_station}} for creating \code{cfStation} objects
 #' when the agent numbers are not known and \code{vignette("cfStation")} 
 #' for working with clifro stations including spatial plotting in \R. For saving
 #' \code{cfStation} objects as KML files refer to the vignette or 
-#' \code{\link{cf.save.kml}}.
+#' \code{\link{cf_save_kml}}.
 #' @examples
 #' # Create a cfStation object for the Leigh 1 and 2 Ews stations
-#' leigh.st = cf.station(1339, 1340)
+#' leigh.st = cf_station(1339, 1340)
 #' leigh.st
 #' 
 #' # Add another column showing how long the station has been open for
 #' leigh.df = as(leigh.st, "data.frame")
 #' leigh.df$ndays = with(leigh.df, round(end - start))
 #' leigh.df
-cf.station = function(...){
+cf_station = function(...){
   agent = c(...)
   if (length(agent) == 0)
     agent = 3925

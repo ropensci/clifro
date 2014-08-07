@@ -13,7 +13,7 @@ The \pkg{clifro} package is intended to simplify the process of data
 extraction, formatting and visualisation from the CliFlo web portal. It
 requires the user to build a query consisting of 3 main components; the user,
 the datatype(s) and the station(s). These are
-then combined using the \code{\link{cf.query}} function which sends the query
+then combined using the \code{\link{cf_query}} function which sends the query
 to the CliFlo database and returns the results that can easily be plotted
 using the \code{\link[clifro]{plot}} function.
 
@@ -25,19 +25,19 @@ limited to Reefton Ews. Subscription is free and can obtained from
 \examples{
 # Create a public user ----------------------------------------------------
 
-public.user = cf.user()
+public.user = cf_user()
 public.user
 
 # Select datatypes --------------------------------------------------------
 
 # 9am Surface wind (m/s)
-wind.dt = cf.datatype(2, 1, 4, 1)
+wind.dt = cf_datatype(2, 1, 4, 1)
 
 # Daily Rain
-rain.dt = cf.datatype(3, 1, 1)
+rain.dt = cf_datatype(3, 1, 1)
 
 # Daily temperature extremes
-temp.dt = cf.datatype(4, 2, 1)
+temp.dt = cf_datatype(4, 2, 1)
 
 # Combine them together
 all.dts = wind.dt + rain.dt + temp.dt
@@ -45,13 +45,13 @@ all.dts
 
 # Select the Reefton Ews station ------------------------------------------
 
-reefton.st = cf.station()
+reefton.st = cf_station()
 reefton.st
 
 # Submit the query --------------------------------------------------------
 
 # Retrieve all data from ~ six months ago at 9am
-reefton.data = cf.query(public.user, all.dts, reefton.st, paste(as.Date(Sys.time()) - 182, "9"))
+reefton.data = cf_query(public.user, all.dts, reefton.st, paste(as.Date(Sys.time()) - 182, "9"))
 reefton.data
 
 

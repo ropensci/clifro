@@ -46,6 +46,6 @@ pressure plots\cr
 Plot \pkg{clifro} data based on the datatype.
 }
 \seealso{
-\code{\link{cf.query}} to retrieve the CliFlo data.
+\code{\link{cf_query}} to retrieve the CliFlo data.
 }
 

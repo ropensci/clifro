@@ -652,7 +652,7 @@ pressure_plot = function(df, ggtheme = "grey", free_y = FALSE, y_lab, ...){
 #' }
 #' 
 #' 
-#' @seealso \code{\link{cf.query}} to retrieve the CliFlo data.
+#' @seealso \code{\link{cf_query}} to retrieve the CliFlo data.
 #' @name plot
 #' @aliases plot,cfData-method
 #' @aliases plot-cfData

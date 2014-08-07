@@ -2,18 +2,18 @@
 library(clifro)
 
 ## ------------------------------------------------------------------------
-lake.tekapo.df = cf.station(12709, 35567, 39557, 4630, 24945, 4616, 4602)
+lake.tekapo.df = cf_station(12709, 35567, 39557, 4630, 24945, 4616, 4602)
 lake.tekapo.df[, c("name", "agent", "start", "end", "open")]
 
 ## ------------------------------------------------------------------------
-added.stations.df = lake.tekapo.df + cf.station() + cf.find.station("lighthouse", status = "all")
+added.stations.df = lake.tekapo.df + cf_station() + cf_find_station("lighthouse", status = "all")
 added.stations.df[, c("name", "agent", "start", "end", "open")]
 
 ## ----,message=FALSE,fig.width=9,fig.height=9, cache=TRUE-----------------
 library(ggmap)
 
 # Conduct the search
-auckland.df = cf.find.station("auckland", search = "region", status = "all")
+auckland.df = cf_find_station("auckland", search = "region", status = "all")
 
 # Add a column to colour the open and closed stations
 auckland.df$colour = factor(auckland.df$open, labels = c("Closed", "Open"))

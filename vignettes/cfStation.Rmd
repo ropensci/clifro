@@ -21,11 +21,11 @@ library(clifro)
 
 There are two functions available in `clifro` to create requisite `cfStation`
 objects to send queries to retrieve data via `clifro`. The first one is to 
-search for stations using the `cf.find.station` function as detailed in the 
+search for stations using the `cf_find_station` function as detailed in the 
 [choose stations vignette][chooseStations]. The other function that creates
-`cfStation` objects is the `cf.station` function that requires comma separated 
+`cfStation` objects is the `cf_station` function that requires comma separated 
 agent numbers as the only input. This vignette covers the construction of a 
-`cfStation`  object via the `cf.station` function, and then shows examples of 
+`cfStation`  object via the `cf_station` function, and then shows examples of 
 plotting and visualising the station's locations using KML files or within R
 using the [ggmap](http://cran.r-project.org/web/packages/ggmap/index.html)
 package.
@@ -33,7 +33,7 @@ package.
 # Creating a cfStation object from agent numbers
 
 This is the simplest method to create a `cfStation` object, simply supply the 
-`cf.station` function the comma separated agent numbers. The following stations 
+`cf_station` function the comma separated agent numbers. The following stations 
 are (or were) located around Lake Tekapo in Canterbury, in the South Island of 
 New Zealand:
 
@@ -46,7 +46,7 @@ New Zealand:
 7. Lilybank
 
 ```{r}
-lake.tekapo.df = cf.station(12709, 35567, 39557, 4630, 24945, 4616, 4602)
+lake.tekapo.df = cf_station(12709, 35567, 39557, 4630, 24945, 4616, 4602)
 lake.tekapo.df[, c("name", "agent", "start", "end", "open")]
 ```
 
@@ -56,12 +56,12 @@ stations are removed and the resulting list is ordered by the end dates first
 and then by the stations' start dates.
 
 ```{r}
-added.stations.df = lake.tekapo.df + cf.station() + cf.find.station("lighthouse", status = "all")
+added.stations.df = lake.tekapo.df + cf_station() + cf_find_station("lighthouse", status = "all")
 added.stations.df[, c("name", "agent", "start", "end", "open")]
 ```
 
 The above code chunk adds the 7 stations around Lake Tekapo, the 
-subscription-free reefton EWS station (`cf.station()`), and all stations located 
+subscription-free reefton EWS station (`cf_station()`), and all stations located 
 (currently or historically) on a lighthouse. Allowing multiple searches is not
 currently available on CliFlo but the above code demonstrates how easy it can be
 in `clifro`.
@@ -72,10 +72,10 @@ of stations which can make the task of choosing geographically suitable stations
 a hard one.
 
 ## Using KML files
-The `cf.save.kml` functionality was introduced in the 
+The `cf_save_kml` functionality was introduced in the 
 [choose stations vignette][chooseStations] and this function can be used on any 
 `cfStation` object. To return a KML file showing all the stations within our
-`added.stations.df` object we just run `cf.save.kml(added.stations.df)` in R
+`added.stations.df` object we just run `cf_save_kml(added.stations.df)` in R
 and the KML file is returned.
 
 ## Showing station locations within R
@@ -94,7 +94,7 @@ across the region.
 library(ggmap)
 
 # Conduct the search
-auckland.df = cf.find.station("auckland", search = "region", status = "all")
+auckland.df = cf_find_station("auckland", search = "region", status = "all")
 
 # Add a column to colour the open and closed stations
 auckland.df$colour = factor(auckland.df$open, labels = c("Closed", "Open"))

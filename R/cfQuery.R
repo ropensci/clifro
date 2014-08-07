@@ -20,7 +20,7 @@ set_history = function(value) cf_parallel[["last_cf_query"]] = value
 #' @note Only the data from the last query is saved.
 #' 
 #' @export
-cf.last.query = function() cf_parallel[["last_cf_query"]]
+cf_last_query = function() cf_parallel[["last_cf_query"]]
 
 #  ------------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ cf.last.query = function() cf_parallel[["last_cf_query"]]
 #' Query the National Climate Database via CliFlo based on the \pkg{clifro} user 
 #' and selected datatypes, stations and dates.
 #' 
-#' The \code{cf.query} function is used to send the query built up from the 
+#' The \code{cf_query} function is used to send the query built up from the 
 #' \pkg{clifro} user and the selected \pkg{clifro} datatypes and stations to the 
 #' National Climate Database via CliFlo.
 #'
@@ -64,7 +64,7 @@ cf.last.query = function() cf_parallel[["last_cf_query"]]
 #' @importFrom selectr querySelector
 #' @importFrom XML xmlValue htmlParse
 #' @export
-cf.query = function(user, datatype, station, start_date, end_date = now(tz),
+cf_query = function(user, datatype, station, start_date, end_date = now(tz),
                     date_format = "ymd_h", 
                     tz = "Pacific/Auckland", quiet = FALSE){
   

@@ -37,7 +37,7 @@ cf_region = function(region){
 
 # Internal function to save a KML file of stations returned from searches
 #
-# This function is used when save_KML in the cf.find.station function is TRUE.
+# This function is used when save_KML in the cf_find_station function is TRUE.
 #
 # df       :  the dataframe containing all the station information
 # file_name:  the name of the KML file
@@ -46,7 +46,7 @@ cf_region = function(region){
 # This function returns a KML file with the open stations shown as blue markers
 # and the closed stations as red markers. 
 # 
-# see also cf.save.kml.
+# see also cf_save_kml.
 #' @importFrom XML newXMLDoc newXMLNode saveXML
 
 save_KML = function(df, file_name, file_path){
@@ -194,7 +194,7 @@ save_KML = function(df, file_name, file_path){
 #' 
 #' Save \code{cfStation} locations to a KML file
 #' 
-#' The \code{cf.save.kml} function is for \code{cfStation} 
+#' The \code{cf_save_kml} function is for \code{cfStation} 
 #' objects to allow for the spatial visualisation of the selected stations. The 
 #' resulting KML file is saved and can then be opened by programs like Google 
 #' Earth (TM). The resultant KML file has the station names and locations shown 
@@ -212,8 +212,8 @@ save_KML = function(df, file_name, file_path){
 #' @param file_path file path for the resulting KML file
 #' 
 #' @export
-#' @seealso \code{\link{cf.station}} and \code{vignette("cfStation")} for 
-#' working with known stations, otherwise \code{\link{cf.find.station}} and 
+#' @seealso \code{\link{cf_station}} and \code{vignette("cfStation")} for 
+#' working with known stations, otherwise \code{\link{cf_find_station}} and 
 #' \code{vignette("choose-station")} for creating \code{cfStation} objects when
 #' the agent numbers are unknown.
 #' 
@@ -222,20 +222,20 @@ save_KML = function(df, file_name, file_path){
 #' # A selection of four Auckland region stations down the East Coast to the 
 #' # upper Waitemata Harbour; Leigh 2 Ews, Warkworth Ews, Tiri Tiri Lighthouse 
 #' # and Henderson
-#' my.stations = cf.station(17838, 1340, 1401, 12327)
+#' my.stations = cf_station(17838, 1340, 1401, 12327)
 #' my.stations
 #' 
 #' # Save these stations to a KML file
-#' cf.save.kml(my.stations)
+#' cf_save_kml(my.stations)
 #' 
 #' # Where is the subscription-free Reefton Ews station?
-#' cf.save.kml(cf.station(), file_name = "reeftonEWS")
+#' cf_save_kml(cf_station(), file_name = "reeftonEWS")
 #' 
 #' # Save all the Christchurch stations (using partial matching)
-#' all.chch.st = cf.find.station("christ", status = "all", search = "region")
-#' cf.save.kml(all.chch.st, file_name = "all_Chch_stations")
+#' all.chch.st = cf_find_station("christ", status = "all", search = "region")
+#' cf_save_kml(all.chch.st, file_name = "all_Chch_stations")
 #' }
-cf.save.kml = function(station, file_name = "my_stations_", 
+cf_save_kml = function(station, file_name = "my_stations_", 
                        file_path = "."){
   if (!is(station, "cfStation"))
     stop("station must be a cfStation object")
@@ -251,7 +251,7 @@ cf.save.kml = function(station, file_name = "my_stations_",
 #' Find the agent number for stations based on name, region, location or network
 #' number.
 #' 
-#' The \code{cf.find.station} function is a convenience function for finding 
+#' The \code{cf_find_station} function is a convenience function for finding 
 #' CliFlo stations in \R. It uses the CliFlo "Find Stations" page 
 #' (\url{http://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html}) to do the 
 #' searching meaning the stations are not stored within \pkg{clifro}.
@@ -294,43 +294,43 @@ cf.save.kml = function(station, file_name = "my_stations_",
 #' @importFrom selectr querySelectorAll
 #' @importFrom lubridate with_tz now round_date %--% dseconds
 #' @importFrom stats na.exclude
-#' @seealso \code{\link{cf.save.kml}}, \code{\link{cf.station}}, 
+#' @seealso \code{\link{cf_save_kml}}, \code{\link{cf_station}}, 
 #' \code{vignette("choose-station")} and \code{vignette("cfStation")}
 #' @examples
 #' \dontrun{
 #' # Return all open stations with 'island' in the name (pattern match search)
 #' # Note this example uses all the defaults
-#' cf.find.station("island")
+#' cf_find_station("island")
 #' 
 #' # Return all the closed stations from Queenstown (region search)
-#' cf.find.station("queen", search = "region", status = "closed")
+#' cf_find_station("queen", search = "region", status = "closed")
 #' 
 #' # Return all open stations within a 10km radius of the Beehive in Wellington
 #' # From Wikipedia: latitude 41.2784 S, longitude 174.7767 E
-#' cf.find.station(lat = -41.2784, long = 174.7767, rad = 10, 
+#' cf_find_station(lat = -41.2784, long = 174.7767, rad = 10, 
 #'                 search = "latlong")
 #' 
 #' # Return all stations that share A42 in their network ID (network ID search)
-#' cf.find.station("A42", search = "network", status = "all")
+#' cf_find_station("A42", search = "network", status = "all")
 #' 
 #' # Is the Reefton EWS station open and does it collect daily rain and wind 
 #' # data? (using datatypes in the search)
 #' 
 #' # Daily rain and wind datatypes
-#' daily.dt = cf.datatype(c(2, 3), c(1, 1), list(4, 1), c(1, NA))
+#' daily.dt = cf_datatype(c(2, 3), c(1, 1), list(4, 1), c(1, NA))
 #' 
-#' cf.find.station("reefton EWS", datatype = daily.dt)      # Yes
+#' cf_find_station("reefton EWS", datatype = daily.dt)      # Yes
 #' 
 #' # Return all stations sharing A42 in their network ID 
 #' \emph{OR} all the open stations within 10km of the Beehive in Wellington
 #' (note this is not an AND query).
-#' cf.find.station("A42", search = "network", status = "all") +
-#' cf.find.station(lat = -41.2784, long = 174.7767, rad = 10, 
+#' cf_find_station("A42", search = "network", status = "all") +
+#' cf_find_station(lat = -41.2784, long = 174.7767, rad = 10, 
 #'                 search = "latlong")
 #' 
 #' # Note these are all ordered by open stations, then again by their end dates
 #' }
-cf.find.station = function(..., 
+cf_find_station = function(..., 
                            search = c("name", "region", "network",
                                            "latlong"),
                            datatype,
@@ -400,7 +400,7 @@ cf.find.station = function(...,
     if (!is(datatype, "cfDatatype"))
       stop("datatype has to be a cfDatatype object")
     
-    user = cf.user()
+    user = cf_user()
     cf_login(user)
     on.exit(cf_logout(user, msg = FALSE))
     combine = switch(match.arg(arg = combine),

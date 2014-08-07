@@ -15,7 +15,7 @@ output:
 %\VignetteIndexEntry{Choosing a clifro datatype}
 -->
 
-The `cf.datatype` function is all that is required to select `clifro` datatypes.
+The `cf_datatype` function is all that is required to select `clifro` datatypes.
 This function can be called without any arguments that takes the user through
 interactive menus, otherwise the datatypes may be chosen programatically if the 
 menu options are known in advance. Whether the intention is to choose one 
@@ -26,7 +26,7 @@ datatype or many, this vignette details the various methods in choosing them.
 Those familiar with the cliflo [datatype selection menu](http://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1)
 will recall the myriad datatypes and options available in the National Climate 
 Database. Selection of a datatype requires navigation through trees of menus,
-check boxes and combo boxes. The `cf.datatype` function mimics this (tedious)
+check boxes and combo boxes. The `cf_datatype` function mimics this (tedious)
 behaviour by default, i.e. when no arguments are passed to the function and the
 datatypes, menus and options are all identical to (actually scraped from) 
 the datatype selection menu.
@@ -36,7 +36,7 @@ Let's say the datatype we are interested in is 9am surface wind in knots.
 
 ```{r, echo=FALSE}
 library(clifro)
-surfaceWind.dt = cf.datatype(2, 1, 4, 3)
+surfaceWind.dt = cf_datatype(2, 1, 4, 3)
 
 menu.opts = function(title, options){
   cat(paste(title, "",
@@ -47,10 +47,10 @@ menu.opts = function(title, options){
 
 
 ```{r, eval=FALSE}
-surfaceWind.dt = cf.datatype()
+surfaceWind.dt = cf_datatype()
 
 # If you prefer pointing and clicking - turn the graphics option on:
-surfaceWind.dt = cf.datatype(graphics = TRUE)
+surfaceWind.dt = cf_datatype(graphics = TRUE)
 ```
 
 ### Daily and Hourly Observations
@@ -120,11 +120,11 @@ a lot faster and a much less tedious.
 
 ## A minimal example
 To repeat our minimal example without the use of the menus we would just pass 
-them as arguments to the `cf.datatype` function. These arguments are the 
+them as arguments to the `cf_datatype` function. These arguments are the 
 selections of each of the four menus (in order) separated by a comma.
 
 ```{r}
-surfaceWind.dt = cf.datatype(2, 1, 4, 3)
+surfaceWind.dt = cf_datatype(2, 1, 4, 3)
 surfaceWind.dt
 ```
 
@@ -137,7 +137,7 @@ just update our third function argument to deal with this in a more
 time-efficient manner.
 
 ```{r}
-surfaceWind.dt = cf.datatype(2, 1, c(2, 4), 3)
+surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
 surfaceWind.dt
 ```
 
@@ -165,16 +165,16 @@ This does of course assume we know the selections at each branch of the
 
 ```{r}
 # Hourly and 9am surface wind (knots)
-surfaceWind.dt = cf.datatype(2, 1, c(2, 4), 3)
+surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
 
 # Hourly and daily rainfall
-rainfall.dt = cf.datatype(3, 1, c(1, 2))
+rainfall.dt = cf_datatype(3, 1, c(1, 2))
 
 # Hourly counts of lightning flashes
-lightning.dt = cf.datatype(6, 1, 1)
+lightning.dt = cf_datatype(6, 1, 1)
 
 # Daily and hourly grass temperature extremes
-temperatureExtremes.dt = cf.datatype(4, 2, c(5, 6))
+temperatureExtremes.dt = cf_datatype(4, 2, c(5, 6))
 
 # Note: only the surface wind datatype requires combo options
 ```
@@ -194,11 +194,11 @@ combo box options  |       3      |     NA   |     NA    |       NA
 
 We can read across the columns to see the selections that are needed to return
 an R object containing the datatypes we are interested in. We can then just pass
-these values into the `cf.datatype` function to return a single R object 
+these values into the `cf_datatype` function to return a single R object 
 containing all of our datatypes and options.
 
 ```{r, tidy=FALSE}
-query1.dt = cf.datatype(c(2, 3, 6, 4), 
+query1.dt = cf_datatype(c(2, 3, 6, 4), 
                         c(1, 1, 1, 2),
                         list(c(2, 4), c(1, 2), 1, c(5, 6)),
                         c(3, NA, NA, NA))
@@ -218,18 +218,18 @@ query1.dt
 ## Extras
 ```{r, eval=FALSE}
 # To add another datatype using the menu:
-query1.dt + cf.datatype()
+query1.dt + cf_datatype()
 
 # Is equivalent to:
-query1.dt + cf.datatype(NA, NA, NA, NA)
+query1.dt + cf_datatype(NA, NA, NA, NA)
 
 # Therefore is equivalent to adding a column of NA's to the above table:
-query1.dt = cf.datatype(c(2, 3, 6, 4, NA), 
+query1.dt = cf_datatype(c(2, 3, 6, 4, NA), 
                               c(1, 1, 1, 2, NA),
                               list(c(2, 4), c(1, 2), 1, c(5, 6), NA),
                               c(3, NA, NA, NA, NA))
 
 # Half an unknown wind datatype i.e. we know first selection = 2 but nothing 
 # further:
-rain.dt = cf.datatype(2) # 0r cf.datatype(2, NA, NA, NA)
+rain.dt = cf_datatype(2) # 0r cf_datatype(2, NA, NA, NA)
 ```

@@ -49,10 +49,10 @@ Reefton Ews (subscription-free) and to maximise the potential of `clifro`, a
 valid [subscription](http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro) is 
 needed.
 
-The `cf.user` function is all that is required to create a valid `clifro` user,
+The `cf_user` function is all that is required to create a valid `clifro` user,
 
 ```{r,eval=FALSE}
-me = cf.user("username", "password")
+me = cf_user("username", "password")
 ```
 
 where `username` and `password` is substituted for the user's CliFlo 
@@ -68,7 +68,7 @@ and daily surface wind.
 (m/s).
 
 ```{r}
-my.dts = cf.datatype(select_1 =     c(7,  4,  3,  2), 
+my.dts = cf_datatype(select_1 =     c(7,  4,  3,  2), 
                      select_2 =     c(1,  2,  1,  1), 
                      check_box = list(3,  1,  1,  4), 
                      combo_box =    c(NA, NA, NA, 1))
@@ -80,7 +80,7 @@ my.dts
 The third requisite for a valid `clifro` query is the station where the
 data has been collected. If the agent numbers of the required CliFlo stations
 are known, the only function needed to create a clifro station `cfStation` 
-object is `cf.station`. See the [choose station vignette][chooseStation]
+object is `cf_station`. See the [choose station vignette][chooseStation]
 for help with choosing stations when the agent numbers are unknown, and the 
 [working with clifro stations vignette][clifrostation] for further information
 and methods on `cfStation` objects.
@@ -91,18 +91,18 @@ regions. These include a station from Invercargill (5814), Nelson (4241),
 Hamilton (2112) and Auckland (1962)
 
 ```{r}
-my.stations = cf.station(5814, 4241, 2112, 1962)
+my.stations = cf_station(5814, 4241, 2112, 1962)
 my.stations[, 1:5]
 ```
 
 # Retrieve the CliFlo Data
 
 Now that we have a valid `clifro` user and the datatypes and stations of 
-interest, a `clifro` query can be conducted using the `cf.query` function. We
+interest, a `clifro` query can be conducted using the `cf_query` function. We
 are interested in all available data from 2012 to 2014.
 
 ```{r,eval=FALSE}
-cf.datalist = cf.query(user = me, 
+cf.datalist = cf_query(user = me, 
                        datatype = my.dts, 
                        station = my.stations, 
                        start_date = "2012-01-01 00", 
