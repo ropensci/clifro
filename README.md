@@ -20,7 +20,7 @@ The `clifro` package requires the user to have a current
 ```R
 install.packages("devtools")
 library(devtools)
-install_github(username = "blasee", repo = "clifro", build_vignettes = FALSE)
+install_github(username = "ropensci", repo = "clifro", build_vignettes = FALSE)
 ```
 
 ## Getting started
