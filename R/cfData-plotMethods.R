@@ -120,9 +120,9 @@ windrose = function(speed, direction, facet, n_directions = 12,
       stop("the faceting variable needs to be character or factor")
     
     if (length(facet) == 1)
-      facet = rep(facet, length(x))
+      facet = rep(facet, length(speed))
     
-    if (length(facet) != length(x))
+    if (length(facet) != length(speed))
       stop("the facet variable must be the same length as the wind 
                    speeds")
   }
@@ -226,7 +226,7 @@ windrose = function(speed, direction, facet, n_directions = 12,
                       proportion = Freq / sum(Freq))
   } else {
     ggplot_df = data.frame(table(dir_bin, spd_bin))
-    ggplot_df$proportion = with(ggplot_df, Freq / sum(Freq))
+    ggplot_df$proportion = ggplot_df$Freq / sum(ggplot_df$Freq)
   }
   
   ## (gg)Plot me
