@@ -51,8 +51,8 @@ The \code{cf_query} function is used to combine the \pkg{clifro} user
 (\code{\link{cfDatatype}}) and stations (\code{\link{cfStation}}). The query
 is 'built up' using these objects, along with the necessary dates. The
 function then uses all these data to query the National Climate Database via
-the CliFlo web portal and returns one of the many \code{\link{cfData}}
-objects if one dataframe is returned, or a \code{\link{cfDataList}} object if
+the CliFlo web portal and returns one of the many \code{cfData}
+objects if one dataframe is returned, or a \code{cfDataList} object if
 there is more than one dataframe returned from CliFlo. If a \code{cfDataList}
 is returned, each element in the list is a subclass of the \code{cfData}
 class, see the 'cfData Subclasses' section.
@@ -69,7 +69,7 @@ The following table summarises these subclasses and how they are created, see
 also the examples on how to automatically create some of these subclasses.
 
 \tabular{ll}{
-\strong{Subclass} \tab \strong{CliFlo Datatype} \tab \strong{}\cr
+\strong{Subclass} \tab \strong{CliFlo Datatype}\cr
 cfWind \tab Any 'Wind' data \cr
 cfRain \tab Any 'Precipitation' data \cr
 cfScreen Obs \tab 'Temperature and Humidity' data measured in a standard screen \cr
