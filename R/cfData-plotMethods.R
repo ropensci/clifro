@@ -79,12 +79,12 @@ NULL
 #' with(wind_df, windrose(wind_speeds, wind_dirs, "Artificial Auckland Wind"))
 #' 
 #' # Plot a windrose for each level of the facet variable (each station)
-#' with(wind_df, windrose(wind_speeds, wind_dirs, station))
+#' with(wind_df, windrose(wind_speeds, wind_dirs, station, n_col = 2))
 #' 
 #' # Make all the text larger
 #' library(ggplot2) # for element_text()
 #' with(wind_df, windrose(wind_speeds, wind_dirs, station, 
-#'                        text = element_text(size = 16)))
+#'                        text = element_text(size = 16), n_col = 2))
 #' 
 #' \dontrun{
 #' # Save the plot as a png to the current working directory
@@ -94,7 +94,6 @@ NULL
 #' 
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom scales percent_format
-#' @importFrom plyr ddply .
 #' @importFrom ggplot2 ggplot coord_polar geom_bar cut_interval aes_string
 #' scale_x_discrete scale_fill_manual theme_grey theme_bw theme_classic 
 #' theme_gray theme_linedraw theme_light theme_minimal element_blank 
@@ -221,9 +220,9 @@ windrose = function(speed, direction, facet, n_directions = 12,
   ## Create the dataframe suitable for plotting
   if (include_facet){
     ggplot_df = as.data.frame(table(dir_bin, spd_bin, facet))
-    ggplot_df = ddply(ggplot_df, .(facet), 
-                      transform, 
-                      proportion = Freq / sum(Freq))
+    ggplot_df$proportion = unlist(by(ggplot_df$Freq, ggplot_df$facet, 
+                                     function(x) x / sum(x)), 
+                                  use.names = FALSE)
   } else {
     ggplot_df = data.frame(table(dir_bin, spd_bin))
     ggplot_df$proportion = ggplot_df$Freq / sum(ggplot_df$Freq)
@@ -316,7 +315,6 @@ if (!isGeneric("plot"))
 #' @aliases plot.cfWind
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom scales percent_format
-#' @importFrom plyr ddply .
 #' @importFrom ggplot2 ggplot coord_polar geom_bar cut_interval aes_string
 #' scale_x_discrete scale_fill_manual theme_grey theme_bw theme_classic 
 #' theme_gray theme_linedraw theme_light theme_minimal element_blank 
@@ -480,8 +478,9 @@ setMethod("plot",
             
             ggplot_df = as.data.frame(table(dir_bin, speed_bin, wind_df$facet))
             names(ggplot_df)[3] = "facet"
-            ggplot_df = ddply(ggplot_df, .(facet), transform, 
-                              proportion = Freq/sum(Freq))
+            ggplot_df$proportion = unlist(by(ggplot_df$Freq, ggplot_df$facet, 
+                                             function(x) x / sum(x)), 
+                                          use.names = FALSE)
             ggplot(data = ggplot_df, aes_string(x = "dir_bin", 
                                                 fill = "speed_bin", 
                                                 y = "proportion")) + 
