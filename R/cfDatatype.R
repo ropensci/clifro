@@ -1,8 +1,5 @@
 # cfDatatype Class --------------------------------------------------------
 
-#' @rdname cfDatatype-class
-#' @name cfDatatype-class
-#' @aliases cf_datatype
 #' @importFrom methods setClass
 setClass(Class = "cfDatatype",
          slots = c(
@@ -90,7 +87,6 @@ setMethod("initialize", "cfDatatype", function(.Object, dt_name, dt_type,
 #' @importFrom XML xmlValue xmlGetAttr
 #' @importFrom utils menu
 dt_href = function(doc, ...){
-  # Hack... not sure how else to do this?
   # "cloud \n          cover" --> "cloud cover"
   choices = gsub("\\n", "", gsub(" {2,}", "", sapply(doc, xmlValue)))
   hrefs = sapply(doc, xmlGetAttr, "href")
@@ -320,24 +316,25 @@ cf_update_dt = function(object, user = cf_user()){
 
 # cfDatatype constructor --------------------------------------------------
 
-#' The \pkg{clifro} Datatype
+#' The Clifro Datatype Object
 #' 
-#' Select one or more daily or hourly datatypes to build the \pkg{clifro} query.
+#' Create a \code{cfDatatype} object by selecting one or more CliFlo datatypes 
+#' to build the \pkg{clifro} query.
 #' 
-#' An object inheriting from the \code{cfDatatype} class is created by the 
-#' constructor function \code{cf_datatype}. The function allows the user to 
-#' choose datatype(s) interactively (if no arguments are given), or to create 
-#' datatypes programatically if the tree menu nodes are known (see examples). 
-#' This function uses the same nodes, check box and combo box options as CliFlo 
-#' and can be viewed at the datatype selection page
-#' (\url{http://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1}).
+#' An object inheriting from the \code{\link{cfDatatype}} class is created by 
+#' the constructor function \code{\link{cf_datatype}}. The function allows the 
+#' user to choose datatype(s) interactively (if no arguments are given), or to 
+#' create datatypes programatically if the tree menu nodes are known a priori 
+#' (see examples). This function uses the same nodes, check box and combo box 
+#' options as CliFlo and can be viewed at the 
+#' \href{http://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1}{datatype selection page}.
 #' 
 #' @param select_1 a numeric vector of first node selections
 #' @param select_2 a numeric vector of second node selections
 #' @param check_box a list containing the check box selections
 #' @param combo_box a numeric vector containing the combo box selection 
 #' (if applicable)
-#' @param graphics a logical indicating whether a graphics menu should be used
+#' @param graphics a logical indicating whether a graphics menu should be used,
 #' if available
 #' 
 #' @note For the 'public' user (see examples) only the Reefton Ews station data 
@@ -348,25 +345,29 @@ cf_update_dt = function(object, user = cf_user()){
 #' from radiosondes and wind radar.
 #' 
 #' @importFrom methods new
-#' @rdname cfDatatype-class
 #' @name cfDatatype-class
+#' @rdname cfDatatype-class
 #' @aliases cfDatatype
 #' @export
-#' @seealso \code{\link{cf_user}} to create a \pkg{clifro} user and 
-#' \code{vignette("choose-datatype")} for help choosing \code{cfDatatype}s.
+#' @return \code{cfDatatype} object
+#' @seealso \code{\link{cf_user}} to create a \pkg{clifro} user, 
+#'   \code{\link{cf_station}} to choose the CliFlo stations and 
+#'   \code{vignette("choose-datatype")} for help choosing \code{cfDatatype}s.
 #' @examples
 #' \dontrun{
-#' # Select the surface wind datatype manually
+#' # Select the surface wind datatype manually (unknown tree nodes)
 #' hourly.wind.dt = cf_datatype()
-#' # 2 --> Datatype:       Wind
-#' # 1 --> Datatype 2:     Surface Wind
-#' # 2 --> Options:        Hourly Wind
-#' # 2 --> Another option: No
-#' # 3 --> Units:          Knots
+#' #  2  --> Datatype:        Wind
+#' #  1  --> Datatype 2:      Surface Wind
+#' #  2  --> Options:         Hourly Wind
+#' # (2) --> Another option:  No
+#' #  3  --> Units:           Knots
+#' hourly.wind.dt
+#'
+#' # Or select the datatype programatically (using the selections seen above)
+#' hourly.wind.dt = cf_datatype(2, 1, 2, 3)
 #' hourly.wind.dt
 #' }
-#' # Or select the datatype programatically
-#' hourly.wind.dt = cf_datatype(2, 1, 2, 3)
 cf_datatype = function(select_1 = NA, 
                        select_2 = NA, 
                        check_box = NA,

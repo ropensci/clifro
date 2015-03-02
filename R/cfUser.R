@@ -1,36 +1,95 @@
-## Internal function to hide password
-rot <- function(ch, k) {
-  p0 <- function(...) paste(c(...), collapse = "")
-  A <- c(letters, LETTERS, " '", paste(0:9))
-  I <- seq_len(k)
-  chartr(p0(A), p0(c(A[-I], A[I])), ch)
-}
-
 #  ------------------------------------------------------------------------
 
-#' From CliFlo to \pkg{clifro}: Enhancing The National Climate Database With R
+#' From CliFlo to \pkg{clifro}: Enhancing The National Climate Database With \R
 #' 
-#' Imports data from New Zealand's National Climate Database via CliFlo into \R
-#' and provides data visualisation functions.
+#' Import data from New Zealand's National Climate Database via CliFlo into \R 
+#' for exploring, analysis, plotting, exporting to KML, CSV, or other software.
 #' 
-#' The \pkg{clifro} package is intended to simplify the process of data 
-#' extraction, formatting and visualisation from the CliFlo web portal. It 
+#' The \pkg{clifro} package is intended to simplify the process of data
+#' extraction, formatting and visualisation from the 
+#' \href{http://cliflo.niwa.co.nz/}{CliFlo web portal}. It 
 #' requires the user to build a query consisting of 3 main components; the user, 
 #' the datatype(s) and the station(s). These are
-#' then combined using the \code{\link{cf_query}} function which sends the query 
+#' then combined using the \code{\link{cf_query}} function that sends the query 
 #' to the CliFlo database and returns the results that can easily be plotted
-#' using the \code{\link[clifro]{plot}} function.
+#' using generic plotting functions.
 #' 
 #' This package requires the user to already have a current subscription to the
-#' National Climate Database unless a public user is sought where data is 
+#' National Climate Database unless a public user is sought, where data is 
 #' limited to Reefton Ews. Subscription is free and can obtained from
 #' \url{http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro}.
 #' 
+#' @seealso \code{\link{cf_user}}, \code{\link{cf_datatype}}, and 
+#'   \code{\link{cf_station}} for choosing the clifro user, datatypes and 
+#'   stations, respectively.
 #' @name clifro
 #' @aliases clifro-package
 #' @docType package
 #' @keywords package
-#' @example demo/clifro.R
+#' @examples
+#' \dontrun{
+#' # Create a public user ----------------------------------------------------
+#' 
+#' public.user = cf_user() # Defaults to "public"
+#' public.user
+#' 
+#' # Select datatypes --------------------------------------------------------
+#' 
+#' # 9am Surface wind (m/s)
+#' wind.dt = cf_datatype(2, 1, 4, 1)
+#' 
+#' # Daily Rain
+#' rain.dt = cf_datatype(3, 1, 1)
+#' 
+#' # Daily temperature extremes
+#' temp.dt = cf_datatype(4, 2, 2)
+#' 
+#' # Combine them together
+#' all.dts = wind.dt + rain.dt + temp.dt
+#' all.dts 
+#' 
+#' # Select the Reefton Ews station ------------------------------------------
+#' 
+#' reefton.st = cf_station()
+#' reefton.st
+#' 
+#' # Submit the query --------------------------------------------------------
+#' 
+#' # Retrieve all data from ~ six months ago at 9am
+#' reefton.data = cf_query(public.user, all.dts, reefton.st, 
+#'                         paste(as.Date(Sys.time()) - 182, "9"))
+#' reefton.data
+#' 
+#' 
+#' # Plot the data -----------------------------------------------------------
+#' 
+#' # Plot the 9am surface wind data (first dataframe in the list) ---
+#' reefton.data[1]
+#' 
+#' # all identical - although passed to different methods
+#' plot(reefton.data)    #plot,cfDataList,missing-method
+#' plot(reefton.data, 1) #plot,cfDataList,numeric-method
+#' plot(reefton.data[1]) #plot,cfData,missing-method --> plot,cfWind,missing-method
+#' 
+#' speed_plot(reefton.data)
+#' direction_plot(reefton.data)
+#' 
+#' # Plot the daily rain data (second dataframe in the list) ---
+#' reefton.data[2]
+#' 
+#' # With runoff and soil deficit
+#' plot(reefton.data, 2)
+#' 
+#' # Just plot amount of rain (mm)
+#' plot(reefton.data, 2, include_runoff = FALSE)
+#' 
+#' # Plot the hourly temperature data (third dataframe in the list) ---
+#' plot(reefton.data, 3)
+#' 
+#' # Pass an argument to ggplot2::theme
+#' library(ggplot2) # for element_text()
+#' plot(reefton.data, 3, text = element_text(size = 18)) 
+#' }
 NULL
 
 # Validation (internals) --------------------------------------------------
@@ -48,9 +107,10 @@ NULL
 #' \code{cf_logout} points the curl handle to the existing cookie session 
 #' initiated with \code{cf_login}. It reads the header information from the 
 #' cliflo logout page to ensure no HTTP error and logs the user out on
-#' cliflo and deletes the cookies. This should be (is) called at the end of any 
-#' function using \code{cf_login} to ensure the user isn't still logged in
-#' on the server, even though they may have closed the \R session.
+#' cliflo and deletes the cookies. This should be (is) called immediately after
+#' \code{cf_login} in any function requiring a login, using 
+#' \code{\link{on.exit}} to ensure the user isn't still logged in on the server, 
+#' after the function call, for any reason.
 #' 
 #' \code{valid_cfuser} is the validation function for the \code{cfUser} class 
 #' and uses  \code{cf_login} to ensure the credentials are authenticated on the 
@@ -133,11 +193,6 @@ valid_cfuser = function(object){
   length_username = length(object@username)
   length_password = length(object@password)
   errors = character()
-  #   errors <- character()
-  #   if (!is.numeric(object@.Data)) {
-  #     msg <- "Span length must be numeric."
-  #     errors <- c(errors, msg)
-  #   }
   
   if (length_username != 1){
     msg = "Exactly one username must be specified"
@@ -178,11 +233,12 @@ setClass("cfUser",
                                          password = "character"),
          validity = valid_cfuser)
 
-#' The Clifro User
+#' The Clifro User Object
 #' 
-#' Allow the user to log into cliflo from \R to build their query.
+#' Create a \code{cfUser} object to allow the user to log into CliFlo from \R 
+#' and  build their query.
 #' 
-#' An object inheriting from the cfUser class is created by the constructor 
+#' An object inheriting from the \code{cfUser} class is created by the constructor 
 #' function \code{cf_user}. The user must have an active subscription to cliflo 
 #' in order to create a valid object, unless a 'public' user is sought. 
 #' Visit \url{http://cliflo.niwa.co.nz/} for more information and to subscribe 
@@ -199,12 +255,16 @@ setClass("cfUser",
 #' @name cfUser-class
 #' @aliases cfUser
 #' @aliases cfUser-class
+#' @return \code{cfUser} object
 #' @export
-#' @seealso \code{\link{valid_cfuser}} for details on the validation of cfUser
-#' and \code{\link[clifro]{summary}} to summarise user information.
+#' @seealso \code{\link{valid_cfuser}} for details on the validation of 
+#' \code{cfUser} and \code{\link{summary,cfUser-method}} to summarise user 
+#' information.
 #' @examples
+#' \dontrun{
 #' public.cfuser = cf_user(username = "public")
 #' public.cfuser
+#' }
 cf_user = function(username = "public", password = character()){
   new("cfUser", username = username, password = password)
 }
@@ -224,28 +284,21 @@ setMethod("initialize", "cfUser", function(.Object, username, password){
 })
 
 # Methods -----------------------------------------------------------------
+
+#'@importFrom methods setGeneric
+if (!isGeneric("summary"))
+  setGeneric("summary", function(object, ...) standardGeneric("summary"))
+
 #' Summarise User Information
 #' 
 #' Show the subscription status for the \pkg{clifro} user
 #' 
 #' @param object an object of class \code{cfUser}.
 #' 
-#' @return Invisibly returns a list with the following components:
-#' \tabular{ll}{
-#' \strong{days.remain} \tab a time interval showing the number of 
-#' subscription days remaining \cr
-#' \strong{rows.used} \tab total number of used rows \cr
-#' \strong{rows.total} \tab total number of rows in the subscription \cr
-#' \strong{rows.remain} \tab number of rows remaining the in subscription\cr
-#' \strong{subscription} \tab subscription status\cr
-#' }
 #' @importFrom RCurl getCurlHandle getForm
 #' @importFrom selectr querySelectorAll querySelector
 #' @importFrom XML htmlParse xmlValue
 #' @importFrom lubridate dmy round_date now with_tz
-#' @name summary
-#' @aliases summary-methods
-#' @aliases summary-clifro
 #' @aliases summary,cfUser-method
 #' @export
 setMethod("summary", signature(object = "cfUser"), 
@@ -288,9 +341,6 @@ setMethod("summary", signature(object = "cfUser"),
                format(total_rows - rows_used, big.mark = ",",
                       scientific = FALSE), ".\n",
                "Your subscription level is: ", subscription_level, "\n"))
-  invisible(list(days.remain = time_diff, rows.used = rows_used, 
-                 rows.total = total_rows, rows.remain = total_rows - rows_used,
-                 subscription = subscription_level))
 })
 
 
@@ -303,3 +353,11 @@ setMethod("show", "cfUser", function(object){
   else
     cat(paste0(status, "Username is: ", object@username, "\n"))
 })
+
+## Internal function to hide password
+rot <- function(ch, k) {
+  p0 <- function(...) paste(c(...), collapse = "")
+  A <- c(letters, LETTERS, " '", paste(0:9))
+  I <- seq_len(k)
+  chartr(p0(A), p0(c(A[-I], A[I])), ch)
+}

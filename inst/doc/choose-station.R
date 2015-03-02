@@ -44,6 +44,7 @@ transform(my.composite.search, ndays = round(end - start))[, c(1, 10)]
 # First, search for the stations
 all.auckland.st = cf_find_station("auckland", search = "region", status = "all")
 
-# Then save these as a KML
-cf_save_kml(all.auckland.st, file_name = "all_auckland_stations")
+## ----,eval=FALSE---------------------------------------------------------
+#  # Then save these as a KML
+#  cf_save_kml(all.auckland.st, file_name = "all_auckland_stations")
 

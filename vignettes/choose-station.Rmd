@@ -1,5 +1,5 @@
 ---
-title: "Choosing a clifro station"
+title: "Choosing a *clifro* Station"
 author: "Blake Seers"
 date: "`r Sys.Date()`"
 output: 
@@ -212,19 +212,27 @@ search and open it using our preferred KML-friendly software.
 ```{r,message=FALSE}
 # First, search for the stations
 all.auckland.st = cf_find_station("auckland", search = "region", status = "all")
+```
 
+Now `all.auckland.st` contains all the `r nrow(all.auckland.st)` 
+Auckland stations where data have been recorded on CliFlo. 
+
+```{r,eval=FALSE}
 # Then save these as a KML
 cf_save_kml(all.auckland.st, file_name = "all_auckland_stations")
 ```
 
-Now `all.auckland.st` contains all the `r nrow(all.auckland.st)` 
-Auckland stations where data have been recorded on CliFlo. The blue markers 
-represent the open stations and the red markers indicate closed stations. The 
-resulting KML file is saved to the current R session's working directory by 
-default. Have a look at the [clifro station vignette][clifrostation] for more 
-methods and plotting of `cfStation` objects.
+The green markers represent the open stations and the red markers indicate 
+closed stations. The resulting KML file is saved to the current R session's 
+working directory by default. Have a look at the 
+[clifro station vignette][clifrostation] for more methods and plotting of 
+`cfStation` objects.
 
 ![auckland stations][allAucklandStations]
+
+Note on the left of the map, the `cf_save_kml` function has organised the 
+stations into 'open' and 'closed' stations so removing all the open/closed 
+stations is easily done.
 
 [chooseDatatype]: choose-datatype.html
 [clifrostation]: cfStation.html

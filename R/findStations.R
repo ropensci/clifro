@@ -93,7 +93,7 @@ save_KML = function(df, file_name, file_path){
                         newXMLNode("scale", "1.3"),
                         newXMLNode("Icon", 
                                    newXMLNode("href",
-                                              "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"))),
+                                              "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png"))),
              newXMLNode("LabelStyle", 
                         newXMLNode("scale", "1.3")))
   
@@ -104,7 +104,7 @@ save_KML = function(df, file_name, file_path){
                         newXMLNode("scale", "1.3"),
                         newXMLNode("Icon", 
                                    newXMLNode("href",
-                                              "http://maps.google.com/mapfiles/ms/micons/red-dot.png"))),
+                                              "http://maps.google.com/mapfiles/kml/paddle/red-circle.png"))),
              newXMLNode("LabelStyle", 
                         newXMLNode("scale", "1.3")))
   
@@ -115,7 +115,7 @@ save_KML = function(df, file_name, file_path){
                         newXMLNode("scale", "0.9"),
                         newXMLNode("Icon", 
                                    newXMLNode("href",
-                                              "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"))),
+                                              "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png"))),
              newXMLNode("LabelStyle", 
                         newXMLNode("scale", "0.7")))
   
@@ -126,7 +126,7 @@ save_KML = function(df, file_name, file_path){
                         newXMLNode("scale", "0.9"),
                         newXMLNode("Icon", 
                                    newXMLNode("href",
-                                              "http://maps.google.com/mapfiles/ms/micons/red-dot.png"))),
+                                              "http://maps.google.com/mapfiles/kml/paddle/red-circle.png"))),
              newXMLNode("LabelStyle", 
                         newXMLNode("scale", "0.7")))
   
@@ -190,22 +190,23 @@ save_KML = function(df, file_name, file_path){
 
 # Save KML files ----------------------------------------------------------
 
-#' Save \code{cfStation} Locations to a KML File
+#' Save Clifro Station Information to a KML File
 #' 
-#' Save \code{cfStation} locations to a KML file
+#' Save \code{\link{cfStation}} object information to a KML file.
 #' 
-#' The \code{cf_save_kml} function is for \code{cfStation} 
+#' The \code{cf_save_kml} function is for \code{\link{cfStation}}
 #' objects to allow for the spatial visualisation of the selected stations. The 
 #' resulting KML file is saved and can then be opened by programs like Google 
 #' Earth (TM). The resultant KML file has the station names and locations shown 
-#' with blue markers for open and red markers for closed stations. The agent 
-#' numbers, network ID's and date ranges are displayed as the descriptions.
+#' with green markers for open and red markers for closed stations. The agent 
+#' numbers, network ID's and date ranges are contained within the descriptions
+#' for each station.
 #' 
 #' If no file name is specified, unique names are produced in the current \R 
 #' working directory.
 #' 
-#' @note The .kml suffix is appended automatically if it isn't already present
-#' in the \code{file_name} argument.
+#' @note The \code{.kml} suffix is appended automatically if it isn't already 
+#' present in the \code{file_name} argument.
 #' 
 #' @param station \code{cfStation} object containing one or more stations
 #' @param file_name file name for the resulting KML file
@@ -213,9 +214,9 @@ save_KML = function(df, file_name, file_path){
 #' 
 #' @export
 #' @seealso \code{\link{cf_station}} and \code{vignette("cfStation")} for 
-#' working with known stations, otherwise \code{\link{cf_find_station}} and 
-#' \code{vignette("choose-station")} for creating \code{cfStation} objects when
-#' the agent numbers are unknown.
+#' working with stations when the agent numbers are known, otherwise 
+#' \code{\link{cf_find_station}} and code{vignette("choose-station")} for 
+#' creating \code{cfStation} objects when the agent numbers are unknown.
 #' 
 #' @examples
 #' \dontrun{
@@ -228,11 +229,22 @@ save_KML = function(df, file_name, file_path){
 #' # Save these stations to a KML file
 #' cf_save_kml(my.stations)
 #' 
+#' # Double click on the file to open with a default program (if available). All 
+#' # the markers are blue, indicating all these stations are open.
+#' 
 #' # Where is the subscription-free Reefton Ews station?
 #' cf_save_kml(cf_station(), file_name = "reeftonEWS")
 #' 
-#' # Save all the Christchurch stations (using partial matching)
+#' # It's located in the sou'west quadrant of Reefton town, in the upper, western 
+#' # part of the South Island, NZ.
+#' 
+#' Find all the open and closed Christchurch stations (using partial matching)
 #' all.chch.st = cf_find_station("christ", status = "all", search = "region")
+#' 
+#' # How many stations in total?
+#' nrow(all.chch.st)
+#' 
+#' # Save all the Christchurch stations
 #' cf_save_kml(all.chch.st, file_name = "all_Chch_stations")
 #' }
 cf_save_kml = function(station, file_name = "my_stations_", 
@@ -241,32 +253,34 @@ cf_save_kml = function(station, file_name = "my_stations_",
     stop("station must be a cfStation object")
   if (grepl(".kml$", file_name))
     file_name = gsub(".kml$", "", file_name)
-  save_KML(station, file_name = file_name, file_path = normalizePath(file_path))
+  save_KML(as(station, "data.frame"), file_name = file_name, 
+           file_path = normalizePath(file_path))
 }
 
 # Find stations -----------------------------------------------------------
 
 #' Search for Clifro Stations
 #' 
-#' Find the agent number for stations based on name, region, location or network
-#' number.
+#' Search for \pkg{clifro} stations based on name, region, location or network
+#' number, and return a \code{cfStation} object.
 #' 
 #' The \code{cf_find_station} function is a convenience function for finding 
-#' CliFlo stations in \R. It uses the CliFlo "Find Stations" page 
-#' (\url{http://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html}) to do the 
-#' searching meaning the stations are not stored within \pkg{clifro}.
+#' CliFlo stations in \R. It uses the CliFlo 
+#' \href{http://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html}{Find Stations} 
+#' page to do the searching, and therefore means that the stations are not 
+#' stored within \pkg{clifro}.
 #' 
 #' If \code{datatype} is missing then the search is conducted 
 #' without any reference to datatypes. If it is supplied then the 
 #' search will only return stations that have any or all of the supplied 
-#' datatypes, depending on \code{combine}. The default behaviour is to searche 
+#' datatypes, depending on \code{combine}. The default behaviour is to search
 #' for stations based on pattern matching the station name and return only the 
 #' open stations.
 #' 
-#' If the \code{latlong} search type is used the function expects a named 
+#' If the \code{latlong} search type is used the function expects named 
 #' arguments with names (partially) matching latitude, 
 #' longitude and radius. If the arguments are passed in without names they must
-#' be in order of latitude, longitude and radius.
+#' be in order of latitude, longitude and radius (see examples).
 #' 
 #' @return \code{cfStation} object
 #' @param ... arguments to pass into the search, these differ depending on 
@@ -284,46 +298,66 @@ cf_save_kml = function(station, file_name = "my_stations_",
 #' @note Since the searching is done by CliFlo there are obvious restrictions. 
 #' Unfortunately the pattern matching for station name does not provide 
 #' functionality for regular expressions, nor does it allow simultaneous 
-#' searches although \pkg{clifro} does provide some functionality, see 
-#' 'Examples' below.
+#' searches although \pkg{clifro} does provide some extra functionality, see 
+#' the 'OR query Search' example below.
 #' 
 #' @export
-#' @aliases find-cfStation
 #' @importFrom RCurl getCurlHandle postForm
 #' @importFrom XML htmlParse xmlValue xmlSApply
 #' @importFrom selectr querySelectorAll
 #' @importFrom lubridate with_tz now round_date %--% dseconds
 #' @importFrom stats na.exclude
-#' @seealso \code{\link{cf_save_kml}}, \code{\link{cf_station}}, 
-#' \code{vignette("choose-station")} and \code{vignette("cfStation")}
+#' @seealso \code{\link{cf_save_kml}} for saving the resulting stations as a KML
+#' file, \code{\link{cf_station}} for creating \code{\link{cfStation}} objects 
+#' when the agent numbers are known, \code{vignette("choose-station")} for a 
+#' tutorial on finding \pkg{clifro} stations and \code{vignette("cfStation")} 
+#' for working with \code{\link{cfStation}} objects.
 #' @examples
 #' \dontrun{
+#' # Station Name Search ------------------------------------------------------
 #' # Return all open stations with 'island' in the name (pattern match search)
 #' # Note this example uses all the defaults
-#' cf_find_station("island")
 #' 
-#' # Return all the closed stations from Queenstown (region search)
-#' cf_find_station("queen", search = "region", status = "closed")
+#' island_st = cf_find_station("island")
+#' island_st
 #' 
+#' # Region Search ------------------------------------------------------------
+#' # Return all the closed stations from Queenstown (using partial matching)
+#' 
+#' queenstown.st = cf_find_station("queen", search = "region", status = "closed")
+#' queenstown.st
+#' 
+#' # Long/Lat Search ----------------------------------------------------------
 #' # Return all open stations within a 10km radius of the Beehive in Wellington
 #' # From Wikipedia: latitude 41.2784 S, longitude 174.7767 E
-#' cf_find_station(lat = -41.2784, long = 174.7767, rad = 10, 
-#'                 search = "latlong")
 #' 
-#' # Return all stations that share A42 in their network ID (network ID search)
-#' cf_find_station("A42", search = "network", status = "all")
+#' beehive.st = cf_find_station(lat = -41.2784, long = 174.7767, rad = 10, 
+#'                              search = "latlong")
+#' beehive.st
 #' 
-#' # Is the Reefton EWS station open and does it collect daily rain and wind 
-#' # data? (using datatypes in the search)
+#' # Network ID Search --------------------------------------------------------
+#' # Return all stations that share A42 in their network ID
 #' 
-#' # Daily rain and wind datatypes
+#' A42.st = cf_find_station("A42", search = "network", status = "all")
+#' A42.st
+#' 
+#' # Using Datatypes in the Search --------------------------------------------
+#' # Is the Reefton EWS station open and does it collect daily rain and/or wind 
+#' # data?
+#' 
+#' # First, create the daily rain and wind datatypes
 #' daily.dt = cf_datatype(c(2, 3), c(1, 1), list(4, 1), c(1, NA))
+#' daily.dt
 #' 
-#' cf_find_station("reefton EWS", datatype = daily.dt)      # Yes
+#' # Then combine into the search. This will only return stations where at least
+#' # one datatype is available.
+#' cf_find_station("reefton EWS", datatype = daily.dt)  # Yes
 #' 
-#' # Return all stations sharing A42 in their network ID 
-#' \emph{OR} all the open stations within 10km of the Beehive in Wellington
-#' (note this is not an AND query).
+#' # OR Query Search ----------------------------------------------------------
+#' # Return all stations sharing A42 in their network ID *or* all the open 
+#' # stations within 10km of the Beehive in Wellington (note this is not 
+#' # currently available as a single query in CliFlo).
+#' 
 #' cf_find_station("A42", search = "network", status = "all") +
 #' cf_find_station(lat = -41.2784, long = 174.7767, rad = 10, 
 #'                 search = "latlong")

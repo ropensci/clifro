@@ -48,15 +48,19 @@ surfaceWind.dt
 ## ------------------------------------------------------------------------
 # Hourly and 9am surface wind (knots)
 surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
+surfaceWind.dt
 
 # Hourly and daily rainfall
 rainfall.dt = cf_datatype(3, 1, c(1, 2))
+rainfall.dt
 
 # Hourly counts of lightning flashes
 lightning.dt = cf_datatype(6, 1, 1)
+lightning.dt
 
 # Daily and hourly grass temperature extremes
 temperatureExtremes.dt = cf_datatype(4, 2, c(5, 6))
+temperatureExtremes.dt
 
 # Note: only the surface wind datatype requires combo options
 

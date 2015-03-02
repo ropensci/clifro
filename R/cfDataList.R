@@ -32,7 +32,7 @@ setMethod("show",
           }
 )
 
-#' @importFrom methods setClass show
+#' @importFrom methods setMethod
 setMethod("[",
           signature(x = "cfDataList"),
           function (x, i, j){
@@ -42,7 +42,7 @@ setMethod("[",
           }
 )
 
-#' @importFrom methods setClass show
+#' @importFrom methods setMethod
 setMethod("[[",
           signature(x = "cfDataList"),
           function (x, i, j){

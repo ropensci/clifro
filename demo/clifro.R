@@ -12,7 +12,7 @@ wind.dt = cf_datatype(2, 1, 4, 1)
 rain.dt = cf_datatype(3, 1, 1)
 
 # Daily temperature extremes
-temp.dt = cf_datatype(4, 2, 1)
+temp.dt = cf_datatype(4, 2, 2)
 
 # Combine them together
 all.dts = wind.dt + rain.dt + temp.dt
@@ -32,9 +32,29 @@ reefton.data
 
 # Plot the data -----------------------------------------------------------
 
-plot(reefton.data, which = 1)
-plot(reefton.data, which = 1, wind_plot = "speed")
-plot(reefton.data, which = 1, wind_plot = "direction")
-plot(reefton.data, which = 2)
-plot(reefton.data, which = 2, include_runoff = FALSE)
-plot(reefton.data, which = 3)
+# Plot the 9am surface wind data (first dataframe in the list) ---
+reefton.data[1]
+
+# all identical - although passed to different methods
+plot(reefton.data)    #plot,cfDataList,missing-method
+plot(reefton.data, 1) #plot,cfDataList,numeric-method
+plot(reefton.data[1]) #plot,cfData,missing-method --> plot,cfWind,missing-method
+
+speed_plot(reefton.data)
+direction_plot(reefton.data)
+
+# Plot the daily rain data (second dataframe in the list) ---
+reefton.data[2]
+
+# With runoff and soil deficit
+plot(reefton.data, 2)
+
+# Just plot amount of rain (mm)
+plot(reefton.data, 2, include_runoff = FALSE)
+
+# Plot the hourly temperature data (third dataframe in the list) ---
+plot(reefton.data, 3)
+
+# Pass an argument to ggplot2::theme
+library(ggplot2) # for element_text()
+plot(reefton.data, 3, text = element_text(size = 18))

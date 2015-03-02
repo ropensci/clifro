@@ -48,7 +48,7 @@ tidy_names = function(names, max_len = 20){
 # query.
 # 
 #' @importFrom methods setClass
-setClass("cfStation", contains = "data.frame")
+setClass("cfStation", contains = "dataFrame")
 
 # Initializer -------------------------------------------------------------
 
@@ -74,20 +74,27 @@ setMethod("initialize", "cfStation", function(.Object, df){
     end_diff = now() - df_list[[5]]
     ordered_stations = order(end_diff, -start_diff)
     .Object@.Data = lapply(df_list, "[", ordered_stations)
-    .Object@row.names = seq_along(df_list[[1]])
+    .Object@row.names = paste(seq_along(df_list[[1]]))
     return(.Object)
 })
 
 # Constructor -------------------------------------------------------------
 
-#' Create a \pkg{clifro} Station Object
+#' The Clifro Station Object
 #' 
-#' Create a \code{cfStation} object containing the station information.
+#' Create a \code{cfStation} object containing station information for one or
+#' more CliFlo stations.
 #' 
-#' A \pkg{clifro} station object is created by the constructor function 
+#' A \code{cfStation} object is created by the constructor function 
 #' \code{cf_station}. The unique agent numbers of the stations are all that is 
 #' required to create a \code{cfStation} object using the \code{cf_station} 
-#' function as the rest of the information is scraped from CliFlo.
+#' function. The rest of the station information including the name, network and 
+#' agent ID, start and end dates, coordinates, as well as other data is scraped 
+#' from CliFlo.
+#' 
+#' This function is used for when the agent numbers are already known. For help 
+#' creating \code{cfStation} objects when the agent numbers are unknown see the
+#' \code{\link{cf_find_station}} function.
 #' 
 #' @param ... comma separated agent numbers
 #' 
@@ -95,10 +102,10 @@ setMethod("initialize", "cfStation", function(.Object, df){
 #' @importFrom XML xmlValue htmlParse
 #' @importFrom methods new
 #' @importFrom lubridate dmy with_tz round_date now
-#' @rdname cf_station
-#' @name cf_station
-#' @aliases cfStation-class
+#' @rdname cfStation-class
+#' @name cfStation-class
 #' @aliases cfStation
+#' @aliases cf_station
 #' @return \code{cfStation} object
 #' @export
 #' @seealso \code{\link{cf_find_station}} for creating \code{cfStation} objects
@@ -107,14 +114,24 @@ setMethod("initialize", "cfStation", function(.Object, df){
 #' \code{cfStation} objects as KML files refer to the vignette or 
 #' \code{\link{cf_save_kml}}.
 #' @examples
+#' \dontrun{
 #' # Create a cfStation object for the Leigh 1 and 2 Ews stations
 #' leigh.st = cf_station(1339, 1340)
 #' leigh.st
 #' 
-#' # Add another column showing how long the station has been open for
+#' # Note, this can also be achieved using the '+' operator
+#' leigh.st = cf_station(1339) + cf_station(1340)
+#' leigh.st
+#' 
+#' # Add another column showing how long the stations have been open for
 #' leigh.df = as(leigh.st, "data.frame")
 #' leigh.df$ndays = with(leigh.df, round(end - start))
 #' leigh.df
+#' 
+#' # Save the stations to the current working directory as a KML to visualise 
+#' # the station locations
+#' cf_save_kml(leigh.st)
+#' }
 cf_station = function(...){
   agent = c(...)
   if (length(agent) == 0)
@@ -163,7 +180,7 @@ cf_station = function(...){
   end_date = as.character(sapply(station_details, "[", 7))
   
   open_station = end_date == "-"
-  final_date = rep(with_tz(round_date(now(), "month"), 
+  final_date = rep(with_tz(round_date(now(), "day"), 
                            tzone = "Pacific/Auckland"), length(station_details))
   
   if (any(!open_station))
@@ -218,7 +235,7 @@ setMethod("+",
               return(new.obj)
           })
 
-#' @importFrom methods setMethod new
+#' @importFrom methods setMethod
 setMethod("[",
           signature(x = "cfStation"),
           function (x, i, j, ..., drop = TRUE) 

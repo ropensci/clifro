@@ -99,6 +99,13 @@ setMethod("show", "dataFrame",
           }
 )
 
+#' @importFrom stats setNames
+#' @importFrom methods setAs
+setAs("dataFrame", "data.frame",
+      function(from){
+        setNames(data.frame(from@.Data), from@names)
+      })
+
 #' @importFrom methods as setMethod
 setMethod("as.data.frame", "dataFrame",
           function (x)

@@ -24,48 +24,60 @@ my.stations[, 1:5]
 #  cf.datalist
 
 ## ----,eval=FALSE---------------------------------------------------------
-#  plot(cf.datalist, which = 1, ggtheme = "bw")
+#  plot(cf.datalist, 1, ggtheme = "bw")
 #  
-#  # Equivalent to
+#  # Equivalent to:
 #  # plot(cf.datalist[1], ggtheme = "bw")
+#  #
+#  # And because y = 1 is the default, this is also equivalent
+#  # plot(cf.datalist, ggtheme = "bw")
 
 ## ----,eval=FALSE---------------------------------------------------------
-#  # Load the ggplot2 library
+#  # Load the ggplot2 library for element_text() and geom_smooth() functions
 #  library(ggplot2)
 #  
-#  # Add a loess smoother with a span of a third of the window
-#  plot(cf.datalist, which = 1, ggtheme = "bw",
-#       strip.text = element_text(size = 14)) +
-#    geom_smooth(method = "loess", span = 1/3)
+#  # Increase the text size to 16pt and add a loess smoother with a span equal to a
+#  # quarter of the window
+#  plot(cf.datalist, ggtheme = "bw", text = element_text(size = 16)) +
+#    geom_smooth(method = "loess", span = 1/4)
 
 ## ----,eval=FALSE---------------------------------------------------------
-#  plot(cf.datalist, which = 2, ggtheme = "linedraw")
+#  # Try a different ggtheme
+#  plot(cf.datalist, 2, ggtheme = "linedraw")
 
 ## ----,eval=FALSE---------------------------------------------------------
-#  plot(cf.datalist, which = 3, ggtheme = "light")
+#  # Try yet another ggtheme
+#  plot(cf.datalist, 3, ggtheme = "light")
 
 ## ----, eval=FALSE--------------------------------------------------------
-#  # Don't plot the soil deficit and runoff
-#  plot(cf.datalist, which = 3, include_runoff = FALSE, ggtheme = "light")
+#  # Don't plot the soil deficit and runoff, and allow the y-axis
+#  # scales to differ between stations
+#  plot(cf.datalist, 3, include_runoff = FALSE,
+#       ggtheme = "light", scales = "free_y")
 
 ## ----,eval=FALSE---------------------------------------------------------
 #  # Defaults to windrose
-#  plot(cf.datalist, which = 4)
+#  plot(cf.datalist, 4, n_col = 2)
 
 ## ----,eval=FALSE---------------------------------------------------------
-#  # Plot the wind speeds through time
-#  plot(cf.datalist, which = 4, wind_plot = "speed", ggtheme = "classic")
+#  # Plot the wind speeds through time, choose the 'classic' ggtheme,
+#  # allow the y-axis scales to differ for each station, and add a smooth
+#  speed_plot(cf.datalist, 4, ggtheme = "classic", scales = "free_y") +
+#    geom_smooth(method = "loess", span = 1/4)
 
 ## ----,eval=FALSE---------------------------------------------------------
-#  # Plot wind direction contours
-#  plot(cf.datalist, which = 4, wind_plot = "direction", contours = 10, ggtheme = "light")
+#  # Plot wind direction contours through time
+#  direction_plot(cf.datalist, 4, n_col = 2)
 
 ## ----,eval=FALSE---------------------------------------------------------
 #  # Export the data as separate CSV files to the current working directory
-#  getwd()
 #  for (i in seq_along(cf.datalist))
 #    write.csv(cf.datalist[i],
 #              file = tempfile(paste0(cf.datalist[i]@dt_name, "_"),
 #                              tmpdir = normalizePath("."),
-#                              fileext = ".csv"))
+#                              fileext = ".csv"),
+#              na = "", row.names = FALSE)
+#  
+#  # Each dataset is saved separately here:
+#  getwd()
 

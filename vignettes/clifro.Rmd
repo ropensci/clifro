@@ -1,5 +1,5 @@
 ---
-title: 'From CliFlo to clifro: An Introduction'
+title: 'From CliFlo to *clifro*: An Introduction'
 author: "Blake Seers"
 date: "`r Sys.Date()`"
 output: 
@@ -126,110 +126,131 @@ We can see that the pressure and surface wind data only span one year.
 There is now a list of 4 dataframes in R containing all the available data for
 each of the stations and datatypes chosen above. The plotting is simply done 
 with a call to `plot`, the type of plot and plotting options depends on the 
-datatype. See `?'plot,cfData-method'` for more details. The following are
-examples of some of the plots possible with `clifro`, note how the optional 
-`ggtheme`argument changes the look of the plots.
+datatype. See `?'plot,cfDataList,missing-method'` for details on default `clifro`
+plotting. The following are examples of some of the plots possible with `clifro`, 
+note how the optional `ggtheme` argument changes the look of the plots.
 
 ## MSL Atmospheric Pressure
+This is the first dataframe in `cf.datalist`.
 
 ```{r,eval=FALSE}
-plot(cf.datalist, which = 1, ggtheme = "bw")
+plot(cf.datalist, 1, ggtheme = "bw")
 
-# Equivalent to 
+# Equivalent to:
 # plot(cf.datalist[1], ggtheme = "bw")
+#
+# And because y = 1 is the default, this is also equivalent
+# plot(cf.datalist, ggtheme = "bw")
 ```
 
-![atmospheric pressure][mslAtmosPress]
+![MSL Atmospheric Pressure][mslAtmosPress]
 
-The `which` argument tells `clifro` which of the four dataframes to plot. Since 
-the plot method returns a `ggplot` object, we can easily modify the plots using 
-[ggplot2](http://ggplot2.org/).
+Since the first argument passed to `plot` is a list of different datatypes 
+(`cfDataList`), the second argument (`y`) tells the `plot` method which of the 
+four dataframes to plot.
+
+Since the plot method returns a `ggplot` object, we can easily modify the plots 
+using [ggplot2](http://ggplot2.org/).
 
 ```{r,eval=FALSE}
-# Load the ggplot2 library
+# Load the ggplot2 library for element_text() and geom_smooth() functions
 library(ggplot2)
 
-# Add a loess smoother with a span of a third of the window
-plot(cf.datalist, which = 1, ggtheme = "bw",
-     strip.text = element_text(size = 14)) + 
-  geom_smooth(method = "loess", span = 1/3)
+# Increase the text size to 16pt and add a loess smoother with a span equal to a 
+# quarter of the window
+plot(cf.datalist, ggtheme = "bw", text = element_text(size = 16)) + 
+  geom_smooth(method = "loess", span = 1/4)
 ```
 
-![atmospheric pressure][mslAtmosPress2]
+![Improved MSL Atmospheric Pressure][mslAtmosPress2]
 
 ## Daily Temperature Extremes
+This is the second dataframe in `cf.datalist`, therefore `y = 2`. 
+These are temperature data showing the air temperature extremes at
+each of the four stations, represented by a grey region in the plot. Note that 
+if the average temperature were available, these would be plotted too.
 
 ```{r,eval=FALSE}
-plot(cf.datalist, which = 2, ggtheme = "linedraw")
+# Try a different ggtheme
+plot(cf.datalist, 2, ggtheme = "linedraw")
 ```
 
-![temperature extremes][temperature]
+![Temperature Extremes][temperature]
 
 ## Rain
-
-Currently there are two possible default plots available for rainfall; with or
-without soil deficit/runoff.
+This is the third dataframe in `cf.datalist`, therefore `y = 3`. Currently there 
+are two possible default plots available for rainfall; with or without soil 
+deficit/runoff.
 
 ```{r,eval=FALSE}
-plot(cf.datalist, which = 3, ggtheme = "light")
+# Try yet another ggtheme
+plot(cf.datalist, 3, ggtheme = "light")
 ```
 
-![rain and runoff][rainRunoff]
+![Rain with Soil Deficit and Runoff][rainRunoff]
 
 ```{r, eval=FALSE}
-# Don't plot the soil deficit and runoff
-plot(cf.datalist, which = 3, include_runoff = FALSE, ggtheme = "light")
+# Don't plot the soil deficit and runoff, and allow the y-axis 
+# scales to differ between stations
+plot(cf.datalist, 3, include_runoff = FALSE, 
+     ggtheme = "light", scales = "free_y")
 ```
 
-![rain amount][rain]
+![Rain Amount][rain]
 
 ## Wind
 
 There are three types of plots available for wind data in `clifro`. The default
 is to plot a windrose displaying wind speed and directions of the full time 
 series at each station. The `windrose` function in `clifro` is also available 
-for the user to plot their own directional data. The other two optional plots 
-for wind data in `clifro` are the wind speed and wind direction plots. These 
-plots display wind speed and direction patterns through time, adding valuable 
-temporal information that is not portrayed in the windroses.
+for the user to plot their own directional data - see `?windrose`. The other two 
+optional plots for wind data in `clifro` are the wind speed and wind direction 
+plots. These plots display wind speed and direction patterns through time, 
+adding valuable temporal information that is not portrayed in the windroses.
 
+The wind datatype is the fourth dataframe in `cf.datalist`, therefore `y = 4`.
 ### Windrose
 
 ```{r,eval=FALSE}
 # Defaults to windrose
-plot(cf.datalist, which = 4)
+plot(cf.datalist, 4, n_col = 2)
 ```
 
-![windrose][windrose]
+![Windrose][windrose]
 
 ### Wind Speeds
 
 ```{r,eval=FALSE}
-# Plot the wind speeds through time
-plot(cf.datalist, which = 4, wind_plot = "speed", ggtheme = "classic")
+# Plot the wind speeds through time, choose the 'classic' ggtheme,
+# allow the y-axis scales to differ for each station, and add a smooth
+speed_plot(cf.datalist, 4, ggtheme = "classic", scales = "free_y") +
+  geom_smooth(method = "loess", span = 1/4)
 ```
 
-![wind speed][windSpeed]
+![wind Speed][windSpeed]
 
 ### Wind Directions
 
 ```{r,eval=FALSE}
-# Plot wind direction contours
-plot(cf.datalist, which = 4, wind_plot = "direction", contours = 10, ggtheme = "light")
+# Plot wind direction contours through time
+direction_plot(cf.datalist, 4, n_col = 2)
 ```
 
-![wind direction][windDir]
+![Wind Direction][windDir]
 
-# Export
+# Data Export
 
 ```{r,eval=FALSE}
 # Export the data as separate CSV files to the current working directory
-getwd()
 for (i in seq_along(cf.datalist))
   write.csv(cf.datalist[i], 
             file = tempfile(paste0(cf.datalist[i]@dt_name, "_"), 
                             tmpdir = normalizePath("."), 
-                            fileext = ".csv"))
+                            fileext = ".csv"),
+            na = "", row.names = FALSE)
+
+# Each dataset is saved separately here:
+getwd()
 ```
 
 
@@ -246,11 +267,11 @@ exploration and analysis stage.
 [chooseDatatype]: choose-datatype.html
 [clifrostation]: cfStation.html
 
-[mslAtmosPress]: figures/atmospress.png "MSL Atmospheric Pressure"
-[mslAtmosPress2]: figures/atmospress2.png "Improved MSL Atmospheric Pressure"
+[mslAtmosPress]: figures/mslAtmosPress.png "MSL Atmospheric Pressure"
+[mslAtmosPress2]: figures/mslAtmosPress2.png "Improved MSL Atmospheric Pressure"
 [temperature]: figures/temperature.png "Temperature Extremes"
 [rainRunoff]: figures/rainRunoff.png "Rain with Soil Deficit and Runoff"
 [rain]: figures/rain.png "Rain Amount"
 [windrose]: figures/windrose.png "Windrose"
-[windSpeed]: figures/windspeed.png "Wind Speed"
-[windDir]: figures/winddir.png "Wind Direction"
+[windSpeed]: figures/windSpeed.png "Wind Speed"
+[windDir]: figures/windDir.png "Wind Direction"

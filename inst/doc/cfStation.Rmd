@@ -46,9 +46,13 @@ New Zealand:
 7. Lilybank
 
 ```{r}
-lake.tekapo.df = cf_station(12709, 35567, 39557, 4630, 24945, 4616, 4602)
-lake.tekapo.df[, c("name", "agent", "start", "end", "open")]
+lake.tekapo.st = cf_station(12709, 35567, 39557, 4630, 24945, 4616, 4602)
+lake.tekapo.st[, c("name", "agent", "start", "end", "open")]
 ```
+
+We can see that subsetting `lake.tekapo.st` acts just like a `data.frame` 
+object, although it is technically a `cfStation` object. All the usual 
+`data.frame` methods work on `cfStation` objects to maximise usability.
 
 ## Adding more stations
 To add more stations to this list the addition sign is used. Any repeated 
@@ -56,15 +60,17 @@ stations are removed and the resulting list is ordered by the end dates first
 and then by the stations' start dates.
 
 ```{r}
-added.stations.df = lake.tekapo.df + cf_station() + cf_find_station("lighthouse", status = "all")
-added.stations.df[, c("name", "agent", "start", "end", "open")]
+added.stations.st = lake.tekapo.st + 
+  cf_station() + 
+  cf_find_station("lighthouse", status = "all")
+added.stations.st[, c("name", "agent", "start", "end", "open")]
 ```
 
 The above code chunk adds the 7 stations around Lake Tekapo, the 
 subscription-free reefton EWS station (`cf_station()`), and all stations located 
 (currently or historically) on a lighthouse. Allowing multiple searches is not
-currently available on CliFlo but the above code demonstrates how easy it can be
-in `clifro`.
+currently available using the web portal, CliFlo, but the above code 
+demonstrates how easy it can be in `clifro`.
 
 # Visualising the station locations
 CliFlo does not currently have any visualisation tools to aid in the selection 
@@ -75,7 +81,7 @@ a hard one.
 The `cf_save_kml` functionality was introduced in the 
 [choose stations vignette][chooseStations] and this function can be used on any 
 `cfStation` object. To return a KML file showing all the stations within our
-`added.stations.df` object we just run `cf_save_kml(added.stations.df)` in R
+`added.stations.st` object we just run `cf_save_kml(added.stations.st)` in R
 and the KML file is returned.
 
 ## Showing station locations within R
@@ -88,20 +94,20 @@ This example is only one of the many ways to plot GIS data in R, and the
 [ggmap](http://cran.r-project.org/web/packages/ggmap/index.html)
 package is chosen for it's usability and quality plots. In this example we will 
 plot all the past and present Auckland climate stations to assess the density 
-across the region.
+of open and closed stations across the region.
 
 ```{r,message=FALSE,fig.width=9,fig.height=9, cache=TRUE}
 library(ggmap)
 
 # Conduct the search
-auckland.df = cf_find_station("auckland", search = "region", status = "all")
+auckland.st = cf_find_station("auckland", search = "region", status = "all")
 
 # Add a column to colour the open and closed stations
-auckland.df$colour = factor(auckland.df$open, labels = c("Closed", "Open"))
+auckland.st$colour = factor(auckland.st$open, labels = c("Closed", "Open"))
 
-# Reverse the dataframe rows so the open stations get plotted on top of the
-# closed stations
-auckland.df = auckland.df[nrow(auckland.df):1, ]
+# Coerce to a data.frame and reverse the rows so the open stations get plotted 
+# on top of the closed stations
+auckland.df = as(auckland.st, "data.frame")[nrow(auckland.st):1, ]
 
 # Obtain the map of the greater Auckland suitably scaled to fit the stations
 auckland.map = ggmap(get_map("Auckland", maptype = "hybrid", zoom = 8))
