@@ -5,6 +5,8 @@ setClass("dataFrame", slots = c(names = "character",
                                 row.names = "character"),
          contains = "list")
 
+#' @rdname dim
+#' @aliases dimnames,dataFrame-method
 #' @importFrom methods setMethod
 setMethod("dimnames", "dataFrame",
           function (x) 
@@ -13,6 +15,22 @@ setMethod("dimnames", "dataFrame",
           }
 )
 
+#' Dimension Attributes of a Clifro Object
+#' 
+#' Retrieve the dimensions or dimension names of a \code{dataFrame} object.
+#' 
+#' @seealso \code{\link{cf_query}} for creating \code{cfData} objects, and
+#'   \code{\link{cf_station}} for creating \code{cfStation} objects.
+#' 
+#' @param x a \code{dataFrame} object
+#' 
+#' Specifically, a \code{dataFrame} object is any \code{\link{cfStation}} or 
+#' \code{cfData} object. These functions are provided for the user to have (some)
+#' familiar \code{data.frame}-type functions available for use on \pkg{clifro}
+#' objects.
+#' 
+#' @rdname dim
+#' @aliases dim,dataFrame-method
 #' @importFrom methods setMethod
 setMethod("dim", "dataFrame",
           function (x) 
@@ -66,20 +84,26 @@ setMethod("colnames", "dataFrame",
 )
 
 #' @importFrom methods as setMethod
+#' @rdname Extract
+#' @aliases [[,dataFrame-method
 setMethod("[[", "dataFrame",
           function (x, i) 
             as(x, "data.frame")[[i]]
 )
 
 #' @importFrom methods as setMethod
+#' @rdname Extract
+#' @aliases [,dataFrame,ANY,ANY,ANY-method
 setMethod("[", "dataFrame", 
           function (x, i, j, drop)
-            as(x, "data.frame")[i, j]
+            as(x, "data.frame")[i, j, drop]
 )
 
 #' @importFrom methods setMethod
+#' @rdname Extract
+#' @aliases $,dataFrame-method
 setMethod("$", "dataFrame",
-          function (x, name) 
+          function (x, name)
           {
             which_col = pmatch(name, names(x))
             if (!is.na(which_col)){

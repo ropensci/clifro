@@ -4,12 +4,15 @@
 \name{plot.cfDataList}
 \alias{plot,cfDataList,missing-method}
 \alias{plot,cfDataList,numeric-method}
+\alias{plot,cfOther,missing-method}
 \alias{plot.cfDataList}
 \title{Default Clifro Plotting}
 \usage{
 \S4method{plot}{cfDataList,numeric}(x, y, ...)
 
 \S4method{plot}{cfDataList,missing}(x, y, ...)
+
+\S4method{plot}{cfOther,missing}(x, y)
 }
 \arguments{
 \item{x}{a \code{cfData} or \code{cfDataList} object.}

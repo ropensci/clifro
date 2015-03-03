@@ -213,8 +213,9 @@ setMethod("show",
             print(cfstation_df)
           })
 
-# Addition method
 #' @importFrom methods setMethod new
+#' @rdname clifroAdd
+#' @aliases +,cfStation,cfStation-method
 setMethod("+",
           signature(e1 = "cfStation",
                     e2 = "cfStation"), 
@@ -236,9 +237,11 @@ setMethod("+",
           })
 
 #' @importFrom methods setMethod
+#' @rdname Extract
+#' @aliases [,cfStation,ANY,ANY,ANY-method
 setMethod("[",
           signature(x = "cfStation"),
-          function (x, i, j, ..., drop = TRUE) 
+          function (x, i, j, drop = TRUE)
           {
             if (!missing(j))
               x = data.frame(x)[i, j, drop = drop, ...]

@@ -32,22 +32,47 @@ setMethod("show",
           }
 )
 
+#' Subsetting Methods for Clifro Objects
+#' 
+#' Operators acting on \code{cfDataList}, \code{cfDatatype}, \code{cfStation},
+#' and \code{dataFrame} objects.
+#' 
+#' These are methods for the generic operators for classes within \pkg{clifro}.
+#' They are intended to give the user the familiar functionality of subsetting
+#' \code{\link{data.frame}} objects.
+#' 
+#' @param x a \pkg{clifro} object
+#' @param i, j, indices specifying elements to extract. Indices are 
+#'              \code{numeric} or \code{character} vectors or empty (missing) or
+#'              \code{NULL}. Character vectors will be matched to the names of 
+#'              the object.
+#' @param name a literal character string. This is partially matched to the 
+#'             names of the object.
+#' @param drop if \code{TRUE}, the result is coerced to the lowest possible 
+#'             dimension. See \code{\link{drop}} for further details.
+#' 
+#' @docType methods
+#' @rdname Extract
+#' @aliases [,cfDataList,ANY,ANY,ANY-method
+#' 
 #' @importFrom methods setMethod
 setMethod("[",
-          signature(x = "cfDataList"),
-          function (x, i, j){
+          signature(x = "cfDataList", i = "ANY", j = "ANY", drop = "ANY"),
+          function (x, i, j, drop){
             if (!missing(j))
               warning("column subscripts ignored")
+            if (!missing(drop))
+              warning("drop ignored")
             x@.Data[[i]]
           }
 )
 
 #' @importFrom methods setMethod
+#' @rdname Extract
+#' @aliases [[,cfDataList-method
 setMethod("[[",
           signature(x = "cfDataList"),
-          function (x, i, j){
-            if (!missing(j))
-              warning("column subscripts ignored")
+          function (x, i){
             x@.Data[[i]]
           }
 )

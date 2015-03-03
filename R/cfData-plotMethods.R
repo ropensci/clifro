@@ -1339,6 +1339,8 @@ setMethod("plot",
 
 #' @importFrom methods setMethod
 #' @importFrom graphics plot
+#' @rdname plot.cfDataList
+#' @aliases plot,cfOther,missing-method
 setMethod("plot",
           signature(x = "cfOther", y = "missing"),
           

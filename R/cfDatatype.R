@@ -468,14 +468,15 @@ cf_datatype = function(select_1 = NA,
 
 # Methods -----------------------------------------------------------------
 
-# '[' method
 #' @importFrom methods new setMethod
+#' @rdname Extract
+#' @aliases [,cfDatatype,ANY,missing,missing
 setMethod("[", 
           signature(x = "cfDatatype",
                     i = "ANY",
                     j = "missing",
                     drop = "missing"),
-          function(x, i, j){
+          function(x, i, j, drop){
             
             dt_param = sapply(x@dt_param, function(x) strsplit(x, ",")[[1]][1])
             
@@ -490,7 +491,16 @@ setMethod("[",
                 dt_option_length = x@dt_option_length[i])
           })
 
-# '+' method
+#' Arithmetic Operators for Clifro Objects
+#' 
+#' This operator allows you to add more datatypes or stations to 
+#' \code{cfDatatype} and \code{cfStation} objects respectively.
+#' 
+#' @param e1 a \code{cfDatatype} or \code{cfStation} object
+#' @param e2 an object matching the class of e1
+#' 
+#' @rdname clifroAdd
+#' @aliases +,cfDatatype,cfDatatype-method
 #' @importFrom methods new setMethod
 setMethod("+", signature(e1 = "cfDatatype",
                          e2 = "cfDatatype"),
@@ -532,10 +542,3 @@ setMethod("show", signature(object = "cfDatatype"), function(object){
                   dt.combo = combo_select, 
                   row.names = names(object@dt_param)))
 })
-
-#' @importFrom methods setMethod
-setMethod("length",
-          signature(x = "cfDatatype"),
-          function (x)
-            length(x@dt_type)
-)
