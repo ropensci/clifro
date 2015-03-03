@@ -244,7 +244,7 @@ setMethod("[",
           function (x, i, j, drop = TRUE)
           {
             if (!missing(j))
-              x = data.frame(x)[i, j, drop = drop, ...]
+              x = data.frame(x)[i, j, drop = drop]
             else{
               x@.Data = lapply(x@.Data, "[", i)
               x@row.names = seq_along(i)
