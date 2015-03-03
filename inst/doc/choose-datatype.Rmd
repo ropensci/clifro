@@ -1,5 +1,5 @@
 ---
-title: "Choosing a clifro datatype"
+title: "Choosing a *clifro* Datatype"
 author: "Blake Seers"
 date: "`r Sys.Date()`"
 output: 
@@ -14,6 +14,7 @@ output:
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{Choosing a clifro datatype}
 -->
+# Introduction
 
 The `cf_datatype` function is all that is required to select `clifro` datatypes.
 This function can be called without any arguments that takes the user through

@@ -18,6 +18,7 @@ output:
 ```{r, echo=FALSE}
 library(clifro)
 ```
+# Introduction
 
 There are two functions available in `clifro` to create requisite `cfStation`
 objects to send queries to retrieve data via `clifro`. The first one is to 
@@ -96,7 +97,7 @@ package is chosen for it's usability and quality plots. In this example we will
 plot all the past and present Auckland climate stations to assess the density 
 of open and closed stations across the region.
 
-```{r,message=FALSE,fig.width=9,fig.height=9, cache=TRUE}
+```{r,message=FALSE,fig.width=7,fig.height=7, dpi=50, cache=TRUE}
 library(ggmap)
 
 # Conduct the search

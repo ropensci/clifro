@@ -11,7 +11,7 @@ added.stations.st = lake.tekapo.st +
   cf_find_station("lighthouse", status = "all")
 added.stations.st[, c("name", "agent", "start", "end", "open")]
 
-## ----,message=FALSE,fig.width=9,fig.height=9, cache=TRUE-----------------
+## ----,message=FALSE,fig.width=7,fig.height=7, dpi=50, cache=TRUE---------
 library(ggmap)
 
 # Conduct the search

@@ -56,17 +56,16 @@ setMethod("show",
 #'             dimension. See \code{\link{drop}} for further details.
 #' 
 #' @docType methods
+#' @name Extract
 #' @rdname Extract
 #' @aliases [,cfDataList,ANY,ANY,ANY-method
 #' 
 #' @importFrom methods setMethod
 setMethod("[",
           signature(x = "cfDataList", i = "ANY", j = "ANY", drop = "ANY"),
-          function (x, i, j, drop){
+          function (x, i, j){
             if (!missing(j))
               warning("column subscripts ignored")
-            if (!missing(drop))
-              warning("drop ignored")
             x@.Data[[i]]
           }
 )

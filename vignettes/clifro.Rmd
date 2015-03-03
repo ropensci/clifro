@@ -126,31 +126,19 @@ We can see that the pressure and surface wind data only span one year.
 There is now a list of 4 dataframes in R containing all the available data for
 each of the stations and datatypes chosen above. The plotting is simply done 
 with a call to `plot`, the type of plot and plotting options depends on the 
-datatype. See `?'plot,cfDataList,missing-method'` for details on default `clifro`
-plotting. The following are examples of some of the plots possible with `clifro`, 
-note how the optional `ggtheme` argument changes the look of the plots.
+datatype. See `?'plot.cfDataList'` for details on default `clifro`
+plotting. The following are examples of *some* of the plots possible with 
+`clifro`, note how the optional `ggtheme` argument changes the look of the plots.
 
 ## MSL Atmospheric Pressure
-This is the first dataframe in `cf.datalist`.
+This is the first dataframe in `cf.datalist`. Since the first argument passed to 
+`plot` is a list of different datatypes (`cfDataList`), the second argument 
+(`y`) tells the `plot` method which of the four dataframes to plot.
 
-```{r,eval=FALSE}
-plot(cf.datalist, 1, ggtheme = "bw")
-
-# Equivalent to:
-# plot(cf.datalist[1], ggtheme = "bw")
-#
-# And because y = 1 is the default, this is also equivalent
-# plot(cf.datalist, ggtheme = "bw")
-```
-
-![MSL Atmospheric Pressure][mslAtmosPress]
-
-Since the first argument passed to `plot` is a list of different datatypes 
-(`cfDataList`), the second argument (`y`) tells the `plot` method which of the 
-four dataframes to plot.
-
-Since the plot method returns a `ggplot` object, we can easily modify the plots 
-using [ggplot2](http://ggplot2.org/).
+We could therefore simply type `plot(cf.datalist, y = 1)` and get a nice plot of
+the MSL atmospheric pressure, but it is usually nice to modify the defaults 
+slightly. Since the plot method returns a `ggplot` object, we can easily modify 
+the plots using [ggplot2](http://ggplot2.org/).
 
 ```{r,eval=FALSE}
 # Load the ggplot2 library for element_text() and geom_smooth() functions
@@ -185,18 +173,12 @@ deficit/runoff.
 ```{r,eval=FALSE}
 # Try yet another ggtheme
 plot(cf.datalist, 3, ggtheme = "light")
+
+# Or only plot the rainfall data
+# plot(cf.datalist, 3, ggtheme = "light", include_runoff = FALSE)
 ```
 
 ![Rain with Soil Deficit and Runoff][rainRunoff]
-
-```{r, eval=FALSE}
-# Don't plot the soil deficit and runoff, and allow the y-axis 
-# scales to differ between stations
-plot(cf.datalist, 3, include_runoff = FALSE, 
-     ggtheme = "light", scales = "free_y")
-```
-
-![Rain Amount][rain]
 
 ## Wind
 
@@ -218,25 +200,19 @@ plot(cf.datalist, 4, n_col = 2)
 
 ![Windrose][windrose]
 
-### Wind Speeds
+### Wind Speeds and Directions
+The other two plotting methods for wind data are the `speed_plot` and 
+`direction_plot` functions to assess the temporal variability in wind (plots not 
+shown).
 
 ```{r,eval=FALSE}
-# Plot the wind speeds through time, choose the 'classic' ggtheme,
-# allow the y-axis scales to differ for each station, and add a smooth
-speed_plot(cf.datalist, 4, ggtheme = "classic", scales = "free_y") +
-  geom_smooth(method = "loess", span = 1/4)
-```
+# Plot the wind speeds through time, choose the 'classic' ggtheme and
+# allow the y-axis scales to differ for each station
+speed_plot(cf.datalist, 4, ggtheme = "classic", scales = "free_y")
 
-![wind Speed][windSpeed]
-
-### Wind Directions
-
-```{r,eval=FALSE}
 # Plot wind direction contours through time
 direction_plot(cf.datalist, 4, n_col = 2)
 ```
-
-![Wind Direction][windDir]
 
 # Data Export
 
@@ -267,11 +243,7 @@ exploration and analysis stage.
 [chooseDatatype]: choose-datatype.html
 [clifrostation]: cfStation.html
 
-[mslAtmosPress]: figures/mslAtmosPress.png "MSL Atmospheric Pressure"
 [mslAtmosPress2]: figures/mslAtmosPress2.png "Improved MSL Atmospheric Pressure"
 [temperature]: figures/temperature.png "Temperature Extremes"
 [rainRunoff]: figures/rainRunoff.png "Rain with Soil Deficit and Runoff"
-[rain]: figures/rain.png "Rain Amount"
 [windrose]: figures/windrose.png "Windrose"
-[windSpeed]: figures/windSpeed.png "Wind Speed"
-[windDir]: figures/windDir.png "Wind Direction"

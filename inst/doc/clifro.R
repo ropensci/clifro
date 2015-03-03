@@ -24,15 +24,6 @@ my.stations[, 1:5]
 #  cf.datalist
 
 ## ----,eval=FALSE---------------------------------------------------------
-#  plot(cf.datalist, 1, ggtheme = "bw")
-#  
-#  # Equivalent to:
-#  # plot(cf.datalist[1], ggtheme = "bw")
-#  #
-#  # And because y = 1 is the default, this is also equivalent
-#  # plot(cf.datalist, ggtheme = "bw")
-
-## ----,eval=FALSE---------------------------------------------------------
 #  # Load the ggplot2 library for element_text() and geom_smooth() functions
 #  library(ggplot2)
 #  
@@ -48,24 +39,19 @@ my.stations[, 1:5]
 ## ----,eval=FALSE---------------------------------------------------------
 #  # Try yet another ggtheme
 #  plot(cf.datalist, 3, ggtheme = "light")
-
-## ----, eval=FALSE--------------------------------------------------------
-#  # Don't plot the soil deficit and runoff, and allow the y-axis
-#  # scales to differ between stations
-#  plot(cf.datalist, 3, include_runoff = FALSE,
-#       ggtheme = "light", scales = "free_y")
+#  
+#  # Or only plot the rainfall data
+#  # plot(cf.datalist, 3, ggtheme = "light", include_runoff = FALSE)
 
 ## ----,eval=FALSE---------------------------------------------------------
 #  # Defaults to windrose
 #  plot(cf.datalist, 4, n_col = 2)
 
 ## ----,eval=FALSE---------------------------------------------------------
-#  # Plot the wind speeds through time, choose the 'classic' ggtheme,
-#  # allow the y-axis scales to differ for each station, and add a smooth
-#  speed_plot(cf.datalist, 4, ggtheme = "classic", scales = "free_y") +
-#    geom_smooth(method = "loess", span = 1/4)
-
-## ----,eval=FALSE---------------------------------------------------------
+#  # Plot the wind speeds through time, choose the 'classic' ggtheme and
+#  # allow the y-axis scales to differ for each station
+#  speed_plot(cf.datalist, 4, ggtheme = "classic", scales = "free_y")
+#  
 #  # Plot wind direction contours through time
 #  direction_plot(cf.datalist, 4, n_col = 2)
 

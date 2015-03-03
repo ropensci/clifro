@@ -18,6 +18,7 @@ output:
 ```{r, echo=FALSE}
 library(clifro)
 ```
+# Introduction
 
 Choosing `clifro` stations is made easy with the single `cf_find_station`
 function. This function is all that is required to find clifro stations. This
