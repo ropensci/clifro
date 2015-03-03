@@ -9,6 +9,10 @@ install:
   - ./travis-tool.sh r_binary_install XML stringr
   - ./travis-tool.sh install_deps
 
+env:
+  - _R_CHECK_FORCE_SUGGESTS_=0
+  - WARNINGS_ARE_ERRORS=1
+
 script:
   - ./travis-tool.sh run_tests
 
