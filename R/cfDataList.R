@@ -42,10 +42,14 @@ setMethod("show",
 #' \code{\link{data.frame}} objects.
 #' 
 #' @param x a \pkg{clifro} object
-#' @param i, j, indices specifying elements to extract. Indices are 
-#'              \code{numeric} or \code{character} vectors or empty (missing) or
-#'              \code{NULL}. Character vectors will be matched to the names of 
-#'              the object.
+#' @param i indices specifying elements to extract. Indices are 
+#'          \code{numeric} or \code{character} vectors or empty (missing) or
+#'          \code{NULL}. Character vectors will be matched to the names of 
+#'          the object.
+#' @param j indices specifying elements to extract. Indices are 
+#'          \code{numeric} or \code{character} vectors or empty (missing) or
+#'          \code{NULL}. Character vectors will be matched to the names of 
+#'          the object.
 #' @param name a literal character string. This is partially matched to the 
 #'             names of the object.
 #' @param drop if \code{TRUE}, the result is coerced to the lowest possible 

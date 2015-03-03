@@ -29,7 +29,12 @@
 \arguments{
 \item{x}{a \pkg{clifro} object}
 
-\item{i,}{j, indices specifying elements to extract. Indices are
+\item{i}{indices specifying elements to extract. Indices are
+\code{numeric} or \code{character} vectors or empty (missing) or
+\code{NULL}. Character vectors will be matched to the names of
+the object.}
+
+\item{j}{indices specifying elements to extract. Indices are
 \code{numeric} or \code{character} vectors or empty (missing) or
 \code{NULL}. Character vectors will be matched to the names of
 the object.}
