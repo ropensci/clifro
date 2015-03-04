@@ -367,7 +367,7 @@ Takaka. From
 we can see that the latitude is -40.85 and the longitude is 172.8. We are 
 interested in all open stations within a 10km radius of the main township.</p>
 
-<pre><code class="r">## takaka.town.st = cf_find_station(lat = -40.85, long = 172.8, rad = 10, search = &quot;latlong&quot;)
+<pre><code class="r">takaka.town.st = cf_find_station(lat = -40.85, long = 172.8, rad = 10, search = &quot;latlong&quot;)
 takaka.town.st[, -c(8, 9)]
 </code></pre>
 
@@ -402,7 +402,7 @@ will need a <a href="http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro">CliFlo ac
 to get data from other stations.</p>
 
 <pre><code class="r"># Create a clifro datatype for hourly rain
-## hourly.rain.dt = cf_datatype(3, 1, 2)
+hourly.rain.dt = cf_datatype(3, 1, 2)
 hourly.rain.dt
 </code></pre>
 
@@ -410,14 +410,8 @@ hourly.rain.dt
 ## dt1 Precipitation Rain (fixed periods)   [Hourly]
 </code></pre>
 
-<pre><code class="r">## # Conduct the search
+<pre><code class="r"># Conduct the search
 cf_find_station(&quot;takaka&quot;, datatype = hourly.rain.dt)
-</code></pre>
-
-<pre><code>##          name network agent      start        end open distance       lat
-## 1) Takaka Ews  F02885 23849 2002-06-02 2015-01-30 TRUE        0 -40.86364
-##         lon
-## 1) 172.8057
 </code></pre>
 
 <pre><code>##          name network agent      start        end open distance       lat      lon
@@ -439,9 +433,9 @@ for <code>cfDatatype</code>s (see the <a href="choose-datatype.html">choose data
 township in the South Island, and the open stations in Kaitaia, in the North 
 Island that collect hourly rain data.</p>
 
-<pre><code class="r">## my.composite.search = takaka.town.st + cf_find_station(&quot;kaitaia&quot;,
-##                                                        search = &quot;region&quot;,
-##                                                        datatype = hourly.rain.dt)
+<pre><code class="r">my.composite.search = takaka.town.st + cf_find_station(&quot;kaitaia&quot;, 
+                                                       search = &quot;region&quot;, 
+                                                       datatype = hourly.rain.dt)
 my.composite.search
 </code></pre>
 

@@ -133,8 +133,12 @@ To repeat our minimal example without the use of the menus we would just pass
 them as arguments to the `cf_datatype` function. These arguments are the 
 selections of each of the four menus (in order) separated by a comma.
 
-```{r, eval = -1}
+```{r, eval = FALSE}
 surfaceWind.dt = cf_datatype(2, 1, 4, 3)
+surfaceWind.dt
+```
+
+```{r, echo = FALSE}
 surfaceWind.dt
 ```
 
@@ -193,8 +197,12 @@ temperatureExtremes.dt = new("cfDatatype"
 )
 ```
 
-```{r, eval = -1}
+```{r, eval = FALSE}
 surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
+surfaceWind.dt
+```
+
+```{r, echo = FALSE}
 surfaceWind.dt
 ```
 
@@ -220,24 +228,46 @@ laborious alternative is to create each of these datatypes without the menus.
 This does of course assume we know the selections at each branch of the
 [datatype selection menus](http://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1).
 
-```{r, eval=-c(2, 5, 8, 11)}
+```{r, eval=FALSE}
 # Hourly and 9am surface wind (knots)
 surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
 surfaceWind.dt
+```
 
+```{r, echo = FALSE}
+surfaceWind.dt
+```
+
+```{r, eval = FALSE}
 # Hourly and daily rainfall
 rainfall.dt = cf_datatype(3, 1, c(1, 2))
 rainfall.dt
+```
 
+```{r, echo = FALSE}
+rainfall.dt
+```
+
+```{r, eval = FALSE}
 # Hourly counts of lightning flashes
 lightning.dt = cf_datatype(6, 1, 1)
 lightning.dt
+```
 
+```{r, echo = FALSE}
+lightning.dt
+```
+
+```{r, eval = FALSE}
 # Daily and hourly grass temperature extremes
 temperatureExtremes.dt = cf_datatype(4, 2, c(5, 6))
 temperatureExtremes.dt
 
 # Note: only the surface wind datatype requires combo options
+```
+
+```{r, echo = FALSE}
+temperatureExtremes.dt
 ```
 
 This results in 4 separate objects in R containing the datatypes and their 
@@ -279,11 +309,15 @@ query1.dt = new("cfDatatype"
 )
 ```
 
-```{r, tidy = FALSE, eval = -c(1:4)}
+```{r, tidy = FALSE, eval = FALSE}
 query1.dt = cf_datatype(c(2, 3, 6, 4), 
                         c(1, 1, 1, 2),
                         list(c(2, 4), c(1, 2), 1, c(5, 6)),
                         c(3, NA, NA, NA))
+query1.dt
+```
+
+```{r, echo = FALSE}
 query1.dt
 ```
 

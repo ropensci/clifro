@@ -34,8 +34,11 @@ takaka.town.df = structure(list(name = structure(c(2L, 3L, 1L), .Label = c("Taka
 "lon"), row.names = c(NA, -3L), class = "data.frame")
 takaka.town.st = new("cfStation", takaka.town.df)
 
-## ----, eval = -1---------------------------------------------------------
-takaka.town.st = cf_find_station(lat = -40.85, long = 172.8, rad = 10, search = "latlong")
+## ----, eval = FALSE------------------------------------------------------
+#  takaka.town.st = cf_find_station(lat = -40.85, long = 172.8, rad = 10, search = "latlong")
+#  takaka.town.st[, -c(8, 9)]
+
+## ----, echo = -1---------------------------------------------------------
 takaka.town.st[, -c(8, 9)]
 
 # We may rather order the stations by distance from the township
@@ -53,13 +56,17 @@ hourly.rain.dt = new("cfDatatype"
     , dt_option_length = 4
 )
 
-## ----, eval = -c(2, 5)---------------------------------------------------
-# Create a clifro datatype for hourly rain
-hourly.rain.dt = cf_datatype(3, 1, 2)
+## ----, eval = FALSE------------------------------------------------------
+#  # Create a clifro datatype for hourly rain
+#  hourly.rain.dt = cf_datatype(3, 1, 2)
+#  hourly.rain.dt
+
+## ----, echo = FALSE------------------------------------------------------
 hourly.rain.dt
 
-# Conduct the search
-cf_find_station("takaka", datatype = hourly.rain.dt)
+## ----, eval = FALSE------------------------------------------------------
+#  # Conduct the search
+#  cf_find_station("takaka", datatype = hourly.rain.dt)
 
 ## ----, echo = FALSE------------------------------------------------------
 kaitaia.df = structure(list(name = structure(c(4L, 9L, 3L, 8L, 1L, 6L, 5L, 
@@ -86,10 +93,13 @@ kaitaia.df = structure(list(name = structure(c(4L, 9L, 3L, 8L, 1L, 6L, 5L,
 kaitaia.st = new("cfStation", kaitaia.df)
 my.composite.search = takaka.town.st + kaitaia.st
 
-## ----, eval = -(1:3)-----------------------------------------------------
-my.composite.search = takaka.town.st + cf_find_station("kaitaia", 
-                                                       search = "region", 
-                                                       datatype = hourly.rain.dt)
+## ----, eval = FALSE------------------------------------------------------
+#  my.composite.search = takaka.town.st + cf_find_station("kaitaia",
+#                                                         search = "region",
+#                                                         datatype = hourly.rain.dt)
+#  my.composite.search
+
+## ----, echo = -1---------------------------------------------------------
 my.composite.search
 
 # How long have these stations been open for?

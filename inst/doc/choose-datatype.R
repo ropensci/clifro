@@ -46,8 +46,11 @@ menu.opts("Units", c("m/s", "km/hr", "knots"))
 ## ------------------------------------------------------------------------
 surfaceWind.dt
 
-## ----, eval = -1---------------------------------------------------------
-surfaceWind.dt = cf_datatype(2, 1, 4, 3)
+## ----, eval = FALSE------------------------------------------------------
+#  surfaceWind.dt = cf_datatype(2, 1, 4, 3)
+#  surfaceWind.dt
+
+## ----, echo = FALSE------------------------------------------------------
 surfaceWind.dt
 
 ## ----, echo = FALSE------------------------------------------------------
@@ -96,28 +99,46 @@ temperatureExtremes.dt = new("cfDatatype"
     , dt_option_length = 6
 )
 
-## ----, eval = -1---------------------------------------------------------
-surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
+## ----, eval = FALSE------------------------------------------------------
+#  surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
+#  surfaceWind.dt
+
+## ----, echo = FALSE------------------------------------------------------
 surfaceWind.dt
 
-## ----, eval=-c(2, 5, 8, 11)----------------------------------------------
-# Hourly and 9am surface wind (knots)
-surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
+## ----, eval=FALSE--------------------------------------------------------
+#  # Hourly and 9am surface wind (knots)
+#  surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
+#  surfaceWind.dt
+
+## ----, echo = FALSE------------------------------------------------------
 surfaceWind.dt
 
-# Hourly and daily rainfall
-rainfall.dt = cf_datatype(3, 1, c(1, 2))
+## ----, eval = FALSE------------------------------------------------------
+#  # Hourly and daily rainfall
+#  rainfall.dt = cf_datatype(3, 1, c(1, 2))
+#  rainfall.dt
+
+## ----, echo = FALSE------------------------------------------------------
 rainfall.dt
 
-# Hourly counts of lightning flashes
-lightning.dt = cf_datatype(6, 1, 1)
+## ----, eval = FALSE------------------------------------------------------
+#  # Hourly counts of lightning flashes
+#  lightning.dt = cf_datatype(6, 1, 1)
+#  lightning.dt
+
+## ----, echo = FALSE------------------------------------------------------
 lightning.dt
 
-# Daily and hourly grass temperature extremes
-temperatureExtremes.dt = cf_datatype(4, 2, c(5, 6))
-temperatureExtremes.dt
+## ----, eval = FALSE------------------------------------------------------
+#  # Daily and hourly grass temperature extremes
+#  temperatureExtremes.dt = cf_datatype(4, 2, c(5, 6))
+#  temperatureExtremes.dt
+#  
+#  # Note: only the surface wind datatype requires combo options
 
-# Note: only the surface wind datatype requires combo options
+## ----, echo = FALSE------------------------------------------------------
+temperatureExtremes.dt
 
 ## ----, echo = FALSE------------------------------------------------------
 query1.dt = new("cfDatatype"
@@ -139,11 +160,14 @@ query1.dt = new("cfDatatype"
     , dt_option_length = c(5, 4, 1, 6)
 )
 
-## ----, tidy = FALSE, eval = -c(1:4)--------------------------------------
-query1.dt = cf_datatype(c(2, 3, 6, 4), 
-                        c(1, 1, 1, 2),
-                        list(c(2, 4), c(1, 2), 1, c(5, 6)),
-                        c(3, NA, NA, NA))
+## ----, tidy = FALSE, eval = FALSE----------------------------------------
+#  query1.dt = cf_datatype(c(2, 3, 6, 4),
+#                          c(1, 1, 1, 2),
+#                          list(c(2, 4), c(1, 2), 1, c(5, 6)),
+#                          c(3, NA, NA, NA))
+#  query1.dt
+
+## ----, echo = FALSE------------------------------------------------------
 query1.dt
 
 ## ------------------------------------------------------------------------

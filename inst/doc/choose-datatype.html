@@ -328,7 +328,7 @@ a lot faster and a much less tedious.</p>
 them as arguments to the <code>cf_datatype</code> function. These arguments are the 
 selections of each of the four menus (in order) separated by a comma.</p>
 
-<pre><code class="r">## surfaceWind.dt = cf_datatype(2, 1, 4, 3)
+<pre><code class="r">surfaceWind.dt = cf_datatype(2, 1, 4, 3)
 surfaceWind.dt
 </code></pre>
 
@@ -345,7 +345,7 @@ the menu to choose more than one option is an iterative process however we can
 just update our third function argument to deal with this in a more 
 time-efficient manner.</p>
 
-<pre><code class="r">## surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
+<pre><code class="r">surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
 surfaceWind.dt
 </code></pre>
 
@@ -378,7 +378,7 @@ This does of course assume we know the selections at each branch of the
 <a href="http://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1">datatype selection menus</a>.</p>
 
 <pre><code class="r"># Hourly and 9am surface wind (knots)
-## surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
+surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
 surfaceWind.dt
 </code></pre>
 
@@ -386,7 +386,7 @@ surfaceWind.dt
 ## dt1    Wind Surface wind [HlyWind,9amWind]    knots
 </code></pre>
 
-<pre><code class="r">## # Hourly and daily rainfall
+<pre><code class="r"># Hourly and daily rainfall
 rainfall.dt = cf_datatype(3, 1, c(1, 2))
 rainfall.dt
 </code></pre>
@@ -395,21 +395,24 @@ rainfall.dt
 ## dt1 Precipitation Rain (fixed periods) [Daily ,Hourly]
 </code></pre>
 
-<pre><code class="r">## 
-# Hourly counts of lightning flashes
+<pre><code class="r"># Hourly counts of lightning flashes
 lightning.dt = cf_datatype(6, 1, 1)
-## lightning.dt
+lightning.dt
+</code></pre>
 
-# Daily and hourly grass temperature extremes
+<pre><code>##     dt.name   dt.type dt.options dt.combo
+## dt1 Weather Lightning     [Ltng]
+</code></pre>
+
+<pre><code class="r"># Daily and hourly grass temperature extremes
 temperatureExtremes.dt = cf_datatype(4, 2, c(5, 6))
 temperatureExtremes.dt
+
+# Note: only the surface wind datatype requires combo options
 </code></pre>
 
 <pre><code>##                      dt.name      dt.type          dt.options dt.combo
 ## dt1 Temperature and Humidity Max_min_temp [DlyGrass,HlyGrass]
-</code></pre>
-
-<pre><code class="r"># Note: only the surface wind datatype requires combo options
 </code></pre>
 
 <p>This results in 4 separate objects in R containing the datatypes and their 
@@ -462,10 +465,10 @@ an R object containing the datatypes we are interested in. We can then just pass
 these values into the <code>cf_datatype</code> function to return a single R object 
 containing all of our datatypes and options.</p>
 
-<pre><code class="r">## query1.dt = cf_datatype(c(2, 3, 6, 4),
-##                         c(1, 1, 1, 2),
-##                         list(c(2, 4), c(1, 2), 1, c(5, 6)),
-##                         c(3, NA, NA, NA))
+<pre><code class="r">query1.dt = cf_datatype(c(2, 3, 6, 4), 
+                        c(1, 1, 1, 2),
+                        list(c(2, 4), c(1, 2), 1, c(5, 6)),
+                        c(3, NA, NA, NA))
 query1.dt
 </code></pre>
 
