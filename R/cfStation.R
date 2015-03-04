@@ -247,7 +247,7 @@ setMethod("[",
               x = data.frame(x)[i, j, drop = drop]
             else{
               x@.Data = lapply(x@.Data, "[", i)
-              x@row.names = seq_along(i)
+              x@row.names = paste(seq_along(i))
             }
             x
           }
