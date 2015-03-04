@@ -1,7 +1,7 @@
 Package: clifro
 Type: Package
 Title: Import Data from CliFlo to R
-Version: 2.2-4
+Version: 2.3-0
 Date: 2015-03-04
 Authors@R: person("Blake", "Seers", role = c("aut", "cre"),
     email = "blake.seers@gmail.com")
