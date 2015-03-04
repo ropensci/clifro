@@ -439,51 +439,51 @@ Island that collect hourly rain data.</p>
 my.composite.search
 </code></pre>
 
-<pre><code>##     name network agent      start        end open distance       lat
-## 1)     4       2 18183 2000-06-15 2015-03-03 TRUE      0.0 -35.06770
-## 2)     9       7 37131 2009-06-04 2015-03-03 TRUE      0.0 -35.72035
-## 3)     3       6  1134 1985-11-14 2015-03-02 TRUE      0.0 -35.42400
-## 4)     8       9  1196 1995-01-01 2015-03-02 TRUE      0.0 -35.12900
-## 5)     1       1  1002 1995-01-01 2015-03-02 TRUE      0.0 -34.43200
-## 6)     6       5 37258 2008-06-26 2015-03-02 TRUE      0.0 -35.26200
-## 7)     2       1  3788 1970-08-01 2015-03-01 TRUE      2.6 -40.87200
-## 8)     3       2  3790 1986-07-01 2015-03-01 TRUE      5.7 -40.84500
-## 9)     1       3 23849 2002-04-30 2015-03-01 TRUE      1.6 -40.86364
-## 10)    5       3 17067 1998-12-17 2015-02-25 TRUE      0.0 -35.13500
-## 11)    7       4  1056 2002-06-28 2015-02-14 TRUE      0.0 -35.18300
-## 12)    2       8 25119 2003-10-30 2015-02-13 TRUE      0.0 -35.93145
-##          lon
-## 1)  173.2874
-## 2)  173.6515
-## 3)  173.8220
-## 4)  174.0150
-## 5)  172.6820
-## 6)  173.9110
-## 7)  172.8090
-## 8)  172.8670
-## 9)  172.8057
-## 10) 173.2620
-## 11) 173.9260
-## 12) 173.8532
+<pre><code>##                       name network agent      start        end open
+## 1)        Kaitaia Aero Ews  A53026 18183 2000-06-15 2015-03-03 TRUE
+## 2)            Trounson Cws  A53762 37131 2009-06-04 2015-03-03 TRUE
+## 3)             Kaikohe Aws  A53487  1134 1985-11-14 2015-03-02 TRUE
+## 4)             Purerua Aws  A54101  1196 1995-01-01 2015-03-02 TRUE
+## 5)         Cape Reinga Aws  A42462  1002 1995-01-01 2015-03-02 TRUE
+## 6)  Kerikeri Aerodrome Aws  A53295 37258 2008-06-26 2015-03-02 TRUE
+## 7)    Takaka, Kotinga Road  F02882  3788 1970-08-01 2015-03-01 TRUE
+## 8)           Takaka Pohara  F02884  3790 1986-07-01 2015-03-01 TRUE
+## 9)              Takaka Ews  F02885 23849 2002-04-30 2015-03-01 TRUE
+## 10)            Kaitaia Ews  A53127 17067 1998-12-17 2015-02-25 TRUE
+## 11)           Kerikeri Ews  A53191  1056 2002-06-28 2015-02-14 TRUE
+## 12)       Dargaville 2 Ews  A53987 25119 2003-10-30 2015-02-13 TRUE
+##     distance       lat      lon
+## 1)       0.0 -35.06770 173.2874
+## 2)       0.0 -35.72035 173.6515
+## 3)       0.0 -35.42400 173.8220
+## 4)       0.0 -35.12900 174.0150
+## 5)       0.0 -34.43200 172.6820
+## 6)       0.0 -35.26200 173.9110
+## 7)       2.6 -40.87200 172.8090
+## 8)       5.7 -40.84500 172.8670
+## 9)       1.6 -40.86364 172.8057
+## 10)      0.0 -35.13500 173.2620
+## 11)      0.0 -35.18300 173.9260
+## 12)      0.0 -35.93145 173.8532
 </code></pre>
 
 <pre><code class="r"># How long have these stations been open for?
 transform(my.composite.search, ndays = round(end - start))[, c(1, 10)]
 </code></pre>
 
-<pre><code>##    name      ndays
-## 1     4  5374 days
-## 2     9  2098 days
-## 3     3 10700 days
-## 4     8  7365 days
-## 5     1  7365 days
-## 6     6  2440 days
-## 7     2 16283 days
-## 8     3 10470 days
-## 9     1  4688 days
-## 10    5  5914 days
-## 11    7  4614 days
-## 12    2  4124 days
+<pre><code>##                      name      ndays
+## 1        Kaitaia Aero Ews  5374 days
+## 2            Trounson Cws  2098 days
+## 3             Kaikohe Aws 10700 days
+## 4             Purerua Aws  7365 days
+## 5         Cape Reinga Aws  7365 days
+## 6  Kerikeri Aerodrome Aws  2440 days
+## 7    Takaka, Kotinga Road 16283 days
+## 8           Takaka Pohara 10470 days
+## 9              Takaka Ews  4688 days
+## 10            Kaitaia Ews  5914 days
+## 11           Kerikeri Ews  4614 days
+## 12       Dargaville 2 Ews  4124 days
 </code></pre>
 
 <h1>So where are these stations?</h1>

@@ -222,8 +222,10 @@ setMethod("+",
           function(e1, e2){
               new.obj = new("cfStation",
                             data.frame(
-                            name = c(e1@.Data[[1]], e2@.Data[[1]]),
-                            network = c(e1@.Data[[2]], e2@.Data[[2]]),
+                            name = c(as.character(e1@.Data[[1]]), 
+                                     as.character(e2@.Data[[1]])),
+                            network = c(as.character(e1@.Data[[2]]), 
+                                        as.character(e2@.Data[[2]])),
                             agent = c(e1@.Data[[3]], e2@.Data[[3]]),
                             start_date = c(e1@.Data[[4]], e2@.Data[[4]]),
                             end_date = c(e1@.Data[[5]], e2@.Data[[5]]),
