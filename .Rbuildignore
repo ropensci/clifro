@@ -1,3 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-.travis.yml
+^\.travis\.yml$
+^NEWS\.md$
+^\.Rprofile$
+^cran-comments.md$
+^cran-comments\.md$
