@@ -1,13 +1,23 @@
-language: r
+language: c
 
-apt_packages:
- - libcurl4-openssl-dev
- - libxml2-dev
+before_install:
+  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+  - chmod 755 ./travis-tool.sh
+  - ./travis-tool.sh bootstrap
 
-r_binary_packages:
-  - XML
+install:
+  - ./travis-tool.sh r_binary_install XML stringr
+  - ./travis-tool.sh install_deps
 
-warnings_are_errors: true
+env:
+  - _R_CHECK_FORCE_SUGGESTS_=0
+  - WARNINGS_ARE_ERRORS=1
+
+script:
+  - ./travis-tool.sh run_tests
+
+on_failure:
+  - ./travis-tool.sh dump_logs
 
 notifications:
   email:
