@@ -264,32 +264,19 @@ station name matching &ldquo;takaka&rdquo; on CliFlo will return these stations.
 cf_find_station(&quot;takaka&quot;, status = &quot;all&quot;)
 </code></pre>
 
-<pre><code>##                     name network agent      start        end  open
-## 1)  Takaka, Kotinga Road  F02882  3788 1970-08-01 2015-03-01  TRUE
-## 2)         Takaka Pohara  F02884  3790 1986-07-01 2015-03-01  TRUE
-## 3)        Upper Takaka 2  F12083 11519 1995-07-12 2015-03-01  TRUE
-## 4)            Takaka Ews  F02885 23849 2002-04-30 2015-03-01  TRUE
-## 5)     Takaka, Kotinga 2  F02883  3789 1985-11-30 2012-07-01 FALSE
-## 6)          Upper Takaka  F12082  7316 1991-10-31 1992-10-31 FALSE
-## 7)    Takaka,Patons Rock  F02772  3779 1969-10-01 1975-01-01 FALSE
-## 8)      Takaka,Kotinga 1  F02971  3794 1961-12-01 1971-08-01 FALSE
-## 9)           Takaka Aero  F02871  3785 1936-11-01 1970-04-01 FALSE
-## 10)          Takaka Hill  F12081  3833 1947-09-01 1959-11-01 FALSE
-## 11)         Takaka,Bu Bu  F02872  3786 1933-04-01 1945-11-30 FALSE
-## 12)               Takaka  F02881  3787 1904-01-01 1927-10-01 FALSE
-##     distance       lat      lon
-## 1)         0 -40.87200 172.8090
-## 2)         0 -40.84500 172.8670
-## 3)         0 -41.01516 172.8258
-## 4)         0 -40.86364 172.8057
-## 5)         0 -40.88200 172.8010
-## 6)         0 -41.05100 172.8330
-## 7)         0 -40.78900 172.7570
-## 8)         0 -40.90000 172.7750
-## 9)         0 -40.81600 172.7720
-## 10)        0 -41.01700 172.8670
-## 11)        0 -40.85000 172.7330
-## 12)        0 -40.81700 172.8000
+<pre><code>##                     name network agent      start        end  open distance       lat      lon
+## 1)  Takaka, Kotinga Road  F02882  3788 1970-08-01 2015-03-01  TRUE        0 -40.87200 172.8090
+## 2)         Takaka Pohara  F02884  3790 1986-07-01 2015-03-01  TRUE        0 -40.84500 172.8670
+## 3)        Upper Takaka 2  F12083 11519 1995-07-12 2015-03-01  TRUE        0 -41.01516 172.8258
+## 4)            Takaka Ews  F02885 23849 2002-04-30 2015-03-01  TRUE        0 -40.86364 172.8057
+## 5)     Takaka, Kotinga 2  F02883  3789 1985-11-30 2012-07-01 FALSE        0 -40.88200 172.8010
+## 6)          Upper Takaka  F12082  7316 1991-10-31 1992-10-31 FALSE        0 -41.05100 172.8330
+## 7)    Takaka,Patons Rock  F02772  3779 1969-10-01 1975-01-01 FALSE        0 -40.78900 172.7570
+## 8)      Takaka,Kotinga 1  F02971  3794 1961-12-01 1971-08-01 FALSE        0 -40.90000 172.7750
+## 9)           Takaka Aero  F02871  3785 1936-11-01 1970-04-01 FALSE        0 -40.81600 172.7720
+## 10)          Takaka Hill  F12081  3833 1947-09-01 1959-11-01 FALSE        0 -41.01700 172.8670
+## 11)         Takaka,Bu Bu  F02872  3786 1933-04-01 1945-11-30 FALSE        0 -40.85000 172.7330
+## 12)               Takaka  F02881  3787 1904-01-01 1927-10-01 FALSE        0 -40.81700 172.8000
 </code></pre>
 
 <p>This shows that 8 of these 12 stations are closed. The search in <code>clifro</code> does 
@@ -298,16 +285,11 @@ not ignore the station status.</p>
 <pre><code class="r">cf_find_station(&quot;takaka&quot;, status = &quot;open&quot;)
 </code></pre>
 
-<pre><code>##                    name network agent      start        end open distance
-## 1) Takaka, Kotinga Road  F02882  3788 1970-08-01 2015-03-01 TRUE        0
-## 2)        Takaka Pohara  F02884  3790 1986-07-01 2015-03-01 TRUE        0
-## 3)       Upper Takaka 2  F12083 11519 1995-07-12 2015-03-01 TRUE        0
-## 4)           Takaka Ews  F02885 23849 2002-04-30 2015-03-01 TRUE        0
-##          lat      lon
-## 1) -40.87200 172.8090
-## 2) -40.84500 172.8670
-## 3) -41.01516 172.8258
-## 4) -40.86364 172.8057
+<pre><code>##                    name network agent      start        end open distance       lat      lon
+## 1) Takaka, Kotinga Road  F02882  3788 1970-08-01 2015-03-01 TRUE        0 -40.87200 172.8090
+## 2)        Takaka Pohara  F02884  3790 1986-07-01 2015-03-01 TRUE        0 -40.84500 172.8670
+## 3)       Upper Takaka 2  F12083 11519 1995-07-12 2015-03-01 TRUE        0 -41.01516 172.8258
+## 4)           Takaka Ews  F02885 23849 2002-04-30 2015-03-01 TRUE        0 -40.86364 172.8057
 </code></pre>
 
 <p>Stations are considered open in <code>clifro</code> if the final date returned from the
@@ -324,36 +306,21 @@ network ID&#39;s match <code>F028</code>.</p>
 <pre><code class="r">cf_find_station(&quot;f028&quot;, search = &quot;network&quot;, status = &quot;all&quot;)
 </code></pre>
 
-<pre><code>##                      name network agent      start        end  open
-## 1)   Takaka, Kotinga Road  F02882  3788 1970-08-01 2015-03-01  TRUE
-## 2)          Takaka Pohara  F02884  3790 1986-07-01 2015-03-01  TRUE
-## 3)             Takaka Ews  F02885 23849 2002-04-30 2015-03-01  TRUE
-## 4)      Takaka, Kotinga 2  F02883  3789 1985-11-30 2012-07-01 FALSE
-## 5)       Nelson,Mckay Hut  F02821  3780 1983-04-01 1993-08-16 FALSE
-## 6)          Gouland Downs  F02831  3781 1984-10-31 1993-08-16 FALSE
-## 7)  Golden Bay,Table Hl I  F02852  3783 1977-06-01 1991-11-23 FALSE
-## 8)  Golden Bay,Table Hl 2  F02853  3784 1977-06-01 1991-11-23 FALSE
-## 9)               Tarakohe  F02891  3791 1932-05-01 1989-01-01 FALSE
-## 10)           Takaka Aero  F02871  3785 1936-11-01 1970-04-01 FALSE
-## 11)             Totaranui  F02892  3792 1957-01-01 1960-08-31 FALSE
-## 12)          Takaka,Bu Bu  F02872  3786 1933-04-01 1945-11-30 FALSE
-## 13)                Takaka  F02881  3787 1904-01-01 1927-10-01 FALSE
-## 14)         Quartz Ranges  F02851  3782 1901-01-01 1902-08-31 FALSE
-##     distance       lat      lon
-## 1)         0 -40.87200 172.8090
-## 2)         0 -40.84500 172.8670
-## 3)         0 -40.86364 172.8057
-## 4)         0 -40.88200 172.8010
-## 5)         0 -40.89000 172.2130
-## 6)         0 -40.89200 172.3510
-## 7)         0 -40.80700 172.5560
-## 8)         0 -40.80700 172.5560
-## 9)         0 -40.82500 172.8980
-## 10)        0 -40.81600 172.7720
-## 11)        0 -40.82300 173.0020
-## 12)        0 -40.85000 172.7330
-## 13)        0 -40.81700 172.8000
-## 14)        0 -40.86700 172.5170
+<pre><code>##                      name network agent      start        end  open distance       lat      lon
+## 1)   Takaka, Kotinga Road  F02882  3788 1970-08-01 2015-03-01  TRUE        0 -40.87200 172.8090
+## 2)          Takaka Pohara  F02884  3790 1986-07-01 2015-03-01  TRUE        0 -40.84500 172.8670
+## 3)             Takaka Ews  F02885 23849 2002-04-30 2015-03-01  TRUE        0 -40.86364 172.8057
+## 4)      Takaka, Kotinga 2  F02883  3789 1985-11-30 2012-07-01 FALSE        0 -40.88200 172.8010
+## 5)       Nelson,Mckay Hut  F02821  3780 1983-04-01 1993-08-16 FALSE        0 -40.89000 172.2130
+## 6)          Gouland Downs  F02831  3781 1984-10-31 1993-08-16 FALSE        0 -40.89200 172.3510
+## 7)  Golden Bay,Table Hl I  F02852  3783 1977-06-01 1991-11-23 FALSE        0 -40.80700 172.5560
+## 8)  Golden Bay,Table Hl 2  F02853  3784 1977-06-01 1991-11-23 FALSE        0 -40.80700 172.5560
+## 9)               Tarakohe  F02891  3791 1932-05-01 1989-01-01 FALSE        0 -40.82500 172.8980
+## 10)           Takaka Aero  F02871  3785 1936-11-01 1970-04-01 FALSE        0 -40.81600 172.7720
+## 11)             Totaranui  F02892  3792 1957-01-01 1960-08-31 FALSE        0 -40.82300 173.0020
+## 12)          Takaka,Bu Bu  F02872  3786 1933-04-01 1945-11-30 FALSE        0 -40.85000 172.7330
+## 13)                Takaka  F02881  3787 1904-01-01 1927-10-01 FALSE        0 -40.81700 172.8000
+## 14)         Quartz Ranges  F02851  3782 1901-01-01 1902-08-31 FALSE        0 -40.86700 172.5170
 </code></pre>
 
 <p>Notice that the resulting dataframes in all of these searches are first ordered
@@ -400,7 +367,7 @@ Takaka. From
 we can see that the latitude is -40.85 and the longitude is 172.8. We are 
 interested in all open stations within a 10km radius of the main township.</p>
 
-<pre><code class="r">takaka.town.st = cf_find_station(lat = -40.85, long = 172.8, rad = 10, search = &quot;latlong&quot;)
+<pre><code class="r">## takaka.town.st = cf_find_station(lat = -40.85, long = 172.8, rad = 10, search = &quot;latlong&quot;)
 takaka.town.st[, -c(8, 9)]
 </code></pre>
 
@@ -435,7 +402,7 @@ will need a <a href="http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro">CliFlo ac
 to get data from other stations.</p>
 
 <pre><code class="r"># Create a clifro datatype for hourly rain
-hourly.rain.dt = cf_datatype(3, 1, 2)
+## hourly.rain.dt = cf_datatype(3, 1, 2)
 hourly.rain.dt
 </code></pre>
 
@@ -443,7 +410,7 @@ hourly.rain.dt
 ## dt1 Precipitation Rain (fixed periods)   [Hourly]
 </code></pre>
 
-<pre><code class="r"># Conduct the search
+<pre><code class="r">## # Conduct the search
 cf_find_station(&quot;takaka&quot;, datatype = hourly.rain.dt)
 </code></pre>
 
@@ -451,6 +418,10 @@ cf_find_station(&quot;takaka&quot;, datatype = hourly.rain.dt)
 ## 1) Takaka Ews  F02885 23849 2002-06-02 2015-01-30 TRUE        0 -40.86364
 ##         lon
 ## 1) 172.8057
+</code></pre>
+
+<pre><code>##          name network agent      start        end open distance       lat      lon
+## 1) Takaka Ews  F02885 23849 2002-06-02 2015-01-30 TRUE        0 -40.86364 172.8057
 </code></pre>
 
 <p>This tells us that the only <em>open</em> station in Takaka where hourly rain data 
@@ -468,57 +439,57 @@ for <code>cfDatatype</code>s (see the <a href="choose-datatype.html">choose data
 township in the South Island, and the open stations in Kaitaia, in the North 
 Island that collect hourly rain data.</p>
 
-<pre><code class="r">my.composite.search = takaka.town.st + cf_find_station(&quot;kaitaia&quot;, 
-                                                       search = &quot;region&quot;, 
-                                                       datatype = hourly.rain.dt)
+<pre><code class="r">## my.composite.search = takaka.town.st + cf_find_station(&quot;kaitaia&quot;,
+##                                                        search = &quot;region&quot;,
+##                                                        datatype = hourly.rain.dt)
 my.composite.search
 </code></pre>
 
-<pre><code>##                       name network agent      start        end open
-## 1)        Kaitaia Aero Ews  A53026 18183 2000-06-15 2015-03-02 TRUE
-## 2)            Trounson Cws  A53762 37131 2009-06-04 2015-03-02 TRUE
-## 3)    Takaka, Kotinga Road  F02882  3788 1970-08-01 2015-03-01 TRUE
-## 4)             Kaikohe Aws  A53487  1134 1985-11-14 2015-03-01 TRUE
-## 5)           Takaka Pohara  F02884  3790 1986-07-01 2015-03-01 TRUE
-## 6)             Purerua Aws  A54101  1196 1995-01-01 2015-03-01 TRUE
-## 7)         Cape Reinga Aws  A42462  1002 1995-01-01 2015-03-01 TRUE
-## 8)              Takaka Ews  F02885 23849 2002-04-30 2015-03-01 TRUE
-## 9)  Kerikeri Aerodrome Aws  A53295 37258 2008-06-26 2015-03-01 TRUE
-## 10)            Kaitaia Ews  A53127 17067 1998-12-17 2015-02-25 TRUE
-## 11)           Kerikeri Ews  A53191  1056 2002-06-28 2015-02-14 TRUE
-## 12)       Dargaville 2 Ews  A53987 25119 2003-10-30 2015-02-13 TRUE
-##     distance       lat      lon
-## 1)       0.0 -35.06770 173.2874
-## 2)       0.0 -35.72035 173.6515
-## 3)       2.6 -40.87200 172.8090
-## 4)       0.0 -35.42400 173.8220
-## 5)       5.7 -40.84500 172.8670
-## 6)       0.0 -35.12900 174.0150
-## 7)       0.0 -34.43200 172.6820
-## 8)       1.6 -40.86364 172.8057
-## 9)       0.0 -35.26200 173.9110
-## 10)      0.0 -35.13500 173.2620
-## 11)      0.0 -35.18300 173.9260
-## 12)      0.0 -35.93145 173.8532
+<pre><code>##     name network agent      start        end open distance       lat
+## 1)     4       2 18183 2000-06-15 2015-03-03 TRUE      0.0 -35.06770
+## 2)     9       7 37131 2009-06-04 2015-03-03 TRUE      0.0 -35.72035
+## 3)     3       6  1134 1985-11-14 2015-03-02 TRUE      0.0 -35.42400
+## 4)     8       9  1196 1995-01-01 2015-03-02 TRUE      0.0 -35.12900
+## 5)     1       1  1002 1995-01-01 2015-03-02 TRUE      0.0 -34.43200
+## 6)     6       5 37258 2008-06-26 2015-03-02 TRUE      0.0 -35.26200
+## 7)     2       1  3788 1970-08-01 2015-03-01 TRUE      2.6 -40.87200
+## 8)     3       2  3790 1986-07-01 2015-03-01 TRUE      5.7 -40.84500
+## 9)     1       3 23849 2002-04-30 2015-03-01 TRUE      1.6 -40.86364
+## 10)    5       3 17067 1998-12-17 2015-02-25 TRUE      0.0 -35.13500
+## 11)    7       4  1056 2002-06-28 2015-02-14 TRUE      0.0 -35.18300
+## 12)    2       8 25119 2003-10-30 2015-02-13 TRUE      0.0 -35.93145
+##          lon
+## 1)  173.2874
+## 2)  173.6515
+## 3)  173.8220
+## 4)  174.0150
+## 5)  172.6820
+## 6)  173.9110
+## 7)  172.8090
+## 8)  172.8670
+## 9)  172.8057
+## 10) 173.2620
+## 11) 173.9260
+## 12) 173.8532
 </code></pre>
 
 <pre><code class="r"># How long have these stations been open for?
 transform(my.composite.search, ndays = round(end - start))[, c(1, 10)]
 </code></pre>
 
-<pre><code>##                      name      ndays
-## 1        Kaitaia Aero Ews  5373 days
-## 2            Trounson Cws  2097 days
-## 3    Takaka, Kotinga Road 16283 days
-## 4             Kaikohe Aws 10699 days
-## 5           Takaka Pohara 10470 days
-## 6             Purerua Aws  7364 days
-## 7         Cape Reinga Aws  7364 days
-## 8              Takaka Ews  4688 days
-## 9  Kerikeri Aerodrome Aws  2439 days
-## 10            Kaitaia Ews  5914 days
-## 11           Kerikeri Ews  4614 days
-## 12       Dargaville 2 Ews  4124 days
+<pre><code>##    name      ndays
+## 1     4  5374 days
+## 2     9  2098 days
+## 3     3 10700 days
+## 4     8  7365 days
+## 5     1  7365 days
+## 6     6  2440 days
+## 7     2 16283 days
+## 8     3 10470 days
+## 9     1  4688 days
+## 10    5  5914 days
+## 11    7  4614 days
+## 12    2  4124 days
 </code></pre>
 
 <h1>So where are these stations?</h1>

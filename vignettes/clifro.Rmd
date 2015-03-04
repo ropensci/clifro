@@ -51,7 +51,7 @@ needed.
 
 The `cf_user` function is all that is required to create a valid `clifro` user,
 
-```{r,eval=FALSE}
+```{r, eval = FALSE}
 me = cf_user("username", "password")
 ```
 
@@ -67,12 +67,20 @@ pressure, minimum and maximum temperature extremes (deg C), daily rainfall (mm)
 and daily surface wind.
 (m/s).
 
-```{r}
+```{r, eval = FALSE}
 my.dts = cf_datatype(select_1 =     c(7,  4,  3,  2), 
                      select_2 =     c(1,  2,  1,  1), 
                      check_box = list(3,  1,  1,  4), 
                      combo_box =    c(NA, NA, NA, 1))
 my.dts
+```
+
+```
+##                      dt.name              dt.type    dt.options dt.combo
+## dt1                 Pressure             Pressure      [9amMSL]         
+## dt2 Temperature and Humidity         Max_min_temp [DailyMaxMin]         
+## dt3            Precipitation Rain (fixed periods)      [Daily ]         
+## dt4                     Wind         Surface wind     [9amWind]      m/s
 ```
 
 # Create clifro Stations
@@ -90,9 +98,17 @@ various parts of the country by taking a selection of stations from various
 regions. These include a station from Invercargill (5814), Nelson (4241), 
 Hamilton (2112) and Auckland (1962)
 
-```{r}
+```{r, eval = FALSE}
 my.stations = cf_station(5814, 4241, 2112, 1962)
 my.stations[, 1:5]
+```
+
+```
+##                name network agent      start        end
+## 1 Invercargill Aero  I68433  5814 1939-09-01 2015-03-05
+## 2       Nelson Aero  G13222  4241 1940-07-01 2015-03-05
+## 3     Auckland Aero  C74082  1962 1962-05-01 2015-03-05
+## 4      Hamilton Aws  C75834  2112 1989-11-30 2015-03-05
 ```
 
 # Retrieve the CliFlo Data
@@ -101,7 +117,7 @@ Now that we have a valid `clifro` user and the datatypes and stations of
 interest, a `clifro` query can be conducted using the `cf_query` function. We
 are interested in all available data from 2012 to 2014.
 
-```{r,eval=FALSE}
+```{r, eval = FALSE}
 cf.datalist = cf_query(user = me, 
                        datatype = my.dts, 
                        station = my.stations, 
@@ -140,7 +156,7 @@ the MSL atmospheric pressure, but it is usually nice to modify the defaults
 slightly. Since the plot method returns a `ggplot` object, we can easily modify 
 the plots using [ggplot2](http://ggplot2.org/).
 
-```{r,eval=FALSE}
+```{r, eval = FALSE}
 # Load the ggplot2 library for element_text() and geom_smooth() functions
 library(ggplot2)
 
@@ -158,7 +174,7 @@ These are temperature data showing the air temperature extremes at
 each of the four stations, represented by a grey region in the plot. Note that 
 if the average temperature were available, these would be plotted too.
 
-```{r,eval=FALSE}
+```{r, eval = FALSE}
 # Try a different ggtheme
 plot(cf.datalist, 2, ggtheme = "linedraw")
 ```
@@ -170,7 +186,7 @@ This is the third dataframe in `cf.datalist`, therefore `y = 3`. Currently there
 are two possible default plots available for rainfall; with or without soil 
 deficit/runoff.
 
-```{r,eval=FALSE}
+```{r, eval = FALSE}
 # Try yet another ggtheme
 plot(cf.datalist, 3, ggtheme = "light")
 
@@ -193,7 +209,7 @@ adding valuable temporal information that is not portrayed in the windroses.
 The wind datatype is the fourth dataframe in `cf.datalist`, therefore `y = 4`.
 ### Windrose
 
-```{r,eval=FALSE}
+```{r, eval = FALSE}
 # Defaults to windrose
 plot(cf.datalist, 4, n_col = 2)
 ```
@@ -205,7 +221,7 @@ The other two plotting methods for wind data are the `speed_plot` and
 `direction_plot` functions to assess the temporal variability in wind (plots not 
 shown).
 
-```{r,eval=FALSE}
+```{r, eval = FALSE}
 # Plot the wind speeds through time, choose the 'classic' ggtheme and
 # allow the y-axis scales to differ for each station
 speed_plot(cf.datalist, 4, ggtheme = "classic", scales = "free_y")
@@ -216,7 +232,7 @@ direction_plot(cf.datalist, 4, n_col = 2)
 
 # Data Export
 
-```{r,eval=FALSE}
+```{r, eval = FALSE}
 # Export the data as separate CSV files to the current working directory
 for (i in seq_along(cf.datalist))
   write.csv(cf.datalist[i], 

@@ -15,7 +15,7 @@ output:
 %\VignetteIndexEntry{Working with clifro stations}
 -->
 
-```{r, echo=FALSE}
+```{r, echo = FALSE}
 library(clifro)
 ```
 # Introduction
@@ -46,9 +46,20 @@ New Zealand:
 6. Godley Peaks
 7. Lilybank
 
-```{r}
+```{r, eval = FALSE}
 lake.tekapo.st = cf_station(12709, 35567, 39557, 4630, 24945, 4616, 4602)
 lake.tekapo.st[, c("name", "agent", "start", "end", "open")]
+```
+
+```
+##                      name agent      start        end  open
+## 1         Coal @ Skifield 12709 1989-02-01 2015-03-05  TRUE
+## 2      Macaulay@Mt Gerald 35567 1990-07-04 2015-03-05  TRUE
+## 3         Lake Tekapo Ews 24945 2003-06-18 2015-03-05  TRUE
+## 4 South Opua @ South Opua 39557 2011-09-28 2015-03-05  TRUE
+## 5        Lilybank Station  4602 1950-01-01 1992-09-30 FALSE
+## 6                 Mt John  4630 1962-10-01 1988-01-01 FALSE
+## 7    Godley Peaks, Tekapo  4616 1914-01-01 1976-06-01 FALSE
 ```
 
 We can see that subsetting `lake.tekapo.st` acts just like a `data.frame` 
@@ -60,11 +71,28 @@ To add more stations to this list the addition sign is used. Any repeated
 stations are removed and the resulting list is ordered by the end dates first 
 and then by the stations' start dates.
 
-```{r}
+```{r, eval = FALSE}
 added.stations.st = lake.tekapo.st + 
   cf_station() + 
   cf_find_station("lighthouse", status = "all")
 added.stations.st[, c("name", "agent", "start", "end", "open")]
+```
+
+```
+##                       name agent      start        end  open
+## 1              Reefton Ews  3925 1960-08-01 2015-03-05  TRUE
+## 2          Coal @ Skifield 12709 1989-02-01 2015-03-05  TRUE
+## 3       Macaulay@Mt Gerald 35567 1990-07-04 2015-03-05  TRUE
+## 4          Lake Tekapo Ews 24945 2003-06-18 2015-03-05  TRUE
+## 5  South Opua @ South Opua 39557 2011-09-28 2015-03-05  TRUE
+## 6     Tiri Tiri Lighthouse  1401 1946-02-01 2015-03-01  TRUE
+## 7         Lilybank Station  4602 1950-01-01 1992-09-30 FALSE
+## 8                  Mt John  4630 1962-10-01 1988-01-01 FALSE
+## 9    Cape Brett Lighthouse  1197 1934-11-01 1978-10-01 FALSE
+## 10     Nugget Lighthouse B  5894 1975-03-01 1977-08-31 FALSE
+## 11     Nugget Lighthouse A  5895 1975-03-01 1977-08-31 FALSE
+## 12    Godley Peaks, Tekapo  4616 1914-01-01 1976-06-01 FALSE
+## 13      Moeraki Lighthouse  5325 1935-10-01 1975-06-01 FALSE
 ```
 
 The above code chunk adds the 7 stations around Lake Tekapo, the 
@@ -97,7 +125,12 @@ package is chosen for it's usability and quality plots. In this example we will
 plot all the past and present Auckland climate stations to assess the density 
 of open and closed stations across the region.
 
-```{r,message=FALSE,fig.width=7,fig.height=7, dpi=50, cache=TRUE}
+```{r, echo = FALSE}
+auckland.df = dget("auckStations")
+auckland.st = new("cfStation", auckland.df)
+```
+
+```{r, eval = -c(2:3), message = FALSE}
 library(ggmap)
 
 # Conduct the search
