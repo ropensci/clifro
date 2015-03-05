@@ -117,3 +117,25 @@ demo(clifro)
 # Read the 'Introduction to clifro' vignette
 vignette("clifro")
 ```
+
+# Citation
+
+```bibtex
+
+To cite package ‘clifro’ in publications use:
+
+  Blake Seers (2015). clifro: Easily Download and Visualise Climate Data from CliFlo. R package version
+  2.4-0. http://cliflo.niwa.co.nz/ https://github.com/ropensci/clifro
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {clifro: Easily Download and Visualise Climate Data from CliFlo},
+    author = {Blake Seers},
+    year = {2015},
+    note = {R package version 2.4-0},
+    url = {http://cliflo.niwa.co.nz/ https://github.com/ropensci/clifro},
+  }
+```
+
+[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
