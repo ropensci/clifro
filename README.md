@@ -22,12 +22,8 @@ Installation in R
 =================
 
 ``` {.r}
-# If devtools is not installed, install and load it
-install.packages("devtools")
-library(devtools)
-
-# Install and load clifro
-install_github("ropensci/clifro")
+# Install the latest CRAN release
+install.packages("clifro")
 library(clifro)
 ```
 
@@ -118,7 +114,7 @@ Citation
 To cite package ‘clifro’ in publications use:
 
   Blake Seers (2015). clifro: Easily Download and Visualise Climate Data from CliFlo. R package version
-  2.4-0. http://cliflo.niwa.co.nz/ https://github.com/ropensci/clifro
+  2.4-0. http://CRAN.R-project.org/package=clifro
 
 A BibTeX entry for LaTeX users is
 
@@ -127,7 +123,7 @@ A BibTeX entry for LaTeX users is
     author = {Blake Seers},
     year = {2015},
     note = {R package version 2.4-0},
-    url = {http://cliflo.niwa.co.nz/ https://github.com/ropensci/clifro},
+    url = {http://CRAN.R-project.org/package=clifro},
   }
 ```
 
