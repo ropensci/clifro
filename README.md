@@ -14,7 +14,7 @@ This package extends the functionality of [CliFlo](http://cliflo.niwa.co.nz/) by
 Free CliFlo Subscription
 ------------------------
 
-A current [CliFlo subscription](http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro) is recommended for *clifro*, otherwise data from only station is available. The subscription is free and lasts for 2 years or 2,000,000 rows without renewal, which enables access to around 6,500 climate stations around New Zealand and the Pacific.
+A current [CliFlo subscription](http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro) is recommended for *clifro*, otherwise data from only one station is available. The subscription is free and lasts for 2 years or 2,000,000 rows without renewal, which enables access to around 6,500 climate stations around New Zealand and the Pacific.
 
 Note this package requires internet access for connecting to the National Climate Database web portal.
 

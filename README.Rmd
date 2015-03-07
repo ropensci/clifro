@@ -36,8 +36,8 @@ updating of spreadsheets or databases can be made much easier.
 
 ## Free CliFlo Subscription
 A current [CliFlo subscription](http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro)
-is recommended for *clifro*, otherwise data from only station is available. The
-subscription is free and lasts for 2 years or 2,000,000 rows without renewal, 
+is recommended for *clifro*, otherwise data from only one station is available. 
+The subscription is free and lasts for 2 years or 2,000,000 rows without renewal, 
 which enables access to around 6,500 climate stations around New Zealand and the 
 Pacific.
 
