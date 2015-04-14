@@ -1,6 +1,8 @@
-# clifro 2.2-4-900
+# clifro 2.4-0-900
 
-# clifro 2.2-4
+* Update citation information
+
+# clifro 2.4-0
 
 * CRAN release
 * Bug fixed for subsetting _cfStation_ using `[`
