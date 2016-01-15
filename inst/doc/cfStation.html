@@ -137,7 +137,7 @@ added.stations.st[, <span class="kw">c</span>(<span class="st">&quot;name&quot;<
 <div id="showing-station-locations-within-r" class="section level2">
 <h2>Showing station locations within R</h2>
 <p>Many useRs may prefer to plot the locations directly in R, or export the station information for use in another software. The <code>as(object, &quot;data.frame&quot;)</code> function call is used for returning the station information as an R dataframe that can then be used for plotting or exporting.</p>
-<p>This example is only one of the many ways to plot GIS data in R, and the <a href="http://cran.r-project.org/web/packages/ggmap/index.html">ggmap</a> package is chosen for it’s usability and quality plots. In this example we will plot all the past and present Auckland climate stations to assess the density of open and closed stations across the region.</p>
+<p>This example is only one of the many ways to plot GIS data in R, and the <a href="http://cran.r-project.org/package=ggmap">ggmap</a> package is chosen for it’s usability and quality plots. In this example we will plot all the past and present Auckland climate stations to assess the density of open and closed stations across the region.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Conduct the search</span>
 auckland.st =<span class="st"> </span><span class="kw">cf_find_station</span>(<span class="st">&quot;auckland&quot;</span>, <span class="dt">search =</span> <span class="st">&quot;region&quot;</span>, <span class="dt">status =</span> <span class="st">&quot;all&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggmap)

@@ -117,7 +117,7 @@ export the station information for use in another software. The
 information as an R dataframe that can then be used for plotting or exporting.
 
 This example is only one of the many ways to plot GIS data in R, and the 
-[ggmap](http://cran.r-project.org/web/packages/ggmap/index.html)
+[ggmap](http://cran.r-project.org/package=ggmap)
 package is chosen for it's usability and quality plots. In this example we will 
 plot all the past and present Auckland climate stations to assess the density 
 of open and closed stations across the region.
