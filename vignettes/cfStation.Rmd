@@ -3,17 +3,14 @@ title: "Working with *clifro* Stations"
 author: "Blake Seers"
 date: "`r Sys.Date()`"
 output: 
-  html_document:
-    toc: true
-    toc_depth: 2
-    highlight: haddock
-    theme: readable
+  rmarkdown::html_vignette:
+    fig_width: 5
+    fig_height: 5
+vignette: >
+  %\VignetteIndexEntry{Working with clifro stations}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
-
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{Working with clifro stations}
--->
 
 ```{r, echo = FALSE}
 library(clifro)
@@ -39,12 +36,12 @@ are (or were) located around Lake Tekapo in Canterbury, in the South Island of
 New Zealand:
 
 1. Coal (Ski Field)
-2. Macaulay (Mt Gerald)
-3. South Opua
-4. Mount John
-5. Lake Tekapo Ews
-6. Godley Peaks
-7. Lilybank
+1. Macaulay (Mt Gerald)
+1. South Opua
+1. Mount John
+1. Lake Tekapo Ews
+1. Godley Peaks
+1. Lilybank
 
 ```{r, eval = FALSE}
 lake.tekapo.st = cf_station(12709, 35567, 39557, 4630, 24945, 4616, 4602)
@@ -53,10 +50,10 @@ lake.tekapo.st[, c("name", "agent", "start", "end", "open")]
 
 ```
 ##                      name agent      start        end  open
-## 1         Coal @ Skifield 12709 1989-02-01 2015-03-05  TRUE
-## 2      Macaulay@Mt Gerald 35567 1990-07-04 2015-03-05  TRUE
-## 3         Lake Tekapo Ews 24945 2003-06-18 2015-03-05  TRUE
-## 4 South Opua @ South Opua 39557 2011-09-28 2015-03-05  TRUE
+## 1         Coal @ Skifield 12709 1989-02-01 2016-01-15  TRUE
+## 2      Macaulay@Mt Gerald 35567 1990-07-04 2016-01-15  TRUE
+## 3         Lake Tekapo Ews 24945 2003-06-18 2016-01-15  TRUE
+## 4 South Opua @ South Opua 39557 2011-09-28 2016-01-15  TRUE
 ## 5        Lilybank Station  4602 1950-01-01 1992-09-30 FALSE
 ## 6                 Mt John  4630 1962-10-01 1988-01-01 FALSE
 ## 7    Godley Peaks, Tekapo  4616 1914-01-01 1976-06-01 FALSE
@@ -80,12 +77,12 @@ added.stations.st[, c("name", "agent", "start", "end", "open")]
 
 ```
 ##                       name agent      start        end  open
-## 1              Reefton Ews  3925 1960-08-01 2015-03-05  TRUE
-## 2          Coal @ Skifield 12709 1989-02-01 2015-03-05  TRUE
-## 3       Macaulay@Mt Gerald 35567 1990-07-04 2015-03-05  TRUE
-## 4          Lake Tekapo Ews 24945 2003-06-18 2015-03-05  TRUE
-## 5  South Opua @ South Opua 39557 2011-09-28 2015-03-05  TRUE
-## 6     Tiri Tiri Lighthouse  1401 1946-02-01 2015-03-01  TRUE
+## 1              Reefton Ews  3925 1960-08-01 2016-01-15  TRUE
+## 2          Coal @ Skifield 12709 1989-02-01 2016-01-15  TRUE
+## 3       Macaulay@Mt Gerald 35567 1990-07-04 2016-01-15  TRUE
+## 4          Lake Tekapo Ews 24945 2003-06-18 2016-01-15  TRUE
+## 5  South Opua @ South Opua 39557 2011-09-28 2016-01-15  TRUE
+## 6     Tiri Tiri Lighthouse  1401 1946-02-01 2016-01-15  TRUE
 ## 7         Lilybank Station  4602 1950-01-01 1992-09-30 FALSE
 ## 8                  Mt John  4630 1962-10-01 1988-01-01 FALSE
 ## 9    Cape Brett Lighthouse  1197 1934-11-01 1978-10-01 FALSE

@@ -2,18 +2,12 @@
 title: "Choosing a *clifro* Datatype"
 author: "Blake Seers"
 date: "`r Sys.Date()`"
-output: 
-  html_document:
-    toc: true
-    toc_depth: 2
-    highlight: haddock
-    theme: readable
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Working with clifro stations}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
-
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{Choosing a clifro datatype}
--->
 # Introduction
 
 The `cf_datatype` function is all that is required to select `clifro` datatypes.
@@ -37,6 +31,7 @@ Let's say the datatype we are interested in is 9am surface wind in knots.
 
 ```{r, echo=FALSE}
 library(clifro)
+library(pander)
 surfaceWind.dt = new("cfDatatype"
     , dt_name = "Wind"
     , dt_type = "Surface wind"
@@ -276,12 +271,15 @@ datatypes at once, having four separate datatypes is less than optimal. The
 following table shows the options for each of the menus that we are interested
 in. 
 
-Menu               | Surface wind | Rainfall | Lightning | Temperature
--------------------|--------------|----------|-----------|-------------
-First selection    |       2      |     3    |     6     |       4
-Second selection   |       1      |     1    |     1     |       2
-Third selection(s) |     2 & 4    |   1 & 2  |     1     |     5 & 6           
-combo box options  |       3      |     NA   |     NA    |       NA
+```{r, echo = FALSE, results = "asis"}
+d = data.frame(Menu = c("First selection", "Second selection", 
+                        "Third selection(s)", "combo box options"),
+               `Surface wind` = c(2, 1, "2 & 4", 3),
+               Rainfall = c(3, 1, "1 & 2", NA),
+               Lightning = c(6, 1, 1, NA),
+               Temperature = c(4, 2, "5 & 6", NA))
+pandoc.table(d, style = "simple")
+```
 
 We can read across the columns to see the selections that are needed to return
 an R object containing the datatypes we are interested in. We can then just pass
@@ -347,5 +345,5 @@ query1.dt = cf_datatype(c(2, 3, 6, 4, NA),
 
 # Half an unknown wind datatype i.e. we know first selection = 2 but nothing 
 # further:
-rain.dt = cf_datatype(2) # 0r cf_datatype(2, NA, NA, NA)
+rain.dt = cf_datatype(2) # Or cf_datatype(2, NA, NA, NA)
 ```

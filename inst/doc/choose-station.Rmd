@@ -3,17 +3,14 @@ title: "Choosing a *clifro* Station"
 author: "Blake Seers"
 date: "`r Sys.Date()`"
 output: 
-  html_document:
-    toc: true
-    toc_depth: 2
-    highlight: haddock
-    theme: readable
+  rmarkdown::html_vignette:
+    fig_width: 5
+    fig_height: 5
+vignette: >
+  %\VignetteIndexEntry{Working with clifro stations}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
-
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{Choosing a clifro station}
--->
 
 ```{r, echo=FALSE}
 library(clifro)

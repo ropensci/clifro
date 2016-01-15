@@ -2,18 +2,12 @@
 title: 'From CliFlo to *clifro*: An Introduction'
 author: "Blake Seers"
 date: "`r Sys.Date()`"
-output: 
-  html_document:
-    toc: true
-    toc_depth: 2
-    highlight: haddock
-    theme: readable
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Working with clifro stations}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
-
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{Introduction to clifro}
--->
 
 ```{r, echo=FALSE}
 library(clifro)
@@ -207,6 +201,7 @@ plots. These plots display wind speed and direction patterns through time,
 adding valuable temporal information that is not portrayed in the windroses.
 
 The wind datatype is the fourth dataframe in `cf.datalist`, therefore `y = 4`.
+
 ### Windrose
 
 ```{r, eval = FALSE}
@@ -244,7 +239,6 @@ for (i in seq_along(cf.datalist))
 # Each dataset is saved separately here:
 getwd()
 ```
-
 
 # Summary
 
