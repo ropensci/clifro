@@ -3,8 +3,8 @@ sudo: required
 warnings_are_errors: true
 env:
   global:
-    - CRAN=http://cran.rstudio.com
     - NOT_CRAN=true
+before_install: echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
 
 r_binary_packages:
   - XML
