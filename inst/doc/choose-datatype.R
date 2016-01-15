@@ -1,5 +1,6 @@
 ## ---- echo=FALSE---------------------------------------------------------
 library(clifro)
+library(pander)
 surfaceWind.dt = new("cfDatatype"
     , dt_name = "Wind"
     , dt_type = "Surface wind"
