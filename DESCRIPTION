@@ -19,6 +19,7 @@ Imports:
     reshape2
 Suggests:
     knitr,
+    rmarkdown,
     ggmap (>= 2.6),
     pander
 Description: CliFlo is a web portal to the New Zealand National Climate
