@@ -18,18 +18,18 @@ cf_user(username = "public", password = character())
 \code{cfUser} object
 }
 \description{
-Create a \code{cfUser} object to allow the user to log into CliFlo from \R 
+Create a \code{cfUser} object to allow the user to log into CliFlo from \R
 and  build their query.
 }
 \details{
-An object inheriting from the \code{cfUser} class is created by the constructor 
-function \code{cf_user}. The user must have an active subscription to cliflo 
-in order to create a valid object, unless a 'public' user is sought. 
-Visit \url{http://cliflo.niwa.co.nz/} for more information and to subscribe 
+An object inheriting from the \code{cfUser} class is created by the constructor
+function \code{cf_user}. The user must have an active subscription to cliflo
+in order to create a valid object, unless a 'public' user is sought.
+Visit \url{http://cliflo.niwa.co.nz/} for more information and to subscribe
 to cliflo.
 }
 \note{
-For the 'public' user (see examples) only the Reefton Ews station data 
+For the 'public' user (see examples) only the Reefton Ews station data
 is available.
 }
 \examples{
@@ -39,8 +39,8 @@ public.cfuser
 }
 }
 \seealso{
-\code{\link{valid_cfuser}} for details on the validation of 
-\code{cfUser} and \code{\link{summary,cfUser-method}} to summarise user 
+\code{\link{valid_cfuser}} for details on the validation of
+\code{cfUser} and \code{\link{summary,cfUser-method}} to summarise user
 information.
 }
 

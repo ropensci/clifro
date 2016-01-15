@@ -10,51 +10,51 @@ cf_query(user, datatype, station, start_date, end_date = now(tz),
 \arguments{
 \item{user}{a \code{\link{cfUser}} object.}
 
-\item{datatype}{a \code{\link{cfDatatype}} object containing the datatypes to 
+\item{datatype}{a \code{\link{cfDatatype}} object containing the datatypes to
 be retrieved.}
 
-\item{station}{a \code{\link{cfStation}} object containing the stations where 
+\item{station}{a \code{\link{cfStation}} object containing the stations where
 the datatypes will be retrieved from.}
 
-\item{start_date}{a character, Date or POSIXt object indicating the start 
-date. If a character string is supplied the date format 
-should be in the form \code{yyyy-mm-dd-hh} unless 
+\item{start_date}{a character, Date or POSIXt object indicating the start
+date. If a character string is supplied the date format
+should be in the form \code{yyyy-mm-dd-hh} unless
 \code{date_format} is specified.}
 
-\item{end_date}{same as \code{start_date}. Defaults to 
+\item{end_date}{same as \code{start_date}. Defaults to
 \code{\link[lubridate]{now}}.}
 
-\item{date_format}{a character string matching one of \code{"ymd_h"}, 
-\code{"mdy_h"}, \code{"ydm_h"} or \code{"dmy_h"} 
-representing the \code{\link[lubridate]{lubridate}} 
+\item{date_format}{a character string matching one of \code{"ymd_h"},
+\code{"mdy_h"}, \code{"ydm_h"} or \code{"dmy_h"}
+representing the \code{\link[lubridate]{lubridate}}
 date parsing function.}
 
 \item{tz}{the timezone for which the start and end dates refer to. Conversion
-to Pacific/Auckland time is done automatically through the 
+to Pacific/Auckland time is done automatically through the
 \code{\link[lubridate]{with_tz}} function. Defaults to
 "Pacific/Auckland".}
 
-\item{quiet}{logical. When \code{TRUE} the function evaluates without 
-displaying customary messages. Messages from CliFlo are still 
+\item{quiet}{logical. When \code{TRUE} the function evaluates without
+displaying customary messages. Messages from CliFlo are still
 displayed.}
 }
 \value{
 a \code{cfData} or \code{cfDataList} object.
 }
 \description{
-Query the National Climate Database via CliFlo based on the \pkg{clifro} user 
+Query the National Climate Database via CliFlo based on the \pkg{clifro} user
 and selected datatypes, stations and dates.
 }
 \details{
-The \code{cf_query} function is used to combine the \pkg{clifro} user 
-(\code{\link{cfUser}}), along with the desired datatypes 
+The \code{cf_query} function is used to combine the \pkg{clifro} user
+(\code{\link{cfUser}}), along with the desired datatypes
 (\code{\link{cfDatatype}}) and stations (\code{\link{cfStation}}). The query
-is 'built up' using these objects, along with the necessary dates. The 
+is 'built up' using these objects, along with the necessary dates. The
 function then uses all these data to query the National Climate Database via
-the CliFlo web portal and returns one of the many \code{cfData} 
-objects if one dataframe is returned, or a \code{cfDataList} object if 
+the CliFlo web portal and returns one of the many \code{cfData}
+objects if one dataframe is returned, or a \code{cfDataList} object if
 there is more than one dataframe returned from CliFlo. If a \code{cfDataList}
-is returned, each element in the list is a subclass of the \code{cfData} 
+is returned, each element in the list is a subclass of the \code{cfData}
 class, see the 'cfData Subclasses' section.
 }
 \section{CfData Subclasses}{
@@ -62,13 +62,13 @@ class, see the 'cfData Subclasses' section.
 
 There are 8 \code{cfData} subclasses that are returned from \code{cf_query}
 depending on the datatype requested. Each of these subclasses have default
-\code{plot} methods for usability and efficiency in exploring and plotting 
+\code{plot} methods for usability and efficiency in exploring and plotting
 \pkg{clifro} data.
 
 The following table summarises these subclasses and how they are created, see
 also the examples on how to automatically create some of these subclasses.
 
-\tabular{ll}{ 
+\tabular{ll}{
 \strong{Subclass} \tab \strong{CliFlo Datatype}\cr
 cfWind \tab Any 'Wind' data \cr
 cfRain \tab Any 'Precipitation' data \cr
@@ -95,12 +95,12 @@ class(daily.rain) # 'cfRain' object - inherits 'cfData'
 
 # Retrieve daily rain and wind data from Reefton Ews
 
-daily.dts = cf_query(cf_user("public"), 
+daily.dts = cf_query(cf_user("public"),
                      cf_datatype(c(2, 3), c(1, 1), list(4, 1), c(1, NA)),
                      cf_station(), "2012-01-01 00", "2013-01-01 00")
 daily.dts
 
-# returns a cfDataList object as there is more than one datatype. Each 
+# returns a cfDataList object as there is more than one datatype. Each
 # element of the cfDataList is an object inheriting from the cfData class.
 class(daily.dts)     # cfDataList
 class(daily.dts[1])  # cfRain
@@ -108,7 +108,7 @@ class(daily.dts[2])  # cfWind
 
 # Create a cfSunshine object (inherits cfData)
 # Retrieve daily global radiation data at Reefton Ews
-rad.data = cf_query(cf_user(), cf_datatype(5,2,1), cf_station(), 
+rad.data = cf_query(cf_user(), cf_datatype(5,2,1), cf_station(),
                     "2012-01-01 00")
 rad.data
 
@@ -124,10 +124,10 @@ plot(daily.dts, 2)
 }
 }
 \seealso{
-\code{\link{cf_user}}, \code{\link{cf_datatype}} and 
+\code{\link{cf_user}}, \code{\link{cf_datatype}} and
   \code{\link{cf_station}} for creating the objects needed for a query. See
   \code{\link{plot,cfDataList,missing-method}} for general information on
-  default plotting of \code{cfData} and \code{cfDataList} objects, and the 
+  default plotting of \code{cfData} and \code{cfDataList} objects, and the
   links within.
 }
 

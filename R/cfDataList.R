@@ -1,5 +1,5 @@
 #' @include cfData.R cfStation.R
- 
+
 # cfDataList --------------------------------------------------------------
 
 #' @importFrom methods setClass
@@ -7,7 +7,7 @@ setClass("cfDataList", contains = "list")
 
 # Methods -----------------------------------------------------------------
 
-#' @importFrom methods setClass
+#' @importFrom methods setClass slot
 setMethod("show",
           signature(object = "cfDataList"),
           function (object)
@@ -33,33 +33,33 @@ setMethod("show",
 )
 
 #' Subsetting Methods for Clifro Objects
-#' 
+#'
 #' Operators acting on \code{cfDataList}, \code{cfDatatype}, \code{cfStation},
 #' and \code{dataFrame} objects.
-#' 
+#'
 #' These are methods for the generic operators for classes within \pkg{clifro}.
 #' They are intended to give the user the familiar functionality of subsetting
 #' \code{\link{data.frame}} objects.
-#' 
+#'
 #' @param x a \pkg{clifro} object
-#' @param i indices specifying elements to extract. Indices are 
+#' @param i indices specifying elements to extract. Indices are
 #'          \code{numeric} or \code{character} vectors or empty (missing) or
-#'          \code{NULL}. Character vectors will be matched to the names of 
+#'          \code{NULL}. Character vectors will be matched to the names of
 #'          the object.
-#' @param j indices specifying elements to extract. Indices are 
+#' @param j indices specifying elements to extract. Indices are
 #'          \code{numeric} or \code{character} vectors or empty (missing) or
-#'          \code{NULL}. Character vectors will be matched to the names of 
+#'          \code{NULL}. Character vectors will be matched to the names of
 #'          the object.
-#' @param name a literal character string. This is partially matched to the 
+#' @param name a literal character string. This is partially matched to the
 #'             names of the object.
-#' @param drop if \code{TRUE}, the result is coerced to the lowest possible 
+#' @param drop if \code{TRUE}, the result is coerced to the lowest possible
 #'             dimension. See \code{\link{drop}} for further details.
-#' 
+#'
 #' @docType methods
 #' @name Extract
 #' @rdname Extract
 #' @aliases [,cfDataList,ANY,ANY,ANY-method
-#' 
+#'
 #' @importFrom methods setMethod
 setMethod("[",
           signature(x = "cfDataList", i = "ANY", j = "ANY", drop = "ANY"),

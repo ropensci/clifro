@@ -11,9 +11,9 @@ Retrieve the last query submitted to CliFlo instead of querying the database
 again and losing subscription rows.
 }
 \details{
-This function is a back up for when the clifro query has been submitted and 
-the data returned but has not been assigned, or inadvertantly deleted. This 
-saves the user resubmitting queries and using more rows from their 
+This function is a back up for when the clifro query has been submitted and
+the data returned but has not been assigned, or inadvertantly deleted. This
+saves the user resubmitting queries and using more rows from their
 subscription than needed.
 }
 \note{

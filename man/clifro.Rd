@@ -6,21 +6,21 @@
 \alias{clifro-package}
 \title{From CliFlo to \pkg{clifro}: Enhancing The National Climate Database With \R}
 \description{
-Import data from New Zealand's National Climate Database via CliFlo into \R 
+Import data from New Zealand's National Climate Database via CliFlo into \R
 for exploring, analysis, plotting, exporting to KML, CSV, or other software.
 }
 \details{
 The \pkg{clifro} package is intended to simplify the process of data
-extraction, formatting and visualisation from the 
-\href{http://cliflo.niwa.co.nz/}{CliFlo web portal}. It 
-requires the user to build a query consisting of 3 main components; the user, 
+extraction, formatting and visualisation from the
+\href{http://cliflo.niwa.co.nz/}{CliFlo web portal}. It
+requires the user to build a query consisting of 3 main components; the user,
 the datatype(s) and the station(s). These are
-then combined using the \code{\link{cf_query}} function that sends the query 
+then combined using the \code{\link{cf_query}} function that sends the query
 to the CliFlo database and returns the results that can easily be plotted
 using generic plotting functions.
 
 This package requires the user to already have a current subscription to the
-National Climate Database unless a public user is sought, where data is 
+National Climate Database unless a public user is sought, where data is
 limited to Reefton Ews. Subscription is free and can obtained from
 \url{http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro}.
 }
@@ -44,7 +44,7 @@ temp.dt = cf_datatype(4, 2, 2)
 
 # Combine them together
 all.dts = wind.dt + rain.dt + temp.dt
-all.dts 
+all.dts
 
 # Select the Reefton Ews station ------------------------------------------
 
@@ -54,7 +54,7 @@ reefton.st
 # Submit the query --------------------------------------------------------
 
 # Retrieve all data from ~ six months ago at 9am
-reefton.data = cf_query(public.user, all.dts, reefton.st, 
+reefton.data = cf_query(public.user, all.dts, reefton.st,
                         paste(as.Date(Sys.time()) - 182, "9"))
 reefton.data
 
@@ -86,12 +86,12 @@ plot(reefton.data, 3)
 
 # Pass an argument to ggplot2::theme
 library(ggplot2) # for element_text()
-plot(reefton.data, 3, text = element_text(size = 18)) 
+plot(reefton.data, 3, text = element_text(size = 18))
 }
 }
 \seealso{
-\code{\link{cf_user}}, \code{\link{cf_datatype}}, and 
-  \code{\link{cf_station}} for choosing the clifro user, datatypes and 
+\code{\link{cf_user}}, \code{\link{cf_datatype}}, and
+  \code{\link{cf_station}} for choosing the clifro user, datatypes and
   stations, respectively.
 }
 \keyword{package}

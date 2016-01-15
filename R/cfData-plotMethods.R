@@ -98,6 +98,7 @@ NULL
 #' scale_x_discrete scale_fill_manual theme_grey theme_bw theme_classic
 #' theme_gray theme_linedraw theme_light theme_minimal element_blank
 #' element_text facet_wrap scale_y_continuous theme
+#' @importFrom methods missingArg
 #' @export
 windrose = function(speed, direction, facet, n_directions = 12,
                     n_speeds = 5, speed_cuts = NA, col_pal = "GnBu",
