@@ -1,5 +1,8 @@
-# clifro 2.4-0-900
+# clifro 2.4-1-900
 
+# clifro 2.4-1
+
+* CRAN release
 * Update citation information
 
 # clifro 2.4-0
