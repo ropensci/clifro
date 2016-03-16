@@ -468,7 +468,7 @@ cf_find_station = function(...,
 
   ## The following is a little messy but I can't figure out how else to do this!
   start_end = distances =
-    sapply(querySelectorAll(doc, "td.stnextdata + td.stnextdata"), xmlValue)
+    sapply(querySelectorAll(doc, "form td.stnextdata + td.stnextdata"), xmlValue)
   which_are_also_dates = start_end == "-"
   start_end = dmy(start_end, quiet = TRUE, tz = "Pacific/Auckland")
   start_end[which_are_also_dates] = with_tz(round_date(now(), "month"),

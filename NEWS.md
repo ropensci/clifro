@@ -1,5 +1,7 @@
 # clifro 2.4-1-900
 
+* Minor bug fixes
+
 # clifro 2.4-1
 
 * CRAN release
