@@ -154,8 +154,8 @@ windrose = function(speed, direction, facet, n_directions = 12,
   if (!is.numeric(calm_wind) || length(calm_wind) != 1)
     stop("calm_wind must be a numeric vector of length 1")
 
-  if (!is.character(legend_title) || length(legend_title) != 1)
-    stop("legend title must be a single character string")
+  if ((!is.character(legend_title) && !is.expression(legend_title)) || length(legend_title) != 1)
+    stop("legend title must be a single character string or expression")
 
   if (n_directions > 180){
     n_directions = 180

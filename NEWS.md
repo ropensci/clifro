@@ -1,6 +1,7 @@
 # clifro 2.4-1-900
 
 * Minor bug fixes
+* Allow expressions in legend title for windrose
 
 # clifro 2.4-1
 
