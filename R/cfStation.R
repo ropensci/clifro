@@ -144,7 +144,7 @@ cf_station = function(...){
   if (any(agent %% 1 != 0))
     stop("agent numbers must be integer")
   
-  uris = paste0("http://cliflo.niwa.co.nz/pls/niwp/wstn.stn_details?cAgent=", 
+  uris = paste0("https://cliflo.niwa.co.nz/pls/niwp/wstn.stn_details?cAgent=", 
                 agent)
   
   if (any(duplicated(agent))){

@@ -36,7 +36,7 @@ user to choose datatype(s) interactively (if no arguments are given), or to
 create datatypes programatically if the tree menu nodes are known a priori 
 (see examples). This function uses the same nodes, check box and combo box 
 options as CliFlo and can be viewed at the 
-\href{http://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1}{datatype selection page}.
+\href{https://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1}{datatype selection page}.
 }
 \note{
 For the 'public' user (see examples) only the Reefton Ews station data 

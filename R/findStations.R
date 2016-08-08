@@ -11,7 +11,7 @@
 #' @importFrom XML htmlParse xmlApply xmlGetAttr
 #' @importFrom utils menu
 cf_region = function(region){
-  regions = htmlParse("http://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html")
+  regions = htmlParse("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html")
   region.xml = querySelectorAll(regions, "option[value^='-']")
   region.names = unlist(xmlApply(region.xml, xmlValue))
 
@@ -267,7 +267,7 @@ cf_save_kml = function(station, file_name = "my_stations_",
 #'
 #' The \code{cf_find_station} function is a convenience function for finding
 #' CliFlo stations in \R. It uses the CliFlo
-#' \href{http://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html}{Find Stations}
+#' \href{https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html}{Find Stations}
 #' page to do the searching, and therefore means that the stations are not
 #' stored within \pkg{clifro}.
 #'
@@ -451,10 +451,10 @@ cf_find_station = function(...,
                          cookiejar = cookies)
     param.list = c(param.list, ccomb_dt = combine)
     doc = htmlParse(
-      postForm("http://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",
+      postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",
                .params = param.list, curl = curl))
   } else
-    doc = htmlParse(postForm("http://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_nodt",
+    doc = htmlParse(postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_nodt",
                              .params = param.list))
 
   agent_name_xml = querySelectorAll(doc, "a.st[href*='wstn.stn_details?']")

@@ -194,7 +194,7 @@ cf_query = function(user, datatype, station, start_date, end_date = now(tz),
     station = station[1:20]
     message("using the first 20 stations")
   }
-  doc = postForm("http://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1_proc",
+  doc = postForm("https://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1_proc",
                  cselect = "wgenf.genform1?fset=defdtype",
                  auswahl = "wgenf.genform1?fset=defagent",
                  agents = paste(station$agent, collapse = ","),

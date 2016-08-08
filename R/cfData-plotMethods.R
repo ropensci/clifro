@@ -848,7 +848,7 @@ setMethod("plot",
 #' The resulting figure plots the dry bulb, wet bulb and dew point temperatures
 #' on the same  scale, for each station.
 #'
-#' @references \href{http://cliflo.niwa.co.nz/pls/niwp/wh.do_help?id=ls_scr1}{Screen Observation details}.
+#' @references \href{https://cliflo.niwa.co.nz/pls/niwp/wh.do_help?id=ls_scr1}{Screen Observation details}.
 #'
 #' @importFrom reshape2 melt
 #' @importFrom ggplot2 ggplot aes_string geom_line ylab theme facet_wrap

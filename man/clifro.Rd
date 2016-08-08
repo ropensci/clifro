@@ -12,7 +12,7 @@ for exploring, analysis, plotting, exporting to KML, CSV, or other software.
 \details{
 The \pkg{clifro} package is intended to simplify the process of data
 extraction, formatting and visualisation from the
-\href{http://cliflo.niwa.co.nz/}{CliFlo web portal}. It
+\href{https://cliflo.niwa.co.nz/}{CliFlo web portal}. It
 requires the user to build a query consisting of 3 main components; the user,
 the datatype(s) and the station(s). These are
 then combined using the \code{\link{cf_query}} function that sends the query
@@ -22,7 +22,7 @@ using generic plotting functions.
 This package requires the user to already have a current subscription to the
 National Climate Database unless a public user is sought, where data is
 limited to Reefton Ews. Subscription is free and can obtained from
-\url{http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro}.
+\url{https://cliflo.niwa.co.nz/pls/niwp/wsubform.intro}.
 }
 \examples{
 \dontrun{

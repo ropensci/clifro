@@ -34,7 +34,7 @@ number, and return a \code{cfStation} object.
 \details{
 The \code{cf_find_station} function is a convenience function for finding
 CliFlo stations in \R. It uses the CliFlo
-\href{http://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html}{Find Stations}
+\href{https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html}{Find Stations}
 page to do the searching, and therefore means that the stations are not
 stored within \pkg{clifro}.
 

@@ -104,11 +104,12 @@ dt_href = function(doc, ...){
 # g        : logical passed to the graphics argument of the menu function
 #' @importFrom selectr querySelectorAll
 #' @importFrom XML htmlParse xmlGetAttr xmlValue
+#' @importFrom RCurl getURL
 first_stage_selection = function(selection, g, iter){
-  domain = "http://cliflo.niwa.co.nz/pls/niwp/"
+  domain = "https://cliflo.niwa.co.nz/pls/niwp/"
   full_path = paste0(domain, "wgenf.choose_datatype?cat=cat1")
   
-  datatypes_xml = querySelectorAll(htmlParse(full_path),
+  datatypes_xml = querySelectorAll(htmlParse(getURL(full_path)),
                                    "table.header td.popup a.top")
   
   if (!is.na(selection) && selection > 9){
@@ -138,9 +139,9 @@ first_stage_selection = function(selection, g, iter){
 #' @importFrom selectr querySelectorAll
 #' @importFrom XML htmlParse xmlGetAttr xmlValue
 second_stage_selection = function(href_1, selection, dt_name, g){
-  domain = "http://cliflo.niwa.co.nz/pls/niwp/"
+  domain = "https://cliflo.niwa.co.nz/pls/niwp/"
   full_path = paste0(domain, href_1)
-  datatypes_xml = querySelectorAll(htmlParse(full_path), "a.dt")
+  datatypes_xml = querySelectorAll(htmlParse(getURL(full_path)), "a.dt")
   
   if (is.na(selection)){
     gsub("\\n", "", gsub(" {2,}", "", dt_href(datatypes_xml, g, dt_name)))
@@ -202,14 +203,14 @@ choose_dt_options = function(datatype_name, datatype_options, g){
 option_selections = function(href_2, selection_check, selection_combo, 
                              dt_type, g){
   selection_check = unique(selection_check)
-  domain = "http://cliflo.niwa.co.nz/pls/niwp/"
+  domain = "https://cliflo.niwa.co.nz/pls/niwp/"
   full_path = paste0(domain, href_2)
-  dt_options_xml = querySelectorAll(htmlParse(full_path), 
+  dt_options_xml = querySelectorAll(htmlParse(getURL(full_path)), 
                                     "td.selected table tr td.selected")
-  dt_params_xml = querySelectorAll(htmlParse(full_path), 
+  dt_params_xml = querySelectorAll(htmlParse(getURL(full_path)), 
                                    "td.selected table tr td input")
   dt_param_values = xmlSApply(dt_params_xml, xmlGetAttr, "value")
-  dt_combo_xml = querySelectorAll(htmlParse(full_path), 
+  dt_combo_xml = querySelectorAll(htmlParse(getURL(full_path)), 
                                   "td.selected table tr td select option")
   
   if (length(dt_combo_xml) == 0)
@@ -289,7 +290,7 @@ cf_update_dt = function(object, user = cf_user()){
   
   all_dt_params = c(object@dt_param, unlist(object@dt_sel_option_params))
   
-  postForm("http://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1_proc",
+  postForm("https://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1_proc",
            cselect = "wgenf.genform1?fset=defdtype",
            auswahl = "wgenf.genform1?fset=defagent",
            agents = "",
@@ -327,7 +328,7 @@ cf_update_dt = function(object, user = cf_user()){
 #' create datatypes programatically if the tree menu nodes are known a priori 
 #' (see examples). This function uses the same nodes, check box and combo box 
 #' options as CliFlo and can be viewed at the 
-#' \href{http://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1}{datatype selection page}.
+#' \href{https://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1}{datatype selection page}.
 #' 
 #' @param select_1 a numeric vector of first node selections
 #' @param select_2 a numeric vector of second node selections

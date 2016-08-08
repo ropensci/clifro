@@ -67,7 +67,7 @@ ggsave("my_screenobs_plot.png")
 }
 }
 \references{
-\href{http://cliflo.niwa.co.nz/pls/niwp/wh.do_help?id=ls_scr1}{Screen Observation details}.
+\href{https://cliflo.niwa.co.nz/pls/niwp/wh.do_help?id=ls_scr1}{Screen Observation details}.
 }
 \seealso{
 \code{\link{plot,cfDataList,missing-method}} for general

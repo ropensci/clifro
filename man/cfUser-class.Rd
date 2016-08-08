@@ -25,7 +25,7 @@ and  build their query.
 An object inheriting from the \code{cfUser} class is created by the constructor
 function \code{cf_user}. The user must have an active subscription to cliflo
 in order to create a valid object, unless a 'public' user is sought.
-Visit \url{http://cliflo.niwa.co.nz/} for more information and to subscribe
+Visit \url{https://cliflo.niwa.co.nz/} for more information and to subscribe
 to cliflo.
 }
 \note{
