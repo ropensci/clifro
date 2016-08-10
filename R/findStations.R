@@ -377,6 +377,7 @@ cf_find_station = function(...,
   status = match.arg(arg = status)
   search_string = c(...)
   include_distances = FALSE
+  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
 
   if (search == "latlong"){
     if (length(search_string) != 3)
@@ -451,7 +452,6 @@ cf_find_station = function(...,
                            paste("clifro", R.Version()$version.string),
                          cookiefile = cookies,
                          cookiejar = cookies)
-    cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
     param.list = c(param.list, ccomb_dt = combine)
     doc = htmlParse(
       postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",

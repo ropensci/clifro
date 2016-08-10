@@ -1,5 +1,5 @@
 ## Test environments
-* ubuntu (travis-ci) 14.04.5 LTS, R 3.2.3
+* ubuntu 12.04.5 LTS (travis-ci) and 14.04.5 LTS (local), R 3.3.1
 * win-builder (devel and release)
 
 ## R CMD check results
@@ -13,4 +13,4 @@ There was 1 NOTE:
   Also, the possibly mis-spelled words in DESCRIPTION (CliFlo, Reefton, Zealand, and clifro) are all spelled correctly.
 
 ## Downstream dependencies
-There are currently no downstream dependencies for this package
+I have also run R CMD CHECK on macleish, the only downstream dependency of clifro, without any problems.
