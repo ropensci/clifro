@@ -159,7 +159,7 @@ cf_login = function(object){
       ispopup = "false",
       submit = "login",
       curl = curl,
-      cainfo = cert))
+      .opts = list(cainfo = cert)))
     result = xmlValue(querySelector(login_html, "h1"))
   }
   rm(curl)
@@ -323,7 +323,7 @@ setMethod("summary", signature(object = "cfUser"),
     getForm("https://cliflo.niwa.co.nz/pls/niwp/wa.subscr_info",
             sub = "t",
             curl = curl,
-            cainfo = cert)
+            .opts = list(cainfo = cert))
   user_info_html = querySelectorAll(htmlParse(user_info_xml),
                                     "body.popup > div")
   info = gsub("  |   |    |     ", " ", sapply(user_info_html, xmlValue))

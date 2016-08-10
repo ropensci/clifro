@@ -283,7 +283,7 @@ option_selections = function(href_2, selection_check, selection_combo,
 #
 # object : a cfDatatype object
 # user   : a cfUser object
-#' @importFrom RCurl getCurlHandle getForm
+#' @importFrom RCurl getCurlHandle
 cf_update_dt = function(object, user = cf_user()){
   cookies = file.path(tempdir(), user@username)
   curl = getCurlHandle(followlocation = TRUE,
@@ -318,7 +318,7 @@ cf_update_dt = function(object, user = cf_user()){
            cdata_order = "DS",
            .params = all_dt_params,
            curl = curl,
-           cainfo = cert)
+           .opts = list(cainfo = cert))
 }
 
 

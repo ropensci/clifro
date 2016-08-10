@@ -455,10 +455,10 @@ cf_find_station = function(...,
     param.list = c(param.list, ccomb_dt = combine)
     doc = htmlParse(
       postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",
-               .params = param.list, curl = curl, cainfo = cert))
+               .params = param.list, curl = curl, .opts = list(cainfo = cert)))
   } else
     doc = htmlParse(postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_nodt",
-                             .params = param.list, cainfo = cert))
+                             .params = param.list, .opts = list(cainfo = cert)))
 
   agent_name_xml = querySelectorAll(doc, "a.st[href*='wstn.stn_details?']")
 
