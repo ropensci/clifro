@@ -50,6 +50,17 @@ Climate Database web portal.
 ```{r, eval = FALSE}
 # Install the latest CRAN release
 install.packages("clifro")
+
+# Or the latest development version
+if(!require(devtools))
+  install.packages("devtools")
+devtools::install_github("ropensci/clifro")
+
+# Then load the package
+library(clifro)
+```
+
+```{r, echo = FALSE}
 library(clifro)
 ```
 
@@ -78,7 +89,6 @@ Reefton electronic weather station (EWS). We can download the 2014 wind and rain
 data and easily visualise the results very easily.
 
 ```{r, rain-wind-example, echo=-1}
-library(clifro)
 # Create a public user
 public.cfuser = cf_user()
 
