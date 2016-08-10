@@ -318,7 +318,7 @@ cf_update_dt = function(object, user = cf_user()){
            cdata_order = "DS",
            .params = all_dt_params,
            curl = curl,
-           cainfo = cert)
+           .opts = list(cainfo = cert))
 }
 
 

@@ -159,7 +159,7 @@ cf_login = function(object){
       ispopup = "false",
       submit = "login",
       curl = curl,
-      cainfo = cert))
+      .opts = list(cainfo = cert)))
     result = xmlValue(querySelector(login_html, "h1"))
   }
   rm(curl)
