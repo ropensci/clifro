@@ -143,10 +143,11 @@ cf_login = function(object){
                        cookiefile = cookies,
                        useragent = paste("clifro", R.Version()$version.string),
                        timeout = 100)
+  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
   if (object@username == "public"){
     login_html = htmlParse(getURL(
       "https://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1",
-      curl = curl
+      curl = curl, cainfo = cert
     ))
     result = "Info"
   }
@@ -157,7 +158,8 @@ cf_login = function(object){
       cpwd = rot(object@password, 3),
       ispopup = "false",
       submit = "login",
-      curl = curl))
+      curl = curl,
+      cainfo = cert))
     result = xmlValue(querySelector(login_html, "h1"))
   }
   rm(curl)
@@ -175,13 +177,15 @@ cf_logout = function(object, msg = TRUE){
                          paste("clifro", R.Version()$version.string),
                        cookiefile = cookies,
                        cookiejar = cookies)
+  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
 
   header = getURLContent("https://cliflo.niwa.co.nz/pls/niwp/wa.logout",
-                         curl = curl, header = TRUE)
+                         curl = curl, header = TRUE, cainfo = cert)
   if (!grepl("OK", header$header["statusMessage"]))
     stop("HTTP error")
 
-  getURL("https://cliflo.niwa.co.nz/pls/niwp/wa.logout", curl = curl)
+  getURL("https://cliflo.niwa.co.nz/pls/niwp/wa.logout", 
+         curl = curl, cainfo = cert)
 
   file.remove(cookies)
   if (msg)
@@ -314,10 +318,12 @@ setMethod("summary", signature(object = "cfUser"),
                          paste("clifro", R.Version()$version.string),
                        cookiefile = cookies,
                        cookiejar = cookies)
+  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
   user_info_xml =
     getForm("https://cliflo.niwa.co.nz/pls/niwp/wa.subscr_info",
             sub = "t",
-            curl = curl)
+            curl = curl,
+            cainfo = cert)
   user_info_html = querySelectorAll(htmlParse(user_info_xml),
                                     "body.popup > div")
   info = gsub("  |   |    |     ", " ", sapply(user_info_html, xmlValue))

@@ -187,6 +187,7 @@ cf_query = function(user, datatype, station, start_date, end_date = now(tz),
                          paste("clifro", R.Version()$version.string),
                        cookiefile = cookies,
                        cookiejar = cookies)
+  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
   all_dt_params = c(datatype@dt_param, unlist(datatype@dt_sel_option_params))
   if (!quiet)
     message("connecting to CliFlo...")
@@ -216,7 +217,8 @@ cf_query = function(user, datatype, station, start_date, end_date = now(tz),
                  cdata_order = "SD",
                  submit_sq = "Send Query",
                  .params = all_dt_params,
-                 curl = curl)
+                 curl = curl,
+                 cainfo = cert)
 
   is_HTML = grepl("<!DOCTYPE HTML PUBLIC", doc, fixed = TRUE)
   if (is_HTML){

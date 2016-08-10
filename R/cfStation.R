@@ -8,11 +8,13 @@
 getURIs = function(uris, multiHandle = getCurlMultiHandle()) {
     content = vector("list", length(uris))
     curls = vector("list", length(uris))
+    cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
     
     for(i in seq_along(uris)) {
         curl = getCurlHandle()
         content[[i]] = basicTextGatherer()
-        opts = curlOptions(URL = uris[i], writefunction = content[[i]]$update)
+        opts = curlOptions(URL = uris[i], writefunction = content[[i]]$update,
+                           cainfo = cert)
         curlSetOpt(.opts = opts, curl = curl)
         multiHandle = push(multiHandle, curl)
     }

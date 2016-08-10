@@ -11,7 +11,9 @@
 #' @importFrom XML htmlParse xmlApply xmlGetAttr
 #' @importFrom utils menu
 cf_region = function(region){
-  regions = htmlParse("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html")
+  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
+  regions = htmlParse(getURL("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html", 
+                             cainfo = cert))
   region.xml = querySelectorAll(regions, "option[value^='-']")
   region.names = unlist(xmlApply(region.xml, xmlValue))
 
@@ -449,13 +451,14 @@ cf_find_station = function(...,
                            paste("clifro", R.Version()$version.string),
                          cookiefile = cookies,
                          cookiejar = cookies)
+    cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
     param.list = c(param.list, ccomb_dt = combine)
     doc = htmlParse(
       postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",
-               .params = param.list, curl = curl))
+               .params = param.list, curl = curl, cainfo = cert))
   } else
     doc = htmlParse(postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_nodt",
-                             .params = param.list))
+                             .params = param.list, cainfo = cert))
 
   agent_name_xml = querySelectorAll(doc, "a.st[href*='wstn.stn_details?']")
 

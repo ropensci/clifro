@@ -108,8 +108,9 @@ dt_href = function(doc, ...){
 first_stage_selection = function(selection, g, iter){
   domain = "https://cliflo.niwa.co.nz/pls/niwp/"
   full_path = paste0(domain, "wgenf.choose_datatype?cat=cat1")
+  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
   
-  datatypes_xml = querySelectorAll(htmlParse(getURL(full_path)),
+  datatypes_xml = querySelectorAll(htmlParse(getURL(full_path, cainfo = cert)),
                                    "table.header td.popup a.top")
   
   if (!is.na(selection) && selection > 9){
@@ -141,7 +142,10 @@ first_stage_selection = function(selection, g, iter){
 second_stage_selection = function(href_1, selection, dt_name, g){
   domain = "https://cliflo.niwa.co.nz/pls/niwp/"
   full_path = paste0(domain, href_1)
-  datatypes_xml = querySelectorAll(htmlParse(getURL(full_path)), "a.dt")
+  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
+  
+  datatypes_xml = querySelectorAll(htmlParse(getURL(full_path, cainfo = cert)), 
+                                   "a.dt")
   
   if (is.na(selection)){
     gsub("\\n", "", gsub(" {2,}", "", dt_href(datatypes_xml, g, dt_name)))
@@ -205,12 +209,13 @@ option_selections = function(href_2, selection_check, selection_combo,
   selection_check = unique(selection_check)
   domain = "https://cliflo.niwa.co.nz/pls/niwp/"
   full_path = paste0(domain, href_2)
-  dt_options_xml = querySelectorAll(htmlParse(getURL(full_path)), 
+  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
+  dt_options_xml = querySelectorAll(htmlParse(getURL(full_path, cainfo = cert)), 
                                     "td.selected table tr td.selected")
-  dt_params_xml = querySelectorAll(htmlParse(getURL(full_path)), 
+  dt_params_xml = querySelectorAll(htmlParse(getURL(full_path, cainfo = cert)), 
                                    "td.selected table tr td input")
   dt_param_values = xmlSApply(dt_params_xml, xmlGetAttr, "value")
-  dt_combo_xml = querySelectorAll(htmlParse(getURL(full_path)), 
+  dt_combo_xml = querySelectorAll(htmlParse(getURL(full_path, cainfo = cert)), 
                                   "td.selected table tr td select option")
   
   if (length(dt_combo_xml) == 0)
@@ -287,6 +292,7 @@ cf_update_dt = function(object, user = cf_user()){
                          paste("clifro", R.Version()$version.string),
                        cookiefile = cookies, 
                        cookiejar = cookies)
+  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
   
   all_dt_params = c(object@dt_param, unlist(object@dt_sel_option_params))
   
@@ -311,7 +317,8 @@ cf_update_dt = function(object, user = cf_user()){
            cstn_id = "A",
            cdata_order = "DS",
            .params = all_dt_params,
-           curl = curl)
+           curl = curl,
+           cainfo = cert)
 }
 
 
