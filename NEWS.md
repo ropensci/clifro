@@ -14,19 +14,11 @@ clifro 3.0 (10-August-2016)
 
 clifro 2.4-1 (15-January-2016)
 ==============================
-
-### New Features
-* CRAN release
-
 ### Minor Improvements
 * Update citation information
 
 clifro 2.4-0 (05-March-2015)
 ============================
-
-### Minor Improvements
-* CRAN release
-
 ### Bug Fixes
 * Bug fixed for subsetting _cfStation_ using `[`
 
