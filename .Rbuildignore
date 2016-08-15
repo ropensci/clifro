@@ -11,3 +11,4 @@
 ^vignettes/auckStations$
 ^vignettes/queenStations$
 ^revdep$
+^CONDUCT\.md$
