@@ -1,3 +1,42 @@
+# Parallel universe ------------------------------------------------------
+
+# Set up a package-specific environment to store local variables.
+cf_parallel = new.env()
+
+#  ------------------------------------------------------------------------
+#' Store curl options for use within \pkg{clifro}
+#'
+#' The \code{cf_curl_opts} function stores specific curl options that are used
+#' for all the \pkg{clifro} queries.
+#'
+#' @param ... a name-value pairs that are passed to \code{\link[RCurl]{curlOptions}}
+#' @param .opts a named list or \code{CURLOptions} object that are passed to \code{\link[RCurl]{curlOptions}}
+#'
+#' @importFrom RCurl curlOptions
+#' @importFrom utils packageVersion
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Specify options for use in all the curl handles created in clifro
+#' cf_curl_opts(.opts = list(proxy = "http://xxxxx.yyyy.govt.nz:8080",
+#'                           proxyusername  = "uid",
+#'                           proxypassword  = "pwd",
+#'                           ssl.verifypeer = FALSE))
+#' # Or alternatively:
+#' cf_curl_opts(proxy = "http://xxxxx.yyyy.govt.nz:8080",
+#'              proxyusername  = "uid",
+#'              proxypassword  = "pwd",
+#'              ssl.verifypeer = FALSE)
+#' }
+cf_curl_opts = function(..., .opts = list()){
+  curl_opts = curlOptions(..., .opts = .opts)
+  curl_opts[["followlocation"]] = TRUE
+  curl_opts[["useragent"]] = paste("clifro", packageVersion("clifro"))
+  curl_opts[["timeout"]] = 100
+  cf_parallel[["curl_opts"]] = curl_opts
+}
+
 #  ------------------------------------------------------------------------
 
 #' From CliFlo to \pkg{clifro}: Enhancing The National Climate Database With \R
@@ -138,11 +177,9 @@ NULL
 
 cf_login = function(object){
   cookies = file.path(tempdir(), object@username)
-  curl = getCurlHandle(followlocation = TRUE,
-                       cookiejar = cookies,
+  curl = getCurlHandle(cookiejar = cookies,
                        cookiefile = cookies,
-                       useragent = paste("clifro", R.Version()$version.string),
-                       timeout = 100)
+                       .opts = cf_parallel[["curl_opts"]])
   cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
   if (object@username == "public"){
     login_html = htmlParse(getURL(
@@ -171,12 +208,9 @@ cf_login = function(object){
 #' @importFrom RCurl getCurlHandle getURLContent getURL
 cf_logout = function(object, msg = TRUE){
   cookies = file.path(tempdir(), object@username)
-  curl = getCurlHandle(followlocation = TRUE,
-                       timeout = 100,
-                       useragent =
-                         paste("clifro", R.Version()$version.string),
+  curl = getCurlHandle(cookiejar = cookies,
                        cookiefile = cookies,
-                       cookiejar = cookies)
+                       .opts = cf_parallel[["curl_opts"]])
   cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
 
   header = getURLContent("https://cliflo.niwa.co.nz/pls/niwp/wa.logout",
@@ -184,7 +218,7 @@ cf_logout = function(object, msg = TRUE){
   if (!grepl("OK", header$header["statusMessage"]))
     stop("HTTP error")
 
-  getURL("https://cliflo.niwa.co.nz/pls/niwp/wa.logout", 
+  getURL("https://cliflo.niwa.co.nz/pls/niwp/wa.logout",
          curl = curl, cainfo = cert)
 
   file.remove(cookies)
@@ -312,12 +346,9 @@ setMethod("summary", signature(object = "cfUser"),
   cf_login(object)
   on.exit(cf_logout(object, msg = FALSE))
   cookies = file.path(tempdir(), object@username)
-  curl = getCurlHandle(followlocation = TRUE,
-                       timeout = 100,
-                       useragent =
-                         paste("clifro", R.Version()$version.string),
+  curl = getCurlHandle(cookiejar = cookies,
                        cookiefile = cookies,
-                       cookiejar = cookies)
+                       .opts = cf_parallel[["curl_opts"]])
   cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
   user_info_xml =
     getForm("https://cliflo.niwa.co.nz/pls/niwp/wa.subscr_info",

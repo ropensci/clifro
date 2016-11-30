@@ -3,29 +3,29 @@
 #
 # This is a function to process multiple HTTP requests concurrently to speed up
 # elapsed time.
-#' @importFrom RCurl getCurlHandle basicTextGatherer curlOptions curlSetOpt push 
+#' @importFrom RCurl getCurlHandle basicTextGatherer curlOptions curlSetOpt push
 #' complete getCurlMultiHandle
 getURIs = function(uris, multiHandle = getCurlMultiHandle()) {
     content = vector("list", length(uris))
     curls = vector("list", length(uris))
     cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
-    
+
     for(i in seq_along(uris)) {
         curl = getCurlHandle()
         content[[i]] = basicTextGatherer()
         opts = curlOptions(URL = uris[i], writefunction = content[[i]]$update,
-                           cainfo = cert)
+                           cainfo = cert, .opts = cf_parallel[["curl_opts"]])
         curlSetOpt(.opts = opts, curl = curl)
         multiHandle = push(multiHandle, curl)
     }
-    
+
     complete(multiHandle)
     lapply(content, function(x) x$value())
 }
 
 # Create tidy names
 #
-# This function is used for the show method to create nicer looking row names 
+# This function is used for the show method to create nicer looking row names
 # that don't take up the whole width of the page.
 #
 # names   : the names
@@ -45,10 +45,10 @@ tidy_names = function(names, max_len = 20){
 # cfStation class ---------------------------------------------------------
 
 # The Clifro Station Class
-# 
-# This class represents cliflo stations that can be passed into the final 
+#
+# This class represents cliflo stations that can be passed into the final
 # query.
-# 
+#
 #' @importFrom methods setClass
 setClass("cfStation", contains = "dataFrame")
 
@@ -58,20 +58,20 @@ setClass("cfStation", contains = "dataFrame")
 #
 # The main aim for the initializer is to order the open stations by opening date
 # and the closed stations by closing date and remove duplicated stations.
-# 
+#
 #' @importFrom methods setMethod
 #' @importFrom lubridate now
 setMethod("initialize", "cfStation", function(.Object, df){
-    
+
     if (any(duplicated(df[3])))
         df = df[ - which(duplicated(df[3])), ]
     df_list = as.list(df)
     names(df_list) = NULL
-    
+
     .Object@names = c("name", "network", "agent",
-                      "start", "end", "open", 
+                      "start", "end", "open",
                       "distance", "lat", "lon")
-    
+
     start_diff = now() - df_list[[4]]
     end_diff = now() - df_list[[5]]
     ordered_stations = order(end_diff, -start_diff)
@@ -83,23 +83,23 @@ setMethod("initialize", "cfStation", function(.Object, df){
 # Constructor -------------------------------------------------------------
 
 #' The Clifro Station Object
-#' 
+#'
 #' Create a \code{cfStation} object containing station information for one or
 #' more CliFlo stations.
-#' 
-#' A \code{cfStation} object is created by the constructor function 
-#' \code{cf_station}. The unique agent numbers of the stations are all that is 
-#' required to create a \code{cfStation} object using the \code{cf_station} 
-#' function. The rest of the station information including the name, network and 
-#' agent ID, start and end dates, coordinates, as well as other data is scraped 
+#'
+#' A \code{cfStation} object is created by the constructor function
+#' \code{cf_station}. The unique agent numbers of the stations are all that is
+#' required to create a \code{cfStation} object using the \code{cf_station}
+#' function. The rest of the station information including the name, network and
+#' agent ID, start and end dates, coordinates, as well as other data is scraped
 #' from CliFlo.
-#' 
-#' This function is used for when the agent numbers are already known. For help 
+#'
+#' This function is used for when the agent numbers are already known. For help
 #' creating \code{cfStation} objects when the agent numbers are unknown see the
 #' \code{\link{cf_find_station}} function.
-#' 
+#'
 #' @param ... comma separated agent numbers
-#' 
+#'
 #' @importFrom selectr querySelector querySelectorAll
 #' @importFrom XML xmlValue htmlParse
 #' @importFrom methods new
@@ -111,26 +111,26 @@ setMethod("initialize", "cfStation", function(.Object, df){
 #' @return \code{cfStation} object
 #' @export
 #' @seealso \code{\link{cf_find_station}} for creating \code{cfStation} objects
-#' when the agent numbers are not known and \code{vignette("cfStation")} 
+#' when the agent numbers are not known and \code{vignette("cfStation")}
 #' for working with clifro stations including spatial plotting in \R. For saving
-#' \code{cfStation} objects as KML files refer to the vignette or 
+#' \code{cfStation} objects as KML files refer to the vignette or
 #' \code{\link{cf_save_kml}}.
 #' @examples
 #' \dontrun{
 #' # Create a cfStation object for the Leigh 1 and 2 Ews stations
 #' leigh.st = cf_station(1339, 1340)
 #' leigh.st
-#' 
+#'
 #' # Note, this can also be achieved using the '+' operator
 #' leigh.st = cf_station(1339) + cf_station(1340)
 #' leigh.st
-#' 
+#'
 #' # Add another column showing how long the stations have been open for
 #' leigh.df = as(leigh.st, "data.frame")
 #' leigh.df$ndays = with(leigh.df, round(end - start))
 #' leigh.df
-#' 
-#' # Save the stations to the current working directory as a KML to visualise 
+#'
+#' # Save the stations to the current working directory as a KML to visualise
 #' # the station locations
 #' cf_save_kml(leigh.st)
 #' }
@@ -138,22 +138,22 @@ cf_station = function(...){
   agent = c(...)
   if (length(agent) == 0)
     agent = 3925
-  
+
   agent = suppressWarnings(as.numeric(agent))
   if (any(is.na(agent)))
     stop("agents must be numeric")
-  
+
   if (any(agent %% 1 != 0))
     stop("agent numbers must be integer")
-  
-  uris = paste0("https://cliflo.niwa.co.nz/pls/niwp/wstn.stn_details?cAgent=", 
+
+  uris = paste0("https://cliflo.niwa.co.nz/pls/niwp/wstn.stn_details?cAgent=",
                 agent)
-  
+
   if (any(duplicated(agent))){
     uris = uris[!duplicated(agent)]
     agent = agent[!duplicated(agent)]
   }
-  
+
   stations_xml = getURIs(uris)
   station_details = lapply(lapply(stations_xml, htmlParse), function(z){
     station_details_xml = querySelectorAll(z, "td.extrdata:nth-child(2)")
@@ -162,35 +162,35 @@ cf_station = function(...){
     else
       sapply(station_details_xml, xmlValue)[c(1:5, 10:12)]
   })
-  
+
   which.na = as.numeric(which(is.na(station_details)))
   if (length(which.na) == length(agent))
     stop("the agent numbers do not represent any CliFlo stations")
-  
+
   if (length(which.na) != 0){
     if (length(which.na) == 1){
       message(paste("agent number", agent[which.na], "does not exist - ignoring"))
     } else {
-      message(paste("agent numbers", paste(agent[which.na], collapse = ", "), 
+      message(paste("agent numbers", paste(agent[which.na], collapse = ", "),
                     "do not exist - ignoring"))
     }
     station_details = station_details[-which.na]
   }
-  
-  start_date = dmy(as.character(sapply(station_details, "[", 6)), 
+
+  start_date = dmy(as.character(sapply(station_details, "[", 6)),
                    tz = "Pacific/Auckland")
   end_date = as.character(sapply(station_details, "[", 7))
-  
+
   open_station = end_date == "-"
-  final_date = rep(with_tz(round_date(now(), "day"), 
+  final_date = rep(with_tz(round_date(now(), "day"),
                            tzone = "Pacific/Auckland"), length(station_details))
-  
+
   if (any(!open_station))
-    final_date[!open_station] = dmy(end_date[!open_station], 
+    final_date[!open_station] = dmy(end_date[!open_station],
                                     tz = "Pacific/Auckland")
-  
+
   ## options(stringsAsFactors = FALSE)
-  new("cfStation", 
+  new("cfStation",
       data.frame(
         name = as.character(sapply(station_details, "[", 3)),
         network = as.character(sapply(station_details, "[", 2)),
@@ -198,7 +198,7 @@ cf_station = function(...){
         start.date = start_date,
         end.date = final_date,
         open.station = open_station,
-        distance = numeric(length(open_station)), 
+        distance = numeric(length(open_station)),
         lat = as.numeric(sapply(station_details, "[", 4)),
         lon = as.numeric(sapply(station_details, "[", 5)),
         check.names = TRUE, stringsAsFactors = FALSE))
@@ -207,7 +207,7 @@ cf_station = function(...){
 # Methods -----------------------------------------------------------------
 
 #' @importFrom methods setMethod
-setMethod("show", 
+setMethod("show",
           signature(object = "cfStation"),
           function(object){
             cfstation_df = data.frame(object)
@@ -220,13 +220,13 @@ setMethod("show",
 #' @aliases +,cfStation,cfStation-method
 setMethod("+",
           signature(e1 = "cfStation",
-                    e2 = "cfStation"), 
+                    e2 = "cfStation"),
           function(e1, e2){
               new.obj = new("cfStation",
                             data.frame(
-                            name = c(as.character(e1@.Data[[1]]), 
+                            name = c(as.character(e1@.Data[[1]]),
                                      as.character(e2@.Data[[1]])),
-                            network = c(as.character(e1@.Data[[2]]), 
+                            network = c(as.character(e1@.Data[[2]]),
                                         as.character(e2@.Data[[2]])),
                             agent = c(e1@.Data[[3]], e2@.Data[[3]]),
                             start_date = c(e1@.Data[[4]], e2@.Data[[4]]),

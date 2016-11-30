@@ -16,7 +16,7 @@
 \item{e2}{an object matching the class of e1}
 }
 \description{
-This operator allows you to add more datatypes or stations to 
+This operator allows you to add more datatypes or stations to
 \code{cfDatatype} and \code{cfStation} objects respectively.
 }
 

@@ -12,7 +12,7 @@
 #' @importFrom utils menu
 cf_region = function(region){
   cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
-  regions = htmlParse(getURL("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html", 
+  regions = htmlParse(getURL("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html",
                              cainfo = cert))
   region.xml = querySelectorAll(regions, "option[value^='-']")
   region.names = unlist(xmlApply(region.xml, xmlValue))
@@ -446,12 +446,9 @@ cf_find_station = function(...,
                      any = "or")
     cf_update_dt(datatype)
     cookies = file.path(tempdir(), user@username)
-    curl = getCurlHandle(followlocation = TRUE,
-                         timeout = 100,
-                         useragent =
-                           paste("clifro", R.Version()$version.string),
-                         cookiefile = cookies,
-                         cookiejar = cookies)
+    curl = curl = getCurlHandle(cookiejar = cookies,
+                                cookiefile = cookies,
+                                .opts = cf_parallel[["curl_opts"]])
     param.list = c(param.list, ccomb_dt = combine)
     doc = htmlParse(
       postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",
