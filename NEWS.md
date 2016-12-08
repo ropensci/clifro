@@ -1,9 +1,10 @@
 clifro 3.0-999
 ==========
-## Bug Fixes
+### Bug Fixes
 * Requesting combined datatypes now works (issue #4). Note there is no default 
   plot method for this datatype as they are essentially combinations of other 
   datatypes.
+* Fix bug that hung R if a datatype without any rows was requested -- Fixed issue #6
 
 clifro 3.0 (10-August-2016)
 ==========
