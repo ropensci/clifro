@@ -4,7 +4,7 @@
 \alias{cf_curl_opts}
 \title{Store curl options for use within \pkg{clifro}}
 \usage{
-cf_curl_opts(..., .opts)
+cf_curl_opts(..., .opts = list())
 }
 \arguments{
 \item{...}{a name-value pairs that are passed to \code{\link[RCurl]{curlOptions}}}
