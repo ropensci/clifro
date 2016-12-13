@@ -248,17 +248,17 @@ cf_query = function(user, datatype, station, start_date, end_date = now(tz),
 
   head_names = lapply(data_list, names)
   nrows = sapply(data_list, nrow)
-  data_list = data_list[!(nrows == 0)]
+  seq_ind =   which(nrows != 0)
 
-  clifro_data_list = vector("list", length(data_list))
+  clifro_data_list = vector("list", length(seq_ind))
 
-  for (i in seq_along(data_list)){
+  for (i in seq_along(seq_ind)){
     clifro_data_list[[i]] = new("cfData",
-                                dt_name = dt_names[i],
-                                dt_type = dt_types[i],
-                                names = head_names[[i]],
-                                row.names = paste(seq_len(nrows[i])),
-                                as(data_list[[i]], "list"))
+                                dt_name = dt_names[seq_ind[i]],
+                                dt_type = dt_types[seq_ind[i]],
+                                names = head_names[[seq_ind[i]]],
+                                row.names = paste(seq_len(nrows[seq_ind[i]])),
+                                as(data_list[[seq_ind[i]]], "list"))
     clifro_data_list[[i]] = create_object(clifro_data_list[[i]])
   }
   if (!quiet)
