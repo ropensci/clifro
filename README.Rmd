@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 # Enhancing the National Climate Database with *clifro*
 
 [![Build Status](https://travis-ci.org/ropensci/clifro.svg)](https://travis-ci.org/ropensci/clifro)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/clifro)](http://cran.r-project.org/package=clifro)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/clifro)](https://cran.r-project.org/package=clifro)
 
 The *clifro* package is designed to minimise the hassle in downloading data from
 New Zealand's National Climate Database via [CliFlo](http://cliflo.niwa.co.nz/).

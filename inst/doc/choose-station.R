@@ -2,23 +2,23 @@
 library(clifro)
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  # Equivalent to searching for status = "open" on CliFro
-#  # Note the search string is not case sensitive
-#  cf_find_station("takaka", status = "all")
+## # Equivalent to searching for status = "open" on CliFro
+## # Note the search string is not case sensitive
+## cf_find_station("takaka", status = "all")
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  cf_find_station("takaka", status = "open")
+## cf_find_station("takaka", status = "open")
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  cf_find_station("f028", search = "network", status = "all")
+## cf_find_station("f028", search = "network", status = "all")
 
 ## ---- echo = FALSE-------------------------------------------------------
 open.queenstown.stations.df = dget(system.file("extdata", "queenStations", package = "clifro"))
 open.queenstown.stations = new("cfStation", open.queenstown.stations.df)
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  # Partial match for the Queenstown region
-#  open.queenstown.stations = cf_find_station("queen", search = "region")
+## # Partial match for the Queenstown region
+## open.queenstown.stations = cf_find_station("queen", search = "region")
 
 ## ---- echo = FALSE-------------------------------------------------------
 takaka.town.df = structure(list(name = structure(c(2L, 3L, 1L), .Label = c("Takaka Ews", 
@@ -35,8 +35,8 @@ takaka.town.df = structure(list(name = structure(c(2L, 3L, 1L), .Label = c("Taka
 takaka.town.st = new("cfStation", takaka.town.df)
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  takaka.town.st = cf_find_station(lat = -40.85, long = 172.8, rad = 10, search = "latlong")
-#  takaka.town.st[, -c(8, 9)]
+## takaka.town.st = cf_find_station(lat = -40.85, long = 172.8, rad = 10, search = "latlong")
+## takaka.town.st[, -c(8, 9)]
 
 ## ---- echo = -1----------------------------------------------------------
 takaka.town.st[, -c(8, 9)]
@@ -57,16 +57,16 @@ hourly.rain.dt = new("cfDatatype"
 )
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  # Create a clifro datatype for hourly rain
-#  hourly.rain.dt = cf_datatype(3, 1, 2)
-#  hourly.rain.dt
+## # Create a clifro datatype for hourly rain
+## hourly.rain.dt = cf_datatype(3, 1, 2)
+## hourly.rain.dt
 
 ## ---- echo = FALSE-------------------------------------------------------
 hourly.rain.dt
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  # Conduct the search
-#  cf_find_station("takaka", datatype = hourly.rain.dt)
+## # Conduct the search
+## cf_find_station("takaka", datatype = hourly.rain.dt)
 
 ## ---- echo = FALSE-------------------------------------------------------
 kaitaia.df = structure(list(name = structure(c(4L, 9L, 3L, 8L, 1L, 6L, 5L, 
@@ -94,10 +94,10 @@ kaitaia.st = new("cfStation", kaitaia.df)
 my.composite.search = takaka.town.st + kaitaia.st
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  my.composite.search = takaka.town.st + cf_find_station("kaitaia",
-#                                                         search = "region",
-#                                                         datatype = hourly.rain.dt)
-#  my.composite.search
+## my.composite.search = takaka.town.st + cf_find_station("kaitaia",
+##                                                        search = "region",
+##                                                        datatype = hourly.rain.dt)
+## my.composite.search
 
 ## ---- echo = -1----------------------------------------------------------
 my.composite.search
@@ -110,10 +110,10 @@ all.auckland.df = dget(system.file("extdata", "auckStations", package = "clifro"
 all.auckland.st = new("cfStation", all.auckland.df)
 
 ## ----eval = FALSE--------------------------------------------------------
-#  # First, search for the stations
-#  all.auckland.st = cf_find_station("auckland", search = "region", status = "all")
+## # First, search for the stations
+## all.auckland.st = cf_find_station("auckland", search = "region", status = "all")
 
 ## ----eval=FALSE----------------------------------------------------------
-#  # Then save these as a KML
-#  cf_save_kml(all.auckland.st, file_name = "all_auckland_stations")
+## # Then save these as a KML
+## cf_save_kml(all.auckland.st, file_name = "all_auckland_stations")
 

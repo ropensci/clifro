@@ -1,4 +1,4 @@
-clifro 3.1 (14-December2016)
+clifro 3.1-0 (14-December2016)
 ==========
 ### Minor Improvements
 * Curl options can now be passed to all curl handles that are initiated by `clifro`. This means the curl options are not overwritten every time a new `clifro` function is called. Curl options are passed to `clifro` using the `cf_curl_opts` function, which is passed directly to the `RCurl::curlOptions()` function.
@@ -9,7 +9,7 @@ clifro 3.1 (14-December2016)
   datatypes.
 * Fix bug that hung R if a datatype without any rows was requested -- Fixed issue #6
 
-clifro 3.0 (10-August-2016)
+clifro 3.0-0 (10-August-2016)
 ==========
 
 ### Minor Improvements

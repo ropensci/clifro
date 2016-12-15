@@ -25,7 +25,7 @@ search for stations using the `cf_find_station` function as detailed in the
 agent numbers as the only input. This vignette covers the construction of a 
 `cfStation`  object via the `cf_station` function, and then shows examples of 
 plotting and visualising the station's locations using KML files or within R
-using the [ggmap](http://cran.r-project.org/package=ggmap)
+using the [ggmap](https://cran.r-project.org/package=ggmap)
 package.
 
 # Creating a cfStation object from agent numbers
@@ -117,7 +117,7 @@ export the station information for use in another software. The
 information as an R dataframe that can then be used for plotting or exporting.
 
 This example is only one of the many ways to plot GIS data in R, and the 
-[ggmap](http://cran.r-project.org/package=ggmap)
+[ggmap](https://cran.r-project.org/package=ggmap)
 package is chosen for it's usability and quality plots. In this example we will 
 plot all the past and present Auckland climate stations to assess the density 
 of open and closed stations across the region.

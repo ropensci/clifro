@@ -4,7 +4,7 @@ author: "Blake Seers"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Working with clifro stations}
+  %\VignetteIndexEntry{Choosing a clifro datatype}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

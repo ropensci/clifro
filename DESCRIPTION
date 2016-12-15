@@ -1,7 +1,7 @@
 Package: clifro
 Type: Package
 Title: Easily Download and Visualise Climate Data from CliFlo
-Version: 3.1
+Version: 3.1-0
 Date: 2016-12-14
 Authors@R: person("Blake", "Seers", role = c("aut", "cre"),
     email = "blake.seers@gmail.com")

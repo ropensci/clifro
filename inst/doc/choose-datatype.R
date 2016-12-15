@@ -19,10 +19,10 @@ menu.opts = function(title, options){
 }
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  surfaceWind.dt = cf_datatype()
-#  
-#  # If you prefer pointing and clicking - turn the graphics option on:
-#  surfaceWind.dt = cf_datatype(graphics = TRUE)
+## surfaceWind.dt = cf_datatype()
+## 
+## # If you prefer pointing and clicking - turn the graphics option on:
+## surfaceWind.dt = cf_datatype(graphics = TRUE)
 
 ## ---- echo=FALSE---------------------------------------------------------
 menu.opts("Daily and Hourly Observations", 
@@ -48,8 +48,8 @@ menu.opts("Units", c("m/s", "km/hr", "knots"))
 surfaceWind.dt
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  surfaceWind.dt = cf_datatype(2, 1, 4, 3)
-#  surfaceWind.dt
+## surfaceWind.dt = cf_datatype(2, 1, 4, 3)
+## surfaceWind.dt
 
 ## ---- echo = FALSE-------------------------------------------------------
 surfaceWind.dt
@@ -101,42 +101,42 @@ temperatureExtremes.dt = new("cfDatatype"
 )
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
-#  surfaceWind.dt
+## surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
+## surfaceWind.dt
 
 ## ---- echo = FALSE-------------------------------------------------------
 surfaceWind.dt
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  # Hourly and 9am surface wind (knots)
-#  surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
-#  surfaceWind.dt
+## # Hourly and 9am surface wind (knots)
+## surfaceWind.dt = cf_datatype(2, 1, c(2, 4), 3)
+## surfaceWind.dt
 
 ## ---- echo = FALSE-------------------------------------------------------
 surfaceWind.dt
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  # Hourly and daily rainfall
-#  rainfall.dt = cf_datatype(3, 1, c(1, 2))
-#  rainfall.dt
+## # Hourly and daily rainfall
+## rainfall.dt = cf_datatype(3, 1, c(1, 2))
+## rainfall.dt
 
 ## ---- echo = FALSE-------------------------------------------------------
 rainfall.dt
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  # Hourly counts of lightning flashes
-#  lightning.dt = cf_datatype(6, 1, 1)
-#  lightning.dt
+## # Hourly counts of lightning flashes
+## lightning.dt = cf_datatype(6, 1, 1)
+## lightning.dt
 
 ## ---- echo = FALSE-------------------------------------------------------
 lightning.dt
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  # Daily and hourly grass temperature extremes
-#  temperatureExtremes.dt = cf_datatype(4, 2, c(5, 6))
-#  temperatureExtremes.dt
-#  
-#  # Note: only the surface wind datatype requires combo options
+## # Daily and hourly grass temperature extremes
+## temperatureExtremes.dt = cf_datatype(4, 2, c(5, 6))
+## temperatureExtremes.dt
+## 
+## # Note: only the surface wind datatype requires combo options
 
 ## ---- echo = FALSE-------------------------------------------------------
 temperatureExtremes.dt
@@ -171,11 +171,11 @@ query1.dt = new("cfDatatype"
 )
 
 ## ---- tidy = FALSE, eval = FALSE-----------------------------------------
-#  query1.dt = cf_datatype(c(2, 3, 6, 4),
-#                          c(1, 1, 1, 2),
-#                          list(c(2, 4), c(1, 2), 1, c(5, 6)),
-#                          c(3, NA, NA, NA))
-#  query1.dt
+## query1.dt = cf_datatype(c(2, 3, 6, 4),
+##                         c(1, 1, 1, 2),
+##                         list(c(2, 4), c(1, 2), 1, c(5, 6)),
+##                         c(3, NA, NA, NA))
+## query1.dt
 
 ## ---- echo = FALSE-------------------------------------------------------
 query1.dt
@@ -186,19 +186,19 @@ query1.dt = surfaceWind.dt + rainfall.dt + lightning.dt +
 query1.dt
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  # To add another datatype using the menu:
-#  query1.dt + cf_datatype()
-#  
-#  # Is equivalent to:
-#  query1.dt + cf_datatype(NA, NA, NA, NA)
-#  
-#  # Therefore is equivalent to adding a column of NA's to the above table:
-#  query1.dt = cf_datatype(c(2, 3, 6, 4, NA),
-#                                c(1, 1, 1, 2, NA),
-#                                list(c(2, 4), c(1, 2), 1, c(5, 6), NA),
-#                                c(3, NA, NA, NA, NA))
-#  
-#  # Half an unknown wind datatype i.e. we know first selection = 2 but nothing
-#  # further:
-#  rain.dt = cf_datatype(2) # Or cf_datatype(2, NA, NA, NA)
+## # To add another datatype using the menu:
+## query1.dt + cf_datatype()
+## 
+## # Is equivalent to:
+## query1.dt + cf_datatype(NA, NA, NA, NA)
+## 
+## # Therefore is equivalent to adding a column of NA's to the above table:
+## query1.dt = cf_datatype(c(2, 3, 6, 4, NA),
+##                               c(1, 1, 1, 2, NA),
+##                               list(c(2, 4), c(1, 2), 1, c(5, 6), NA),
+##                               c(3, NA, NA, NA, NA))
+## 
+## # Half an unknown wind datatype i.e. we know first selection = 2 but nothing
+## # further:
+## rain.dt = cf_datatype(2) # Or cf_datatype(2, NA, NA, NA)
 
