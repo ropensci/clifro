@@ -101,11 +101,6 @@ with(wind_df, windrose(wind_speeds, wind_dirs, "Artificial Auckland Wind"))
 # Plot a windrose for each level of the facet variable (each station)
 with(wind_df, windrose(wind_speeds, wind_dirs, station, n_col = 2))
 
-# Make all the text larger
-library(ggplot2) # for element_text()
-with(wind_df, windrose(wind_speeds, wind_dirs, station,
-                       text = element_text(size = 16), n_col = 2))
-
 \dontrun{
 # Save the plot as a png to the current working directory
 library(ggplot2)
