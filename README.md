@@ -2,7 +2,7 @@
 Enhancing the National Climate Database with *clifro*
 =====================================================
 
-[![Build Status](https://travis-ci.org/ropensci/clifro.svg)](https://travis-ci.org/ropensci/clifro) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/clifro)](http://cran.r-project.org/package=clifro)
+[![Build Status](https://travis-ci.org/ropensci/clifro.svg)](https://travis-ci.org/ropensci/clifro) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/clifro)](https://cran.r-project.org/package=clifro)
 
 The *clifro* package is designed to minimise the hassle in downloading data from New Zealand's National Climate Database via [CliFlo](http://cliflo.niwa.co.nz/). It does this by providing functions for the user to log in, easily choose the appropriate datatypes and stations and then query the database. Once the data have been downloaded, they are stored as specific objects in **R** with the primary aim to ensure data visualisation and exploration is done with minimal effort and maximum efficiency.
 

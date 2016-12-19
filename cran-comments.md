@@ -1,5 +1,5 @@
 ## Test environments
-* ubuntu 12.04.5 LTS (travis-ci) and 14.04.5 LTS (local), R 3.3.1
+* ubuntu 12.04.5 LTS (travis-ci) and 14.04.1 LTS (local), R 3.3.2
 * win-builder (devel and release)
 
 ## R CMD check results
