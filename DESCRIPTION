@@ -24,7 +24,7 @@ Suggests:
     pander
 Description: CliFlo is a web portal to the New Zealand National Climate
     Database and provides public access (via subscription) to around 6,500
-    various climate stations (see <http://cliflo.niwa.co.nz/> for more 
+    various climate stations (see <https://cliflo.niwa.co.nz/> for more 
     information). Collating and manipulating data from CliFlo
     (hence clifro) and importing into R for further analysis, exploration and
     visualisation is now straightforward and coherent. The user is required to
