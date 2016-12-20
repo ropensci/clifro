@@ -14,3 +14,8 @@ There was 1 NOTE:
 
 ## Downstream dependencies
 I have also run R CMD CHECK on macleish, the only downstream dependency of clifro, without any problems.
+
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Included a link to the CliFlo web portal in the Description field in DESCRIPTION.
