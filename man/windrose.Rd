@@ -82,16 +82,14 @@ wind_df = data.frame(wind_speeds = c(rweibull(80, 2, 4), rweibull(20, 3, 9)),
 # Plot a simple windrose using all the defaults, ignoring any facet variable
 with(wind_df, windrose(wind_speeds, wind_dirs))
 
-# Change the ggtheme and colour scheme for black and white figures
-with(wind_df, windrose(wind_speeds, wind_dirs,
-                       ggtheme = "bw",
-                       col_pal = "Greys"))
-
-# Create custom speed bins and legend title
+# Create custom speed bins, add a legend title, and change to a B&W theme
 with(wind_df, windrose(wind_speeds, wind_dirs,
                        speed_cuts = c(3, 6, 9, 12),
                        legend_title = "Wind Speed\\n(m/s)",
-                       legend.title.align = .5))
+                       legend.title.align = .5,
+                       ggtheme = "bw",
+                       col_pal = "Greys"))
+                       
 # Note that underscore-separated arguments come from the windrose method, and
 # period-separated arguments come from ggplot2::theme().
 
