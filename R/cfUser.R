@@ -215,15 +215,18 @@ cf_logout = function(object, msg = TRUE){
 
   header = getURLContent("https://cliflo.niwa.co.nz/pls/niwp/wa.logout",
                          curl = curl, header = TRUE, cainfo = cert)
-  if (!grepl("OK", header$header["statusMessage"]))
-    stop("HTTP error")
-
-  getURL("https://cliflo.niwa.co.nz/pls/niwp/wa.logout",
-         curl = curl, cainfo = cert)
-
-  file.remove(cookies)
-  if (msg)
-    message("Logout successful")
+  
+  if (header$header["status"] != 200){
+    file.remove(cookies)
+    warning("HTTP status was not '200' when logging out")
+  } else {
+    getURL("https://cliflo.niwa.co.nz/pls/niwp/wa.logout",
+           curl = curl, cainfo = cert)
+    
+    file.remove(cookies)
+    if (msg)
+      message("Logout successful")
+  }
 }
 
 #' @rdname valid_cfuser

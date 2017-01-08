@@ -213,6 +213,9 @@ cf_query = function(user, datatype, station, start_date, end_date = now(tz),
                  .params = all_dt_params,
                  curl = curl,
                  .opts = list(cainfo = cert))
+  
+  if (is.raw(doc))
+    doc = rawToChar(doc)
 
   is_HTML = grepl("<!DOCTYPE HTML PUBLIC", doc, fixed = TRUE)
   if (is_HTML){
