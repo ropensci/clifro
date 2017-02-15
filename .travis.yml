@@ -12,6 +12,9 @@ after_success:
 r_binary_packages:
   - XML
 
+r_packages:
+  - covr
+
 notifications:
   email:
     on_success: change
