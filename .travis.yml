@@ -6,6 +6,9 @@ env:
     - NOT_CRAN=true
 before_install: echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
 
+after_success:
+- Rscript -e 'covr::codecov()'
+
 r_binary_packages:
   - XML
 
