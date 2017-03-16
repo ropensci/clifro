@@ -2,13 +2,7 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^\.Rprofile$
-^cran-comments.md$
 ^cran-comments\.md$
 ^README\.Rmd$
-^README-map\.png$
-^README-rain-wind-example-1\.png$
-^README-rain-wind-example-2\.png$
-^vignettes/auckStations$
-^vignettes/queenStations$
 ^revdep$
 ^CONDUCT\.md$
