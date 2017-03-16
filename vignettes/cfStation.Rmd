@@ -132,7 +132,7 @@ auckland.st = new("cfStation", auckland.df)
 auckland.st = cf_find_station("auckland", search = "region", status = "all")
 ```
 
-```{r, message = FALSE}
+```{r, eval = FALSE}
 library(ggmap)
 
 # Add a column to colour the open and closed stations
@@ -152,6 +152,8 @@ auckland.map %+% auckland.df +
   scale_colour_discrete("Status", c("Closed", "Open")) +
   theme(legend.title = element_text(face = "bold"))
 ```
+
+![Density of open and closed climate stations in the greater Auckland region.](figures/ggmap.png)
 
 Remembering that closed stations in clifro are the ones that have end dates 
 over four weeks ago. It appears that the open stations are reasonably confined 
