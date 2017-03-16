@@ -2,8 +2,8 @@
 % Please edit documentation in R/dataFrame.R
 \docType{methods}
 \name{dimnames,dataFrame-method}
-\alias{dim,dataFrame-method}
 \alias{dimnames,dataFrame-method}
+\alias{dim,dataFrame-method}
 \title{Dimension Attributes of a Clifro Object}
 \usage{
 \S4method{dimnames}{dataFrame}(x)
@@ -25,4 +25,3 @@ Retrieve the dimensions or dimension names of a \code{dataFrame} object.
 \code{\link{cf_query}} for creating \code{cfData} objects, and
   \code{\link{cf_station}} for creating \code{cfStation} objects.
 }
-

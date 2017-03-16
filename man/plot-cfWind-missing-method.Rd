@@ -2,16 +2,16 @@
 % Please edit documentation in R/cfData-plotMethods.R
 \docType{methods}
 \name{plot,cfWind,missing-method}
+\alias{plot,cfWind,missing-method}
+\alias{plot.cfWind}
+\alias{direction_plot,cfWind,missing-method}
 \alias{direction_plot}
 \alias{direction_plot,cfDataList,missing-method}
 \alias{direction_plot,cfDataList,numeric-method}
-\alias{direction_plot,cfWind,missing-method}
-\alias{plot,cfWind,missing-method}
-\alias{plot.cfWind}
+\alias{speed_plot,cfWind,missing-method}
 \alias{speed_plot}
 \alias{speed_plot,cfDataList,missing-method}
 \alias{speed_plot,cfDataList,numeric-method}
-\alias{speed_plot,cfWind,missing-method}
 \title{Plot Clifro Wind Objects}
 \usage{
 \S4method{plot}{cfWind,missing}(x, y, n_directions = 12, n_speeds = 5,
@@ -108,6 +108,7 @@ the \code{col_pal} should be \code{'Greys'}. Otherwise, any of the sequential
 \code{\link[RColorBrewer]{RColorBrewer}} colour palettes are recommended for
 colour plots.
 }
+
 \examples{
 \dontrun{
 # Retrieve maximum wind gust data at the Reefton Ews station from CliFlo
@@ -180,4 +181,3 @@ library(ggplot2) # for ggsave()
 ggsave("my_wind_plot.png")
 }
 }
-

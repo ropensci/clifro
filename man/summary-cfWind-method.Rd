@@ -40,4 +40,3 @@ summary(reefton_wind)
  clifro wind data, and \code{\link{cf_query}} for creating \code{cfWind}
  objects.
 }
-

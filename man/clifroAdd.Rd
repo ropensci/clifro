@@ -2,8 +2,8 @@
 % Please edit documentation in R/cfStation.R, R/cfDatatype.R
 \docType{methods}
 \name{+,cfStation,cfStation-method}
-\alias{+,cfDatatype,cfDatatype-method}
 \alias{+,cfStation,cfStation-method}
+\alias{+,cfDatatype,cfDatatype-method}
 \title{Arithmetic Operators for Clifro Objects}
 \usage{
 \S4method{+}{cfStation,cfStation}(e1, e2)
@@ -19,4 +19,3 @@
 This operator allows you to add more datatypes or stations to
 \code{cfDatatype} and \code{cfStation} objects respectively.
 }
-

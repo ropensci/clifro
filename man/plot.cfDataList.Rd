@@ -2,10 +2,10 @@
 % Please edit documentation in R/cfData-plotMethods.R
 \docType{methods}
 \name{plot.cfDataList}
-\alias{plot,cfDataList,missing-method}
-\alias{plot,cfDataList,numeric-method}
-\alias{plot,cfOther,missing-method}
 \alias{plot.cfDataList}
+\alias{plot,cfDataList,numeric-method}
+\alias{plot,cfDataList,missing-method}
+\alias{plot,cfOther,missing-method}
 \title{Default Clifro Plotting}
 \usage{
 \S4method{plot}{cfDataList,numeric}(x, y, ...)
@@ -59,4 +59,3 @@ Plot \pkg{clifro} data based on the datatype.
   Refer to \code{\link[ggplot2]{theme}} for more possible arguments to pass
   to these methods.
 }
-

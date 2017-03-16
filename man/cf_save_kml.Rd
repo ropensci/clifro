@@ -68,4 +68,3 @@ working with stations when the agent numbers are known, otherwise
 \code{\link{cf_find_station}} and code{vignette("choose-station")} for
 creating \code{cfStation} objects when the agent numbers are unknown.
 }
-

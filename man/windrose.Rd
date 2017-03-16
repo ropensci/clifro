@@ -69,6 +69,7 @@ the \code{col_pal} should be \code{'Greys'}. Otherwise, any of the sequential
 \code{\link[RColorBrewer]{RColorBrewer}} colour palettes are recommended for
 colour plots.
 }
+
 \examples{
 # Create some dummy wind data with predominant south to westerly winds, and
 # occasional yet higher wind speeds from the NE (not too dissimilar to
@@ -110,4 +111,3 @@ ggsave("my_windrose.png")
 \code{\link[ggplot2]{theme}} for more possible arguments to pass to
 \code{windrose}.
 }
-

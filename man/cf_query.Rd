@@ -80,6 +80,7 @@ cfPressure \tab Any 'Pressure' data \cr
 cfOther \tab Any other CliFlo 'Daily and Hourly Observations' \cr
 }
 }
+
 \examples{
 \dontrun{
 # Retrieve daily rain data from Reefton Ews
@@ -130,4 +131,3 @@ plot(daily.dts, 2)
   default plotting of \code{cfData} and \code{cfDataList} objects, and the
   links within.
 }
-

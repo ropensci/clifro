@@ -29,4 +29,3 @@ cf_curl_opts(proxy = "http://xxxxx.yyyy.govt.nz:8080",
              ssl.verifypeer = FALSE)
 }
 }
-

@@ -117,4 +117,3 @@ when the agent numbers are known, \code{vignette("choose-station")} for a
 tutorial on finding \pkg{clifro} stations and \code{vignette("cfStation")}
 for working with \code{\link{cfStation}} objects.
 }
-

@@ -2,9 +2,11 @@
 % Please edit documentation in R/cfUser.R
 \docType{class}
 \name{cfUser-class}
-\alias{cfUser}
 \alias{cfUser-class}
 \alias{cf_user}
+\alias{cfUser-class}
+\alias{cf_user}
+\alias{cfUser}
 \title{The Clifro User Object}
 \usage{
 cf_user(username = "public", password = character())
@@ -43,4 +45,3 @@ public.cfuser
 \code{cfUser} and \code{\link{summary,cfUser-method}} to summarise user
 information.
 }
-

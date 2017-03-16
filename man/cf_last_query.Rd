@@ -29,4 +29,3 @@ reefton.wind = cf_last_query()
 reefton.wind
 }
 }
-

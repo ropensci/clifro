@@ -73,4 +73,3 @@ ggsave("my_rain_plot.png")
   Refer to \code{\link[ggplot2]{theme}} for more possible arguments to pass
   to these methods.
 }
-

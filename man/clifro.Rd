@@ -4,6 +4,7 @@
 \name{clifro}
 \alias{clifro}
 \alias{clifro-package}
+\alias{clifro-package}
 \title{From CliFlo to \pkg{clifro}: Enhancing The National Climate Database With \R}
 \description{
 Import data from New Zealand's National Climate Database via CliFlo into \R
@@ -95,4 +96,3 @@ plot(reefton.data, 3, text = element_text(size = 18))
   stations, respectively.
 }
 \keyword{package}
-

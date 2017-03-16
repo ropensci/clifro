@@ -13,4 +13,3 @@
 \description{
 Show the subscription status for the \pkg{clifro} user
 }
-
