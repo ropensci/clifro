@@ -10,7 +10,7 @@ output:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "tools/README-"
 )
 ```
 
@@ -79,7 +79,7 @@ all.auckland.st = cf_find_station("Auckland", search = "region", status = "all")
 cf_save_kml(all.auckland.st, "all_auckland_stations")
 ```
 
-![All Auckland Climate Stations](README-map.png)
+![All Auckland Climate Stations](tools/README-map.png)
 
 Note the open stations have green markers and the closed stations have red 
 markers.

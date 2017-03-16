@@ -1,3 +1,9 @@
+clifro 3.1-3 (16-March-2017)
+==========
+### Updates
+* Reorganise package structure to include README figures to be shipped with the
+package so that the upcoming version of R can compile them locally.
+
 clifro 3.1-2 (09-January-2017)
 ==========
 ### Bug Fixes

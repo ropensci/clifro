@@ -2,8 +2,7 @@
 Enhancing the National Climate Database with *clifro*
 =====================================================
 
-[![Build Status](https://travis-ci.org/ropensci/clifro.svg)](https://travis-ci.org/ropensci/clifro) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/clifro)](https://cran.r-project.org/package=clifro)
-[![codecov.io](https://codecov.io/github/ropensci/clifro/coverage.svg?branch=master)](https://codecov.io/github/ropensci/clifro?branch=master)
+[![Build Status](https://travis-ci.org/ropensci/clifro.svg)](https://travis-ci.org/ropensci/clifro) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/clifro)](https://cran.r-project.org/package=clifro) [![codecov.io](https://codecov.io/github/ropensci/clifro/coverage.svg?branch=master)](https://codecov.io/github/ropensci/clifro?branch=master)
 
 The *clifro* package is designed to minimise the hassle in downloading data from New Zealand's National Climate Database via [CliFlo](http://cliflo.niwa.co.nz/). It does this by providing functions for the user to log in, easily choose the appropriate datatypes and stations and then query the database. Once the data have been downloaded, they are stored as specific objects in **R** with the primary aim to ensure data visualisation and exploration is done with minimal effort and maximum efficiency.
 
@@ -47,7 +46,7 @@ all.auckland.st = cf_find_station("Auckland", search = "region", status = "all")
 cf_save_kml(all.auckland.st, "all_auckland_stations")
 ```
 
-![All Auckland Climate Stations](README-map.png)
+![All Auckland Climate Stations](tools/README-map.png)
 
 Note the open stations have green markers and the closed stations have red markers.
 
@@ -77,7 +76,7 @@ daily.datalist = cf_query(user = public.cfuser,
 #> Number of charged rows output = 0
 #> Number of free rows output = 732
 #> Total number of rows output = 732
-#> Copyright NIWA 2016 Subject to NIWA's Terms and Conditions
+#> Copyright NIWA 2017 Subject to NIWA's Terms and Conditions
 #> See: http://cliflo.niwa.co.nz/pls/niwp/doc/terms.html
 #> Comments to: cliflo@niwa.co.nz
 
@@ -92,13 +91,13 @@ daily.datalist
 plot(daily.datalist)     # For the first dataframe  (Surface Wind)
 ```
 
-![](README-rain-wind-example-1.png)
+![](tools/README-rain-wind-example-1.png)
 
 ``` r
 plot(daily.datalist, 2)  # For the second dataframe (Rain)
 ```
 
-![](README-rain-wind-example-2.png)
+![](tools/README-rain-wind-example-2.png)
 
 For more details and reproducible examples, see the [technical report](http://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/) for how to use *clifro*, including choosing datatypes, stations, saving locations as KML files and easy, elegant plotting for various different climate and weather data.
 
