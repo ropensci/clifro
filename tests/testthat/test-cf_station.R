@@ -1,7 +1,7 @@
 context("cf_station")
 
 test_that("cf_station", {
-  tt <- cf_station()
+  tt = cf_station()
   
   expect_is(tt, "cfStation")
   expect_is(tt$name, "factor")

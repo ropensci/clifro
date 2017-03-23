@@ -1,7 +1,7 @@
 context("cf_find_station")
 
 test_that("cf_find_station", {
-  tt <- cf_find_station("island")
+  tt = cf_find_station("island")
   
   expect_is(tt, "cfStation")
   expect_is(tt$name, "factor")

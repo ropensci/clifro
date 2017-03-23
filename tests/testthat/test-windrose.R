@@ -1,7 +1,7 @@
 context("windrose")
 
 test_that("windrose", {
-  tt <- windrose(speed = c(80, 2), direction = c(2,1))
+  tt = windrose(speed = c(80, 2), direction = c(2, 1))
 
   expect_is(tt, "gg")
   expect_is(tt$data, "data.frame")
