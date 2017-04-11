@@ -2,7 +2,7 @@
 Enhancing the National Climate Database with *clifro*
 =====================================================
 
-[![Build Status](https://travis-ci.org/ropensci/clifro.svg)](https://travis-ci.org/ropensci/clifro) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/clifro)](https://cran.r-project.org/package=clifro) [![codecov.io](https://codecov.io/github/ropensci/clifro/coverage.svg?branch=master)](https://codecov.io/github/ropensci/clifro?branch=master)
+[![Build Status](https://travis-ci.org/ropensci/clifro.svg)](https://travis-ci.org/ropensci/clifro) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/clifro)](https://cran.r-project.org/package=clifro) [![](http://cranlogs.r-pkg.org/badges/clifro)](http://cran.rstudio.com/web/packages/clifro/index.html) [![codecov.io](https://codecov.io/github/ropensci/clifro/coverage.svg?branch=master)](https://codecov.io/github/ropensci/clifro?branch=master)
 
 New Zealand's National Climate Database, CliFlo [CliFlo](http://cliflo.niwa.co.nz/) holds data from about 6500 climate stations, with observations dating back to 1850. CliFlo returns raw data at ten minute, hourly, and daily frequencies. CliFlo also returns statistical summaries, inclusive of about eighty different types of monthly and annual statistics and six types of thirty−year normals.
 
