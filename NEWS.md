@@ -1,3 +1,8 @@
+clifro 3.1-4 (21-April-2017)
+==========
+### Bug Fixes
+* Fixed issue #13
+
 clifro 3.1-3 (16-March-2017)
 ==========
 ### Updates
