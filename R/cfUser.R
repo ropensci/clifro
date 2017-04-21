@@ -189,14 +189,20 @@ cf_login = function(object){
     result = "Info"
   }
   else{
-    login_html = htmlParse(postForm(
+    my_form = postForm(
       "https://cliflo.niwa.co.nz/pls/niwp/wa.logindb",
       cusername = object@username,
       cpwd = rot(object@password, 3),
       ispopup = "false",
       submit = "login",
       curl = curl,
-      .opts = list(cainfo = cert)))
+      .opts = list(cainfo = cert))
+    
+    if (is.raw(my_form))
+      my_form = rawToChar(my_form)
+    
+    login_html = htmlParse(my_form)
+    
     result = xmlValue(querySelector(login_html, "h1"))
   }
   rm(curl)
