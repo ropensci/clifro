@@ -10,6 +10,7 @@ The *clifro* package is designed to minimise the hassle in downloading data from
 
 This package extends the functionality of [CliFlo](http://cliflo.niwa.co.nz/) by returning stations resulting from simultaneous searches, the ability to visualise where these climate stations are by exporting to KML files, and elegant plotting of the climate data. The vignettes and help files are written with the intention that even inexperienced R users can use *clifro* easily. Exporting the climate data from **R** is fairly easy and for more experienced useRs, automated updating of spreadsheets or databases can be made much easier.
 
+
 Free CliFlo Subscription
 ------------------------
 
