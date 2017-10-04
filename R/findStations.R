@@ -450,12 +450,23 @@ cf_find_station = function(...,
                                 cookiefile = cookies,
                                 .opts = cf_parallel[["curl_opts"]])
     param.list = c(param.list, ccomb_dt = combine)
-    doc = htmlParse(
-      postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",
-               .params = param.list, curl = curl, .opts = list(cainfo = cert)))
+    my_form = postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",
+                       .params = param.list, curl = curl, 
+                       .opts = list(cainfo = cert))
+    
+    if (is.raw(my_form))
+      my_form = rawToChar(my_form)
+    
+    doc = htmlParse(my_form)
+    
   } else
-    doc = htmlParse(postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_nodt",
-                             .params = param.list, .opts = list(cainfo = cert)))
+    my_form = postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_nodt",
+                       .params = param.list, .opts = list(cainfo = cert))
+  
+  if (is.raw(my_form))
+    my_form = rawToChar(my_form)
+  
+  doc = htmlParse(my_form)
 
   agent_name_xml = querySelectorAll(doc, "a.st[href*='wstn.stn_details?']")
 
