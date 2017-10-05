@@ -708,7 +708,7 @@ setMethod("summary",
 
 # Precipitation -----------------------------------------------------------
 
-#' Plot Rain Timeseries
+#' Plot Rain Time series
 #'
 #' Plot the amount of rainfall (mm) through time, with optional available soil
 #' water capacity and runoff amounts (if applicable).
@@ -829,7 +829,7 @@ setMethod("plot",
 
 #' Plot Screen Observations
 #'
-#' Plot temperature data from screen observations (degrees celsuis) through time.
+#' Plot temperature data from screen observations (degrees celsius) through time.
 #'
 #' Temperature data from screen observations include the air, and wet bulb,
 #' temperature at the time the measurement was taken (dry bulb and wet bulb
@@ -1290,16 +1290,16 @@ setMethod("plot",
 #' Wind \tab \code{\link{plot.cfWind}} for windrose, wind speed and direction
 #' contour plots\cr
 #' Rain \tab \code{\link{plot.cfRain}} for plotting rainfall (mm) through time\cr
-#' Screen Obs \tab \code{\link{plot.cfScreenObs}} for timeseries plots of air,
+#' Screen Obs \tab \code{\link{plot.cfScreenObs}} for time series plots of air,
 #' wet bulb, and dew-point temperature plots\cr
 #' Max/Min Temp \tab \code{\link{plot.cfTemp}} for maximum, minimum and
-#' average temperature timeseries plots\cr
+#' average temperature time series plots\cr
 #' Earth Temp \tab \code{\link{plot.cfEarthTemp}} for earth temperature
-#' timeseries plots\cr
+#' time series plots\cr
 #' Sunshine \tab \code{\link{plot.cfSunshine}} for accumulated, hourly or daily
-#' sunshine, timeseries plots\cr
+#' sunshine, time series plots\cr
 #' Pressure \tab \code{\link{plot.cfPressure}} for mean sea level atmospheric
-#' pressure timeseries plots\cr
+#' pressure time series plots\cr
 #' Other data \tab No default plot methods\cr
 #' }
 #'

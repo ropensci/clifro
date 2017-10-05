@@ -346,7 +346,7 @@ cf_update_dt = function(object, user = cf_user()){
 #' is available.
 #'
 #' @note Currently clifro does not support datatypes from the special datasets
-#' (Ten minute, Tier2, Virutal Climate, Lysimeter) or upper air measurements
+#' (Ten minute, Tier2, Virtual Climate, Lysimeter) or upper air measurements
 #' from radiosondes and wind radar.
 #'
 #' @importFrom methods new

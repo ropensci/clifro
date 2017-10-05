@@ -4,7 +4,7 @@
 \name{plot,cfRain,missing-method}
 \alias{plot,cfRain,missing-method}
 \alias{plot.cfRain}
-\title{Plot Rain Timeseries}
+\title{Plot Rain Time series}
 \usage{
 \S4method{plot}{cfRain,missing}(x, y, include_runoff = TRUE,
   ggtheme = c("grey", "gray", "bw", "linedraw", "light", "minimal",

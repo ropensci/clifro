@@ -27,7 +27,7 @@ in the \code{link[ggplot2]{facet_wrap}} function.}
 \item{...}{further arguments passed to \code{\link[ggplot2]{theme}}.}
 }
 \description{
-Plot temperature data from screen observations (degrees celsuis) through time.
+Plot temperature data from screen observations (degrees celsius) through time.
 }
 \details{
 Temperature data from screen observations include the air, and wet bulb,
