@@ -1,0 +1,227 @@
+{
+  "@context": ["https://doi.org/doi:10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@type": "SoftwareSourceCode",
+  "identifier": "clifro",
+  "description": "CliFlo is a web portal to the New Zealand National Climate\n    Database and provides public access (via subscription) to around 6,500\n    various climate stations (see <https://cliflo.niwa.co.nz/> for more\n    information). Collating and manipulating data from CliFlo\n    (hence clifro) and importing into R for further analysis, exploration and\n    visualisation is now straightforward and coherent. The user is required to\n    have an internet connection, and a current CliFlo subscription (free) if\n    data from stations, other than the public Reefton electronic weather\n    station, is sought.",
+  "name": "clifro: Easily Download and Visualise Climate Data from CliFlo",
+  "codeRepository": "https://github.com/ropensci/clifro",
+  "issueTracker": "https://github.com/ropensci/clifro/issues",
+  "datePublished": "2017-10-04",
+  "license": "https://spdx.org/licenses/GPL-2.0",
+  "version": "3.1-5",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "version": "3.3.2",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 3.3.2 (2016-10-31)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Central R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Blake",
+      "familyName": "Seers",
+      "email": "blake.seers@gmail.com",
+      "@id": "http://orcid.org/0000-0001-6841-4312"
+    }
+  ],
+  "maintainer": {
+    "@type": "Person",
+    "givenName": "Blake",
+    "familyName": "Seers",
+    "email": "blake.seers@gmail.com",
+    "@id": "http://orcid.org/0000-0001-6841-4312"
+  },
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ggmap",
+      "name": "ggmap",
+      "version": "2.6",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "pander",
+      "name": "pander",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    }
+  ],
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "methods",
+      "name": "methods"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "lubridate",
+      "name": "lubridate",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "XML",
+      "name": "XML",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "selectr",
+      "name": "selectr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "RCurl",
+      "name": "RCurl",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "utils",
+      "name": "utils"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ggplot2",
+      "name": "ggplot2",
+      "version": "2.0.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "scales",
+      "name": "scales",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "RColorBrewer",
+      "name": "RColorBrewer",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "reshape2",
+      "name": "reshape2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    }
+  ],
+  "applicationCategory": "DataAccess",
+  "keywords": ["r", "opensci", "zealand", "weather", "climate", "cliflo", "data", "api", "windrose", "rain", "wind", "temperature"],
+  "isPartOf": "https://ropensci.org",
+  "contIntegration": "https://travis-ci.org/ropensci/clifro",
+  "releaseNotes": "https://github.com/ropensci/clifro/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/clifro/blob/master/README.md",
+  "fileSize": "1721.161KB",
+  "citation": [
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2015",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Blake",
+          "familyName": "Seers"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Nick",
+          "familyName": "Shears"
+        }
+      ],
+      "name": "New Zealand's Climate Data in R --- An Introduction to clifro",
+      "url": "http://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/"
+    }
+  ]
+}

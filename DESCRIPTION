@@ -4,7 +4,8 @@ Title: Easily Download and Visualise Climate Data from CliFlo
 Version: 3.1-5
 Date: 2017-10-04
 Authors@R: person("Blake", "Seers", role = c("aut", "cre"),
-    email = "blake.seers@gmail.com")
+    email = "blake.seers@gmail.com",
+    comment = "http://orcid.org/0000-0001-6841-4312")
 VignetteBuilder: knitr
 Imports:
     methods,
@@ -46,3 +47,6 @@ Collate:
     'cfUser.R'
     'findStations.R'
 RoxygenNote: 6.0.1
+X-schema.org-keywords: r, opensci, zealand, weather, climate, cliflo, data, api, windrose, rain, wind, temperature
+X-schema.org-applicationCategory: Data Access
+X-schema.org-isPartOf: "https://ropensci.org"
