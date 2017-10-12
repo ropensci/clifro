@@ -5,7 +5,7 @@ Version: 3.1-5
 Date: 2017-10-04
 Authors@R: person("Blake", "Seers", role = c("aut", "cre"),
     email = "blake.seers@gmail.com",
-    comment = "http://orcid.org/0000-0001-6841-4312")
+    comment = c(ORCID = "http://orcid.org/0000-0001-6841-4312"))
 VignetteBuilder: knitr
 Imports:
     methods,
