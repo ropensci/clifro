@@ -6,3 +6,4 @@
 ^README\.Rmd$
 ^revdep$
 ^CONDUCT\.md$
+^codemeta\.json$
