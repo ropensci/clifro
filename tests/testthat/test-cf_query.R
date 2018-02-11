@@ -2,6 +2,8 @@ context("cf_query")
 
 test_that("cf_query", {
   skip_on_cran()
+  skip_on_travis()
+  
   tt = cf_query(cf_user("public"), cf_datatype(5, 2, 1), cf_station(),
                 "2012-01-01 00", "2012-01-02 00")
 
