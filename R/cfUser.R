@@ -163,8 +163,7 @@ NULL
 #' \code{TRUE}.
 #'
 #' @importFrom RCurl getCurlHandle postForm getURL
-#' @importFrom XML htmlParse xmlValue
-#' @importFrom selectr querySelector
+#' @importFrom xml2 read_html xml_text xml_find_all
 #' @keywords internal
 #' @aliases cf_logout cf_login
 #' @name valid_cfuser
@@ -201,9 +200,8 @@ cf_login = function(object){
     if (is.raw(my_form))
       my_form = rawToChar(my_form)
     
-    login_html = htmlParse(my_form)
-    
-    result = xmlValue(querySelector(login_html, "h1"))
+    login_html = read_html(my_form)
+    result = xml_text(xml_find_all(login_html, ".//title"), trim = TRUE)
   }
   rm(curl)
   gc()
