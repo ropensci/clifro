@@ -341,8 +341,7 @@ if (!isGeneric("summary"))
 #' @param object an object of class \code{cfUser}.
 #'
 #' @importFrom RCurl getCurlHandle getForm
-#' @importFrom selectr querySelectorAll querySelector
-#' @importFrom XML htmlParse xmlValue
+#' @importFrom xml2 xml_find_all read_html xml_text
 #' @importFrom lubridate dmy round_date now with_tz
 #' @aliases summary,cfUser-method
 #' @export
@@ -362,17 +361,20 @@ setMethod("summary", signature(object = "cfUser"),
             sub = "t",
             curl = curl,
             .opts = list(cainfo = cert))
-  user_info_html = querySelectorAll(htmlParse(user_info_xml),
-                                    "body.popup > div")
-  info = gsub("  |   |    |     ", " ", sapply(user_info_html, xmlValue))
-  rows = sapply(querySelectorAll(user_info_html[[3]], "b"), xmlValue)
+  
+  user_info_html = xml_find_all(read_html(user_info_xml), ".//div")
+  info = gsub("  |   |    |     ", " ", 
+              xml_text(user_info_html, trim = TRUE))
+  rows = xml_text(xml_find_all(user_info_html[3], ".//b"), 
+                  trim = TRUE)
   rows = gsub(",", "", rows)
-  subscription_level = xmlValue(querySelector(user_info_html[[5]], "b"))
+  subscription_level = xml_text(xml_find_all(user_info_html[5], "b"))
   expiry = strsplit(info[2], ": ")[[1]][2]
   rows_used = as.numeric(rows[1])
   total_rows = as.numeric(rows[3])
   time_diff = dmy(expiry, tz = "Pacific/Auckland") -
     with_tz(round_date(now(), "month"), "Pacific/Auckland")
+  
   cat(paste0("Username is: ", object@username, "\n",
                "Subscription status:\n\n",
                "Your subscription expires on: ", expiry, " (", format(time_diff),
@@ -386,7 +388,6 @@ setMethod("summary", signature(object = "cfUser"),
                       scientific = FALSE), ".\n",
                "Your subscription level is: ", subscription_level, "\n"))
 })
-
 
 # Show
 #' @importFrom methods setMethod
