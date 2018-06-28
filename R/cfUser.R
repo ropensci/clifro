@@ -181,7 +181,7 @@ cf_login = function(object){
                        .opts = cf_parallel[["curl_opts"]])
   cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
   if (object@username == "public"){
-    login_html = htmlParse(getURL(
+    login_html = read_html(getURL(
       "https://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1",
       curl = curl, cainfo = cert
     ))
