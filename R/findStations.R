@@ -7,15 +7,14 @@
 # is prompted for a selection using menu.
 #
 # region: a string to be partially matched to the available regions
-#' @importFrom selectr querySelectorAll
-#' @importFrom XML htmlParse xmlApply xmlGetAttr
+#' @importFrom xml2 read_html xml_text xml_find_all xml_attr
 #' @importFrom utils menu
 cf_region = function(region){
   cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
-  regions = htmlParse(getURL("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html",
+  regions = read_html(getURL("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html",
                              cainfo = cert))
-  region.xml = querySelectorAll(regions, "option[value^='-']")
-  region.names = unlist(xmlApply(region.xml, xmlValue))
+  region.xml = xml_find_all(regions, "//option[contains(@value, '-')]")
+  region.names = xml_text(region.xml, trim = TRUE)
 
   if (!missing(region)){
     region.names.lower = tolower(region.names)
@@ -26,14 +25,14 @@ cf_region = function(region){
       warning("region not matched - ignoring", immediate. = TRUE)
       region.choice = menu(region.names, title = "Regions")
       if (region.choice)
-        return(xmlGetAttr(region.xml[[region.choice]], "value"))
+        return(xml_attr(region.xml[region.choice], "value"))
     } else {
-      return(xmlGetAttr(region.xml[[region.choice]], "value"))
+      return(xml_attr(region.xml[region.choice], "value"))
     }
   } else {
     region.choice = menu(region.names, title = "Regions")
     if (region.choice)
-      return(xmlGetAttr(region.xml[[region.choice]], "value"))
+      return(xml_attr(region.xml[region.choice], "value"))
   }
 }
 
@@ -49,143 +48,153 @@ cf_region = function(region){
 # and the closed stations as red markers.
 #
 # see also cf_save_kml.
-#' @importFrom XML newXMLDoc newXMLNode saveXML
+#' @importFrom xml2 xml_new_root xml_add_child xml_add_sibling xml_parent 
+#'                  xml_root write_xml
+#' @importFrom magrittr %>%
 
 save_KML = function(df, file_name, file_path){
-  doc = newXMLDoc()
-  kml.node =
-    newXMLNode("kml", doc = doc,
-               namespaceDefinitions = c("http://www.opengis.net/kml/2.2",
-                                        gx = "http://www.google.com/kml/ext/2.2",
-                                        kml = "http://www.opengis.net/kml/2.2",
-                                        atom = "http://w3.org/2005/Atom"))
-  Document.node = newXMLNode("Document", parent = kml.node)
-  newXMLNode("name", gsub("_", " ", strsplit(file_name, ".kml")[[1]]),
-             parent = Document.node)
-  newXMLNode("open", 1, parent = Document.node)
-
-  ## Define the hover state for open stations
-  newXMLNode("StyleMap", attrs = c(id = "hoverStateOpen"),
-             parent = Document.node,
-             newXMLNode("Pair",
-                        newXMLNode("key", "normal"),
-                        newXMLNode("styleUrl", "#normalStateOpen")),
-             newXMLNode("Pair",
-                        newXMLNode("key", "highlight"),
-                        newXMLNode("styleUrl", "#highlightStateOpen")
-             )
-  )
-
-  ## Define the hover state for closed stations
-  newXMLNode("StyleMap", attrs = c(id = "hoverStateClosed"),
-             parent = Document.node,
-             newXMLNode("Pair",
-                        newXMLNode("key", "normal"),
-                        newXMLNode("styleUrl", "#normalStateClosed")),
-             newXMLNode("Pair",
-                        newXMLNode("key", "highlight"),
-                        newXMLNode("styleUrl", "#highlightStateClosed")
-             )
-  )
-
-  ## Define the highlight state for open stations
-  newXMLNode("Style", attrs = c(id = "highlightStateOpen"),
-             parent = Document.node,
-             newXMLNode("IconStyle",
-                        newXMLNode("scale", "1.3"),
-                        newXMLNode("Icon",
-                                   newXMLNode("href",
-                                              "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png"))),
-             newXMLNode("LabelStyle",
-                        newXMLNode("scale", "1.3")))
-
-  ## Define the highlight state for closed stations
-  newXMLNode("Style", attrs = c(id = "highlightStateClosed"),
-             parent = Document.node,
-             newXMLNode("IconStyle",
-                        newXMLNode("scale", "1.3"),
-                        newXMLNode("Icon",
-                                   newXMLNode("href",
-                                              "http://maps.google.com/mapfiles/kml/paddle/red-circle.png"))),
-             newXMLNode("LabelStyle",
-                        newXMLNode("scale", "1.3")))
-
-  ## Define the normal state for open stations
-  newXMLNode("Style", attrs = c(id = "normalStateOpen"),
-             parent = Document.node,
-             newXMLNode("IconStyle",
-                        newXMLNode("scale", "0.9"),
-                        newXMLNode("Icon",
-                                   newXMLNode("href",
-                                              "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png"))),
-             newXMLNode("LabelStyle",
-                        newXMLNode("scale", "0.7")))
-
-  ## Define the normal state for closed stations
-  newXMLNode("Style", attrs = c(id = "normalStateClosed"),
-             parent = Document.node,
-             newXMLNode("IconStyle",
-                        newXMLNode("scale", "0.9"),
-                        newXMLNode("Icon",
-                                   newXMLNode("href",
-                                              "http://maps.google.com/mapfiles/kml/paddle/red-circle.png"))),
-             newXMLNode("LabelStyle",
-                        newXMLNode("scale", "0.7")))
-
   df$hoverstate = "#hoverStateClosed"
   df$hoverstate[df$open] = "#hoverStateOpen"
-
-  closed.folder = newXMLNode("Folder", parent = Document.node)
-  newXMLNode("name", "Closed", parent = closed.folder)
-  for (i in which(!df$open)){
-    newXMLNode("Placemark",
-               newXMLNode("name", df$name[i]),
-               newXMLNode("description", paste0("Agent:     ", df$agent[i], "\n",
-                                               "Network:    ", df$network[i], "\n",
-                                               "Start date: ", df$start[i], "\n",
-                                               "End date:   ", df$end[i], "\n")),
-               newXMLNode("styleUrl", df$hoverstate[i]),
-               newXMLNode("Point",
-                          newXMLNode("coordinates",
-                                     paste(df$lon[i],
-                                           df$lat[i], 0, sep = ",")
-                          )
-               ), parent = closed.folder
-    )
+  df$name = as.character(df$name)
+  
+  doc = xml_new_root("kml",
+                     xmlns = "http://www.opengis.net/kml/2.2",
+                     "xmlns:gx" = "http://www.google.com/kml/ext/2.2",
+                     "xmlns:kml" = "http://www.opengis.net/kml/2.2",
+                     "xmlns:atom" = "http://w3.org/2005/Atom") %>% 
+    xml_add_child("Document") %>% 
+    xml_add_child("name", gsub("_", " ", strsplit(file_name, ".kml")[[1]])) %>% 
+    xml_add_sibling("open", 1) %>% 
+    
+    ## Define the hover state for open stations
+    xml_add_sibling("StyleMap", id = "hoverStateOpen") %>% 
+    xml_add_child("Pair") %>% 
+    xml_add_child("key", "normal") %>% 
+    xml_add_sibling("styleUrl", "#normalStateOpen") %>% 
+    xml_parent() %>% 
+    xml_add_sibling("Pair") %>% 
+    xml_add_child("key", "highlight") %>% 
+    xml_add_sibling("styleUrl", "#highlightStateOpen") %>% 
+    xml_parent() %>% 
+    xml_parent() %>% 
+    
+    ## Define the hover state for closed stations
+    xml_add_sibling("StyleMap", id = "hoverStateClosed") %>% 
+    xml_add_child("Pair") %>% 
+    xml_add_child("key", "normal") %>% 
+    xml_add_sibling("styleUrl", "#normalStateClosed") %>% 
+    xml_parent() %>% 
+    xml_add_sibling("Pair") %>% 
+    xml_add_child("key", "highlight") %>% 
+    xml_add_sibling("styleUrl", "#highlightStateClosed") %>% 
+    xml_parent() %>% 
+    xml_parent() %>% 
+    
+    ## Define the highlight state for open stations
+    xml_add_sibling("Style", id = "highlightStateOpen") %>% 
+    xml_add_child("IconStyle") %>% 
+    xml_add_child("scale", "1.3") %>% 
+    xml_add_sibling("Icon") %>% 
+    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png") %>% 
+    xml_parent() %>% 
+    xml_parent() %>% 
+    xml_add_sibling("LabelStyle") %>% 
+    xml_add_child("scale", "1.3") %>% 
+    xml_parent() %>% 
+    xml_parent() %>% 
+    
+    ## Define the highlight state for closed stations
+    xml_add_sibling("Style", id = "highlightStateClosed") %>% 
+    xml_add_child("IconStyle") %>% 
+    xml_add_child("scale", "1.3") %>% 
+    xml_add_sibling("Icon") %>% 
+    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/red-circle.png") %>% 
+    xml_parent() %>% 
+    xml_parent() %>% 
+    xml_add_sibling("LabelStyle") %>% 
+    xml_add_child("scale", "1.3") %>% 
+    xml_parent() %>% 
+    xml_parent() %>% 
+    
+    ## Define the normal state for open stations
+    xml_add_sibling("Style", id = "normalStateOpen") %>% 
+    xml_add_child("IconStyle") %>% 
+    xml_add_child("scale", "0.9") %>% 
+    xml_add_sibling("Icon") %>% 
+    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png") %>% 
+    xml_parent() %>% 
+    xml_parent() %>% 
+    xml_add_sibling("LabelStyle") %>% 
+    xml_add_child("scale", "0.7") %>% 
+    xml_parent() %>% 
+    xml_parent() %>% 
+    
+    ## Define the normal state for closed stations
+    xml_add_sibling("Style", id = "normalStateClosed") %>% 
+    xml_add_child("IconStyle") %>% 
+    xml_add_child("scale", "0.9") %>% 
+    xml_add_sibling("Icon") %>% 
+    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/red-circle.png") %>% 
+    xml_parent() %>% 
+    xml_parent() %>% 
+    xml_add_sibling("LabelStyle") %>% 
+    xml_add_child("scale", "0.7") %>% 
+    xml_parent() %>% 
+    xml_parent() %>%
+    
+    xml_add_sibling("Folder") %>% 
+    xml_add_child("name", "Closed")
+  
+  for (i in which(!df$open)) {
+    doc = doc %>% 
+      xml_add_sibling("Placemark") %>% 
+      xml_add_child("name", df$name[i]) %>% 
+      xml_add_sibling("description", paste0("Agent:     ", df$agent[i], "\n",
+                                            "Network:    ", df$network[i], "\n",
+                                            "Start date: ", df$start[i], "\n",
+                                            "End date:   ", df$end[i], "\n")) %>% 
+      xml_add_sibling("styleUrl", df$hoverstate[i]) %>% 
+      xml_add_sibling("Point") %>% 
+      xml_add_child("coordinates", paste(df$lon[i], df$lat[i], 0, sep = ",")) %>% 
+      xml_parent() %>% 
+      xml_parent()
   }
-
-  open.folder = newXMLNode("Folder", parent = Document.node)
-  newXMLNode("name", "Open", parent = open.folder)
-  for (i in which(df$open)){
-    newXMLNode("Placemark",
-               newXMLNode("name", df$name[i]),
-               newXMLNode("description", paste0("Agent:     ", df$agent[i], "\n",
-                                                "Network:    ", df$network[i], "\n",
-                                                "Start date: ", df$start[i], "\n",
-                                                "End date:   ", df$end[i], "\n")),
-               newXMLNode("styleUrl", df$hoverstate[i]),
-               newXMLNode("Point",
-                          newXMLNode("coordinates",
-                                     paste(df$lon[i],
-                                           df$lat[i], 0, sep = ",")
-                          )
-               ), parent = open.folder
-    )
+  
+  doc = doc %>% 
+    xml_parent() %>% 
+    xml_add_sibling("Folder") %>% 
+    xml_add_child("name", "Open")
+  
+  for (i in which(df$open)) {
+    doc = doc %>% 
+      xml_add_sibling("Placemark") %>% 
+      xml_add_child("name", df$name[i]) %>% 
+      xml_add_sibling("description", paste0("Agent:     ", df$agent[i], "\n",
+                                            "Network:    ", df$network[i], "\n",
+                                            "Start date: ", df$start[i], "\n",
+                                            "End date:   ", df$end[i], "\n")) %>% 
+      xml_add_sibling("styleUrl", df$hoverstate[i]) %>% 
+      xml_add_sibling("Point") %>% 
+      xml_add_child("coordinates", paste(df$lon[i], df$lat[i], 0, sep = ",")) %>% 
+      xml_parent() %>% 
+      xml_parent()
   }
-
+  
+  doc = doc %>% 
+    xml_root()
+  
   if (file_name == "my_stations_"){
     xml_file = tempfile(file_name, file_path, ".kml")
-    saveXML(doc, file = xml_file)
-  }
-  else{
+    write_xml(doc, file = xml_file)
+  } else {
     if (!grepl(".kml$", file_name))
       file_name = paste0(file_name, ".kml")
     xml_file = file.path(file_path, file_name)
-    saveXML(doc, file = xml_file)
+    write_xml(doc, file = xml_file)
   }
-
+  
   message(paste("output KML file:", xml_file))
-
+  
   if (Sys.which("google-earth") == "")
     message("You may like to install Google Earth to view the locations")
 }
@@ -232,7 +241,7 @@ save_KML = function(df, file_name, file_path){
 #' cf_save_kml(my.stations)
 #'
 #' # Double click on the file to open with a default program (if available). All
-#' # the markers are blue, indicating all these stations are open.
+#' # the markers are green, indicating all these stations are open.
 #'
 #' # Where is the subscription-free Reefton Ews station?
 #' cf_save_kml(cf_station(), file_name = "reeftonEWS")
@@ -306,8 +315,7 @@ cf_save_kml = function(station, file_name = "my_stations_",
 #'
 #' @export
 #' @importFrom RCurl getCurlHandle postForm
-#' @importFrom XML htmlParse xmlValue xmlSApply
-#' @importFrom selectr querySelectorAll
+#' @importFrom xml2 read_html xml_find_all xml_text xml_double
 #' @importFrom lubridate with_tz now round_date %--% dseconds
 #' @importFrom stats na.exclude
 #' @seealso \code{\link{cf_save_kml}} for saving the resulting stations as a KML
@@ -446,9 +454,9 @@ cf_find_station = function(...,
                      any = "or")
     cf_update_dt(datatype)
     cookies = file.path(tempdir(), user@username)
-    curl = curl = getCurlHandle(cookiejar = cookies,
-                                cookiefile = cookies,
-                                .opts = cf_parallel[["curl_opts"]])
+    curl = getCurlHandle(cookiejar = cookies,
+                         cookiefile = cookies,
+                         .opts = cf_parallel[["curl_opts"]])
     param.list = c(param.list, ccomb_dt = combine)
     my_form = postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",
                        .params = param.list, curl = curl, 
@@ -457,7 +465,7 @@ cf_find_station = function(...,
     if (is.raw(my_form))
       my_form = rawToChar(my_form)
     
-    doc = htmlParse(my_form)
+    doc = read_html(my_form)
     
   } else
     my_form = postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_nodt",
@@ -466,34 +474,37 @@ cf_find_station = function(...,
   if (is.raw(my_form))
     my_form = rawToChar(my_form)
   
-  doc = htmlParse(my_form)
-
-  agent_name_xml = querySelectorAll(doc, "a.st[href*='wstn.stn_details?']")
+  doc = read_html(my_form)
+  
+  agent_name_xml = 
+    xml_find_all(doc, 
+                 "//a[contains(@href, 'wstn.stn_details?') and @class = 'st']")
 
   if (length(agent_name_xml) == 0)
     stop("no climate stations were found matching your search criteria",
          call. = FALSE)
 
-  network_xml = querySelectorAll(doc, "a.st[href*='wstn.data_availibility']")
-  lat_long_xml = querySelectorAll(doc, "a.st[href*='?cstype=']")
+  network_xml = 
+    xml_find_all(
+      doc, 
+      "//a[contains(@href, 'wstn.data_availibility') and @class = 'st']")
+  
+  lat_long_xml = 
+    xml_find_all(doc, 
+                 "//a[contains(@href, '?cstype=') and @class = 'st']")
+  
+  start_end = distances = xml_text(
+    xml_find_all(doc, "//td[@class = 'stnextdata' and not(.//a)]"))
+  start_end = replace(start_end, start_end == "-", 
+                      format(Sys.Date(), "%d-%b-%Y"))
+  start_end = na.exclude(dmy(start_end, quiet = TRUE, tz = "Pacific/Auckland"))
 
-  ## The following is a little messy but I can't figure out how else to do this!
-  start_end = distances =
-    sapply(querySelectorAll(doc, "form td.stnextdata + td.stnextdata"), xmlValue)
-  which_are_also_dates = start_end == "-"
-  start_end = dmy(start_end, quiet = TRUE, tz = "Pacific/Auckland")
-  start_end[which_are_also_dates] = with_tz(round_date(now(), "month"),
-                                            tzone = "Pacific/Auckland")
-  start_end = na.exclude(start_end)
-
-  if (include_distances)
-    if (!missing(datatype)){
-      distances = as.numeric(distances[seq(8, length(distances), by = 8)])
-    } else {
-      distances = as.numeric(distances[seq(7, length(distances), by = 7)])
-    }
-  else
+  if (include_distances){
+    distances = suppressWarnings(as.numeric(distances))
+    distances = distances[!is.na(distances)]
+  } else {
     distances = numeric(length(network_xml))
+  }
 
   start_dates = start_end[seq(1, length(start_end), by = 2)]
   end_dates = start_end[seq(2, length(start_end), by = 2)]
@@ -531,13 +542,13 @@ cf_find_station = function(...,
     open_station = open_station[!open_station]
   }
 
-  agent_name = sapply(agent_name_xml, xmlValue)
-  lat_long = as.numeric(sapply(lat_long_xml, xmlValue))
+  agent_name = xml_text(agent_name_xml)
+  lat_long = xml_double(lat_long_xml)
 
   new("cfStation",
       data.frame(
           name = agent_name[seq(2, length(agent_name), by = 2)],
-          network = sapply(network_xml, xmlValue),
+          network = xml_text(network_xml),
           agent = as.numeric(agent_name[seq(1, length(agent_name), by = 2)]),
           start_date = start_dates,
           end_date = end_dates,
