@@ -94,8 +94,7 @@ cf_last_query = function() cf_parallel[["last_cf_query"]]
 #' @importFrom lubridate with_tz force_tz ymd_h mdy_h ydm_h dmy_h is.POSIXt year
 #' month day hour
 #' @importFrom RCurl getCurlHandle postForm
-#' @importFrom selectr querySelector
-#' @importFrom XML xmlValue htmlParse
+#' @importFrom xml2 xml_find_first read_html xml_text
 #' @importFrom utils read.table
 #' @return a \code{cfData} or \code{cfDataList} object.
 #' @seealso \code{\link{cf_user}}, \code{\link{cf_datatype}} and
@@ -219,7 +218,7 @@ cf_query = function(user, datatype, station, start_date, end_date = now(tz),
 
   is_HTML = grepl("<!DOCTYPE HTML PUBLIC", doc, fixed = TRUE)
   if (is_HTML){
-    error_msg = xmlValue(querySelector(htmlParse(doc), "h3"))
+    error_msg = xml_text(xml_find_first(read_html(doc), "//h3"))
     if (!is.na(error_msg))
       stop(error_msg)
   }

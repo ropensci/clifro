@@ -12,8 +12,6 @@ Imports:
     lubridate,
     xml2,
     magrittr,
-    XML,
-    selectr,
     RCurl,
     utils,
     ggplot2 (>= 2.0.0),
