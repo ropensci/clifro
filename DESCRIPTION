@@ -1,8 +1,8 @@
 Package: clifro
 Type: Package
 Title: Easily Download and Visualise Climate Data from CliFlo
-Version: 3.1-5
-Date: 2017-10-04
+Version: 3.1-999
+Date: 2018-06-27
 Authors@R: person("Blake", "Seers", role = c("aut", "cre"),
     email = "blake.seers@gmail.com",
     comment = c(ORCID = "http://orcid.org/0000-0001-6841-4312"))
@@ -10,8 +10,8 @@ VignetteBuilder: knitr
 Imports:
     methods,
     lubridate,
-    XML,
-    selectr,
+    xml2,
+    magrittr,
     RCurl,
     utils,
     ggplot2 (>= 2.0.0),

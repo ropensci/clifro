@@ -84,12 +84,12 @@ setMethod("initialize", "cfDatatype", function(.Object, dt_name, dt_type,
 #
 # doc: the XML to extract the information for the datatypes
 # ...: passed to menu
-#' @importFrom XML xmlValue xmlGetAttr
+#' @importFrom xml2 xml_text xml_attr
 #' @importFrom utils menu
 dt_href = function(doc, ...){
   # "cloud \n          cover" --> "cloud cover"
-  choices = gsub("\\n", "", gsub(" {2,}", "", sapply(doc, xmlValue)))
-  hrefs = sapply(doc, xmlGetAttr, "href")
+  choices = xml_text(doc, trim = TRUE)
+  hrefs = xml_attr(doc, "href")
   dt = menu(choices, ...)
   if (dt)
     c(hrefs[dt], choices[dt])
@@ -102,16 +102,16 @@ dt_href = function(doc, ...){
 #
 # selection: passed from the select_1 argument
 # g        : logical passed to the graphics argument of the menu function
-#' @importFrom selectr querySelectorAll
-#' @importFrom XML htmlParse xmlGetAttr xmlValue
+#' @importFrom xml2 xml_find_all read_html xml_text xml_attr
 #' @importFrom RCurl getURL
 first_stage_selection = function(selection, g, iter){
   domain = "https://cliflo.niwa.co.nz/pls/niwp/"
   full_path = paste0(domain, "wgenf.choose_datatype?cat=cat1")
   cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
 
-  datatypes_xml = querySelectorAll(htmlParse(getURL(full_path, cainfo = cert)),
-                                   "table.header td.popup a.top")
+  datatypes_xml = 
+    xml_find_all(read_html(getURL(full_path, cainfo = cert)), 
+                 "//table[@class='header']//td[@class='popup']//a[@class='top']")
 
   if (!is.na(selection) && selection > 9){
     stop(paste("the first selection can only be between 1 and 9 for datatype",
@@ -122,8 +122,8 @@ first_stage_selection = function(selection, g, iter){
     dt_href(datatypes_xml, graphics = g,
             title = "Daily and Hourly Observations")
   } else {
-    dt_name = sapply(datatypes_xml, xmlValue)[selection]
-    c(sapply(datatypes_xml, xmlGetAttr, "href")[selection], dt_name)
+    dt_name = xml_text(datatypes_xml, trim = TRUE)[selection]
+    c(xml_attr(datatypes_xml, "href")[selection], dt_name)
   }
 }
 
@@ -137,25 +137,23 @@ first_stage_selection = function(selection, g, iter){
 # dt_name   : the name of the datatype from the first stage selection. This is
 #             used for menu titles and warnings
 # g         : logical passed to the graphics argument of the menu function
-#' @importFrom selectr querySelectorAll
-#' @importFrom XML htmlParse xmlGetAttr xmlValue
+#' @importFrom xml2 xml_find_all read_html xml_text xml_attr
 second_stage_selection = function(href_1, selection, dt_name, g){
   domain = "https://cliflo.niwa.co.nz/pls/niwp/"
   full_path = paste0(domain, href_1)
   cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
 
-  datatypes_xml = querySelectorAll(htmlParse(getURL(full_path, cainfo = cert)),
-                                   "a.dt")
+  datatypes_xml = xml_find_all(read_html(getURL(full_path, cainfo = cert)), 
+                               "//a[@class='dt']")
 
   if (is.na(selection)){
-    gsub("\\n", "", gsub(" {2,}", "", dt_href(datatypes_xml, g, dt_name)))
+    dt_href(datatypes_xml, g, dt_name)
   } else {
     if (selection > length(datatypes_xml))
       stop(paste("second selection (select_2) is out of range for",
                  dt_name), call. = FALSE)
-    dt_type = gsub("\\n", "", gsub(" {2,}", "",
-                                   sapply(datatypes_xml, xmlValue)[selection]))
-    c(sapply(datatypes_xml, xmlGetAttr, "href")[selection], dt_type)
+    dt_name = xml_text(datatypes_xml, trim = TRUE)[selection]
+    c(xml_attr(datatypes_xml, "href")[selection], dt_name)
   }
 }
 
@@ -201,8 +199,8 @@ choose_dt_options = function(datatype_name, datatype_options, g){
 # dt_type         : the datatype from the second stage selection. This is
 #                   used for menu titles and warnings
 # g               : logical passed to the graphics argument of the menu function
-#' @importFrom selectr querySelectorAll
-#' @importFrom XML htmlParse xmlGetAttr xmlValue xmlSApply
+#' @importFrom xml2 xml_find_all read_html xml_attr xml_text
+#' @importFrom RCurl getURL
 #' @importFrom utils menu
 option_selections = function(href_2, selection_check, selection_combo,
                              dt_type, g){
@@ -210,23 +208,26 @@ option_selections = function(href_2, selection_check, selection_combo,
   domain = "https://cliflo.niwa.co.nz/pls/niwp/"
   full_path = paste0(domain, href_2)
   cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
-  dt_options_xml = querySelectorAll(htmlParse(getURL(full_path, cainfo = cert)),
-                                    "td.selected table tr td.selected")
-  dt_params_xml = querySelectorAll(htmlParse(getURL(full_path, cainfo = cert)),
-                                   "td.selected table tr td input")
-  dt_param_values = xmlSApply(dt_params_xml, xmlGetAttr, "value")
-  dt_combo_xml = querySelectorAll(htmlParse(getURL(full_path, cainfo = cert)),
-                                  "td.selected table tr td select option")
-
+  
+  dt_options_xml = 
+    xml_find_all(read_html(getURL(full_path, cainfo = cert)), 
+                 "//td[@class='selected']//table//tr//td[@class='selected']")
+  dt_params_xml = 
+    xml_find_all(read_html(getURL(full_path, cainfo = cert)), 
+                 "//td[@class='selected']//table//tr//td//input")
+  dt_param_values = xml_attr(dt_params_xml, "value")
+  dt_combo_xml = xml_find_all(read_html(getURL(full_path, cainfo = cert)), 
+                              "//td[@class='selected']//table//tr//td//select//option")
+  
   if (length(dt_combo_xml) == 0)
-    dt_options = xmlSApply(dt_options_xml, xmlValue)
+    dt_options = xml_text(dt_options_xml, trim = TRUE)
   else{
-    dt_options_inc_combo = xmlSApply(dt_options_xml, xmlValue)
+    dt_options_inc_combo = xml_text(dt_options_xml, trim = TRUE)
     dt_options_inc_combo = dt_options_inc_combo[dt_options_inc_combo != ""]
     combo_name = tail(dt_options_inc_combo, 1)
     dt_options = head(dt_options_inc_combo, -1)
-    dt_combo_param_names = xmlSApply(dt_combo_xml, xmlValue)
-    dt_combo_param_values = xmlSApply(dt_combo_xml, xmlGetAttr, "value")
+    dt_combo_param_names = xml_text(dt_combo_xml, trim = TRUE)
+    dt_combo_param_values = xml_attr(dt_combo_xml, "value")
   }
 
   if (any(is.na(selection_check)))
@@ -536,7 +537,7 @@ setMethod("show", signature(object = "cfDatatype"), function(object){
   second_sel_names = object@dt_type
 
   check_select = sapply(object@dt_sel_option_names,
-                        function(x) paste0("[", paste(x, collapse = ","), "]"))
+                        function(x) paste0("[", paste(x, collapse = ", "), "]"))
 
   combo_select = object@dt_sel_combo_name
   if (any(is.na(combo_select)))

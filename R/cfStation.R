@@ -100,8 +100,7 @@ setMethod("initialize", "cfStation", function(.Object, df){
 #'
 #' @param ... comma separated agent numbers
 #'
-#' @importFrom selectr querySelector querySelectorAll
-#' @importFrom XML xmlValue htmlParse
+#' @importFrom xml2 read_html xml_text xml_find_all
 #' @importFrom methods new
 #' @importFrom lubridate dmy with_tz round_date now
 #' @rdname cfStation-class
@@ -155,13 +154,15 @@ cf_station = function(...){
   }
 
   stations_xml = getURIs(uris)
-  station_details = lapply(lapply(stations_xml, htmlParse), function(z){
-    station_details_xml = querySelectorAll(z, "td.extrdata:nth-child(2)")
-    if (length(station_details_xml) == 0)
-      NA
-    else
-      sapply(station_details_xml, xmlValue)[c(1:5, 10:12)]
-  })
+  station_details = lapply(lapply(stations_xml, read_html),
+                           function(x){
+                             station_details_xml = 
+                               xml_find_all(x, "//td[@class='extrdata' and position()=2]")
+                             if(length(station_details_xml) == 0)
+                               NA
+                             else
+                               xml_text(station_details_xml)[c(1:5, 10:12)]
+                           })
 
   which.na = as.numeric(which(is.na(station_details)))
   if (length(which.na) == length(agent))

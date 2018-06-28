@@ -10,9 +10,6 @@ before_install: echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.R
 after_success:
 - Rscript -e 'covr::codecov()'
 
-r_binary_packages:
-  - XML
-
 r_packages:
   - covr
 

@@ -44,7 +44,7 @@ my.stations
 cf_save_kml(my.stations)
 
 # Double click on the file to open with a default program (if available). All
-# the markers are blue, indicating all these stations are open.
+# the markers are green, indicating all these stations are open.
 
 # Where is the subscription-free Reefton Ews station?
 cf_save_kml(cf_station(), file_name = "reeftonEWS")
