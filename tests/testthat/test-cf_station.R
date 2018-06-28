@@ -2,7 +2,7 @@ context("cf_station")
 
 test_that("cf_station", {
   skip_on_cran()
-  skip_on_travis()
+  # skip_on_travis()
   
   tt = cf_station()
 
