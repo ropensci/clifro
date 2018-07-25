@@ -701,8 +701,8 @@ setMethod("summary",
                                                      FUN = function(x)
                                                        quantile(ecdf(x)))))
             colnames(speed_ecdf) = seq(0, 100, by = 25)
-            round(cbind(speed_ecdf, calm = calm_days * 100,
-                        variable = variable_days * 100), 1)
+            round(cbind(speed_ecdf, calm_pct = calm_days * 100,
+                        variable_pct = variable_days * 100), 1)
           }
 )
 
