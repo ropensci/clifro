@@ -997,10 +997,10 @@ setMethod("plot",
             ggtheme = match.arg(ggtheme)
             scales = match.arg(scales)
 
-            x_df = as(x, "data.frame")
-            names(x_df)[c(2, 3, 5, 9)] = c("date", "max", "min", "mean")
+            x_df = as(x, "data.frame")[c(1:3, 5, 9)]
+            names(x_df)[c(2:5)] = c("date", "max", "min", "mean")
 
-            if (!all(is.na(x_df[, 9]))){
+            if (!all(is.na(x_df$mean))){
               p = ggplot(x_df, aes_string(x = "date", y = "mean")) +
                 geom_ribbon(aes_string(ymax = "max", ymin = "min"), alpha = .3) +
                 geom_line()
