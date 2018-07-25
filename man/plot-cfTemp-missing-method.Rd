@@ -28,7 +28,7 @@ in the \code{link[ggplot2]{facet_wrap}} function.}
 }
 \description{
 Plot minimum and maximum temperature data for a given period (degrees
-celsuis) through time, for each chosen CliFlo station.
+celsius) through time, for each chosen CliFlo station.
 }
 \details{
 This plotting method shows the temperature extremes as a grey region on the

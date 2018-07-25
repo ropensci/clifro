@@ -930,7 +930,7 @@ setMethod("plot",
 #' Plot Temperature Range
 #'
 #' Plot minimum and maximum temperature data for a given period (degrees
-#' celsuis) through time, for each chosen CliFlo station.
+#' celsius) through time, for each chosen CliFlo station.
 #'
 #' This plotting method shows the temperature extremes as a grey region on the
 #' plot, with a black line indicating the average temperature (if available).

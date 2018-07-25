@@ -10,7 +10,7 @@ set_history = function(value) cf_parallel[["last_cf_query"]] = value
 #' again and losing subscription rows.
 #'
 #' This function is a back up for when the clifro query has been submitted and
-#' the data returned but has not been assigned, or inadvertantly deleted. This
+#' the data returned but has not been assigned, or inadvertently deleted. This
 #' saves the user resubmitting queries and using more rows from their
 #' subscription than needed.
 #'

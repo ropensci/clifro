@@ -33,7 +33,7 @@ to build the \pkg{clifro} query.
 An object inheriting from the \code{\link{cfDatatype}} class is created by
 the constructor function \code{\link{cf_datatype}}. The function allows the
 user to choose datatype(s) interactively (if no arguments are given), or to
-create datatypes programatically if the tree menu nodes are known a priori
+create datatypes programmatically if the tree menu nodes are known a priori
 (see examples). This function uses the same nodes, check box and combo box
 options as CliFlo and can be viewed at the
 \href{https://cliflo.niwa.co.nz/pls/niwp/wgenf.choose_datatype?cat=cat1}{datatype selection page}.
