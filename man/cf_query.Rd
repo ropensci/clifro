@@ -26,7 +26,7 @@ should be in the form \code{yyyy-mm-dd-hh} unless
 
 \item{date_format}{a character string matching one of \code{"ymd_h"},
 \code{"mdy_h"}, \code{"ydm_h"} or \code{"dmy_h"}
-representing the \code{\link[lubridate]{lubridate}}
+representing the \code{\link[lubridate]{lubridate-package}}
 date parsing function.}
 
 \item{tz}{the timezone for which the start and end dates refer to. Conversion

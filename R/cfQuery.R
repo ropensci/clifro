@@ -59,7 +59,7 @@ cf_last_query = function() cf_parallel[["last_cf_query"]]
 #'                 \code{\link[lubridate]{now}}.
 #' @param date_format a character string matching one of \code{"ymd_h"},
 #'                    \code{"mdy_h"}, \code{"ydm_h"} or \code{"dmy_h"}
-#'                    representing the \code{\link[lubridate]{lubridate}}
+#'                    representing the \code{\link[lubridate]{lubridate-package}}
 #'                    date parsing function.
 #' @param tz the timezone for which the start and end dates refer to. Conversion
 #'           to Pacific/Auckland time is done automatically through the

@@ -27,7 +27,7 @@ used if \code{speed_cuts} is \code{NA} (default 5).}
 intervals, or \code{NA} (default).}
 
 \item{col_pal}{character string indicating the name of the
-\code{\link[RColorBrewer]{RColorBrewer}} colour palette to be
+\code{\link[RColorBrewer]{brewer.pal.info}} colour palette to be
 used for plotting, see 'Theme Selection' below.}
 
 \item{ggtheme}{character string (partially) matching the
@@ -66,7 +66,7 @@ For black and white windroses that may be preferred if plots are to be used
 in journal articles for example, recommended \code{ggtheme}s are \code{'bw'},
 \code{'linedraw'}, \code{'minimal'} or \code{'classic'} and
 the \code{col_pal} should be \code{'Greys'}. Otherwise, any of the sequential
-\code{\link[RColorBrewer]{RColorBrewer}} colour palettes are recommended for
+\code{\link[RColorBrewer]{brewer.pal.info}} colour palettes are recommended for
 colour plots.
 }
 
