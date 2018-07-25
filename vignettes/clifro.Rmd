@@ -99,10 +99,10 @@ my.stations[, 1:5]
 
 ```
 ##                name network agent      start        end
-## 1 Invercargill Aero  I68433  5814 1939-09-01 2015-03-05
-## 2       Nelson Aero  G13222  4241 1940-07-01 2015-03-05
-## 3     Auckland Aero  C74082  1962 1962-05-01 2015-03-05
-## 4      Hamilton Aws  C75834  2112 1989-11-30 2015-03-05
+## 1 Invercargill Aero  I68433  5814 1939-09-01 2018-07-26
+## 2       Nelson Aero  G13222  4241 1940-07-01 2018-07-26
+## 3     Auckland Aero  C74082  1962 1962-05-01 2018-07-26
+## 4      Hamilton Aws  C75834  2112 1989-11-30 2018-07-26
 ```
 
 # Retrieve the CliFlo Data

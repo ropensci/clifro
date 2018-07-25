@@ -50,10 +50,10 @@ lake.tekapo.st[, c("name", "agent", "start", "end", "open")]
 
 ```
 ##                      name agent      start        end  open
-## 1         Coal @ Skifield 12709 1989-02-01 2016-01-15  TRUE
-## 2      Macaulay@Mt Gerald 35567 1990-07-04 2016-01-15  TRUE
-## 3         Lake Tekapo Ews 24945 2003-06-18 2016-01-15  TRUE
-## 4 South Opua @ South Opua 39557 2011-09-28 2016-01-15  TRUE
+## 1         Coal @ Skifield 12709 1989-02-01 2018-07-26  TRUE
+## 2      Macaulay@Mt Gerald 35567 1990-07-04 2018-07-26  TRUE
+## 3         Lake Tekapo Ews 24945 2003-06-18 2018-07-26  TRUE
+## 4 South Opua @ South Opua 39557 2011-09-28 2018-07-26  TRUE
 ## 5        Lilybank Station  4602 1950-01-01 1992-09-30 FALSE
 ## 6                 Mt John  4630 1962-10-01 1988-01-01 FALSE
 ## 7    Godley Peaks, Tekapo  4616 1914-01-01 1976-06-01 FALSE
@@ -77,19 +77,20 @@ added.stations.st[, c("name", "agent", "start", "end", "open")]
 
 ```
 ##                       name agent      start        end  open
-## 1              Reefton Ews  3925 1960-08-01 2016-01-15  TRUE
-## 2          Coal @ Skifield 12709 1989-02-01 2016-01-15  TRUE
-## 3       Macaulay@Mt Gerald 35567 1990-07-04 2016-01-15  TRUE
-## 4          Lake Tekapo Ews 24945 2003-06-18 2016-01-15  TRUE
-## 5  South Opua @ South Opua 39557 2011-09-28 2016-01-15  TRUE
-## 6     Tiri Tiri Lighthouse  1401 1946-02-01 2016-01-15  TRUE
-## 7         Lilybank Station  4602 1950-01-01 1992-09-30 FALSE
-## 8                  Mt John  4630 1962-10-01 1988-01-01 FALSE
-## 9    Cape Brett Lighthouse  1197 1934-11-01 1978-10-01 FALSE
-## 10     Nugget Lighthouse B  5894 1975-03-01 1977-08-31 FALSE
-## 11     Nugget Lighthouse A  5895 1975-03-01 1977-08-31 FALSE
-## 12    Godley Peaks, Tekapo  4616 1914-01-01 1976-06-01 FALSE
-## 13      Moeraki Lighthouse  5325 1935-10-01 1975-06-01 FALSE
+## 1              Reefton Ews  3925 1960-08-01 2018-07-26  TRUE
+## 2          Coal @ Skifield 12709 1989-02-01 2018-07-26  TRUE
+## 3       Macaulay@Mt Gerald 35567 1990-07-04 2018-07-26  TRUE
+## 4          Lake Tekapo Ews 24945 2003-06-18 2018-07-26  TRUE
+## 5  South Opua @ South Opua 39557 2011-09-28 2018-07-26  TRUE
+## 6     Tiri Tiri Lighthouse  1401 1946-02-01 2018-07-25  TRUE
+## 7  Kapoaiaia At Lighthouse 42673 1998-05-17 2018-07-25  TRUE
+## 8         Lilybank Station  4602 1950-01-01 1992-09-30 FALSE
+## 9                  Mt John  4630 1962-10-01 1988-01-01 FALSE
+## 10   Cape Brett Lighthouse  1197 1934-11-01 1978-10-01 FALSE
+## 11     Nugget Lighthouse B  5894 1975-03-01 1977-08-31 FALSE
+## 12     Nugget Lighthouse A  5895 1975-03-01 1977-08-31 FALSE
+## 13    Godley Peaks, Tekapo  4616 1914-01-01 1976-06-01 FALSE
+## 14      Moeraki Lighthouse  5325 1935-10-01 1975-06-01 FALSE
 ```
 
 The above code chunk adds the 7 stations around Lake Tekapo, the 
