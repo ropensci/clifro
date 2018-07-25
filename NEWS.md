@@ -1,3 +1,17 @@
+clifro 3.2-0 (25-Jul-2018)
+==========
+### Bug Fixes
+* Fixed issue #14
+* Updated links in Rd files to ensure no warnings when building package.
+* `clifro` no longer tests whether or not you have Google Earth installed.
+
+### Minor Improvements
+* `clifro` has had troubles with installation on certain operating systems due 
+to the `XML` package (issue #19). The `XML` and `selectr` dependencies have now 
+been replaced with `xml2` and `magrittr`.
+* Updated vignettes.
+
+
 clifro 3.1-5 (04-Oct-2017)
 ==========
 ### Bug Fixes

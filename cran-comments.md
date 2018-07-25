@@ -1,16 +1,10 @@
 ## Test environments
-* ubuntu 14.04.5 LTS (travis-ci) and 16.04.3 LTS (local), R 3.4.1
+* ubuntu 14.04.5 LTS (travis-ci) and 16.04.3 LTS (local), R >= 3.5.0
 * win-builder (devel and release)
 
 ## R CMD check results
-There were no ERRORs or WARNINGs.
-
-There was 1 NOTE (on Windows):
-
-Maintainer: ‘Blake Seers <blake.seers@gmail.com>’
-This is the correct email address.
-
-Also, the possibly mis-spelled words in DESCRIPTION (CliFlo, Reefton, Zealand, and clifro) are all spelled correctly.
+There were no NOTEs, ERRORs or WARNINGs.
 
 ## Downstream dependencies
-I have also run R CMD CHECK on macleish, the only downstream dependency of clifro, without any problems.
+I have also run R CMD CHECK on macleish, the only downstream dependency of 
+clifro, without any problems.
