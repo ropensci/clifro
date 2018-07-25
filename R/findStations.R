@@ -194,9 +194,6 @@ save_KML = function(df, file_name, file_path){
   }
   
   message(paste("output KML file:", xml_file))
-  
-  if (Sys.which("google-earth") == "")
-    message("You may like to install Google Earth to view the locations")
 }
 
 # Save KML files ----------------------------------------------------------
