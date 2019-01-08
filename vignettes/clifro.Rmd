@@ -148,7 +148,7 @@ This is the first dataframe in `cf.datalist`. Since the first argument passed to
 We could therefore simply type `plot(cf.datalist, y = 1)` and get a nice plot of
 the MSL atmospheric pressure, but it is usually nice to modify the defaults 
 slightly. Since the plot method returns a `ggplot` object, we can easily modify 
-the plots using [ggplot2](http://ggplot2.org/).
+the plots using [ggplot2](https://ggplot2.tidyverse.org).
 
 ```{r, eval = FALSE}
 # Load the ggplot2 library for element_text() and geom_smooth() functions
