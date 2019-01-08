@@ -100,7 +100,7 @@ windrose = function(speed, direction, facet, n_directions = 12,
                     legend_title = "Wind Speed", calm_wind = 0,
                     variable_wind = 990, n_col = 1, ...){
 
-  if (missingArg(direction))
+  if (missingArg(speed))
     stop("speed can't be missing")
 
   if (missingArg(direction))
@@ -121,7 +121,7 @@ windrose = function(speed, direction, facet, n_directions = 12,
   }
 
   if (!is.numeric(speed))
-    stop("wind speed need to be numeric")
+    stop("wind speeds need to be numeric")
 
   if (!is.numeric(direction))
     stop("wind directions need to be numeric")
