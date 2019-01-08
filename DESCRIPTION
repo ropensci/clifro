@@ -1,8 +1,8 @@
 Package: clifro
 Type: Package
 Title: Easily Download and Visualise Climate Data from CliFlo
-Version: 3.2-0
-Date: 2018-07-25
+Version: 3.2-1
+Date: 2019-01-08
 Authors@R: person("Blake", "Seers", role = c("aut", "cre"),
     email = "blake.seers@gmail.com",
     comment = c(ORCID = "http://orcid.org/0000-0001-6841-4312"))
@@ -36,6 +36,7 @@ Description: CliFlo is a web portal to the New Zealand National Climate
 URL: https://github.com/ropensci/clifro
 BugReports: https://github.com/ropensci/clifro/issues
 License: GPL-2
+Encoding: UTF-8
 Collate:
     'dataFrame.R'
     'cfStation.R'
@@ -46,7 +47,7 @@ Collate:
     'cfQuery.R'
     'cfUser.R'
     'findStations.R'
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 X-schema.org-keywords: r, opensci, zealand, weather, climate, cliflo, data, api, windrose, rain, wind, temperature
 X-schema.org-applicationCategory: Data Access
 X-schema.org-isPartOf: "https://ropensci.org"
