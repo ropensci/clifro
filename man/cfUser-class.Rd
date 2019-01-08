@@ -4,8 +4,6 @@
 \name{cfUser-class}
 \alias{cfUser-class}
 \alias{cf_user}
-\alias{cfUser-class}
-\alias{cf_user}
 \alias{cfUser}
 \title{The Clifro User Object}
 \usage{

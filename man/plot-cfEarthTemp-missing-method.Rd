@@ -6,9 +6,9 @@
 \alias{plot.cfEarthTemp}
 \title{Plot Earth Temperatures}
 \usage{
-\S4method{plot}{cfEarthTemp,missing}(x, y, ggtheme = c("grey", "gray", "bw",
-  "linedraw", "light", "minimal", "classic"), scales = c("fixed", "free_x",
-  "free_y", "free"), n_col = 1, ...)
+\S4method{plot}{cfEarthTemp,missing}(x, y, ggtheme = c("grey", "gray",
+  "bw", "linedraw", "light", "minimal", "classic"), scales = c("fixed",
+  "free_x", "free_y", "free"), n_col = 1, ...)
 }
 \arguments{
 \item{x}{a cfEarthTemp object.}

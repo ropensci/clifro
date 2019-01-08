@@ -5,9 +5,10 @@
 \title{Plot a windrose}
 \usage{
 windrose(speed, direction, facet, n_directions = 12, n_speeds = 5,
-  speed_cuts = NA, col_pal = "GnBu", ggtheme = c("grey", "gray", "bw",
-  "linedraw", "light", "minimal", "classic"), legend_title = "Wind Speed",
-  calm_wind = 0, variable_wind = 990, n_col = 1, ...)
+  speed_cuts = NA, col_pal = "GnBu", ggtheme = c("grey", "gray",
+  "bw", "linedraw", "light", "minimal", "classic"),
+  legend_title = "Wind Speed", calm_wind = 0, variable_wind = 990,
+  n_col = 1, ...)
 }
 \arguments{
 \item{speed}{numeric vector of wind speeds.}

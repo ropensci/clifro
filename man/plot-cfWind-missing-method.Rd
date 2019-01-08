@@ -15,20 +15,20 @@
 \title{Plot Clifro Wind Objects}
 \usage{
 \S4method{plot}{cfWind,missing}(x, y, n_directions = 12, n_speeds = 5,
-  speed_cuts = NULL, col_pal = "GnBu", ggtheme = c("grey", "gray", "bw",
-  "linedraw", "light", "minimal", "classic"), n_col = 1, ...)
+  speed_cuts = NULL, col_pal = "GnBu", ggtheme = c("grey", "gray",
+  "bw", "linedraw", "light", "minimal", "classic"), n_col = 1, ...)
 
-\S4method{direction_plot}{cfWind,missing}(x, y, ggtheme = c("grey", "gray",
-  "bw", "linedraw", "light", "minimal", "classic"), contours = 10,
-  n_col = 1, ...)
+\S4method{direction_plot}{cfWind,missing}(x, y, ggtheme = c("grey",
+  "gray", "bw", "linedraw", "light", "minimal", "classic"),
+  contours = 10, n_col = 1, ...)
 
 \S4method{direction_plot}{cfDataList,missing}(x, y, ...)
 
 \S4method{direction_plot}{cfDataList,numeric}(x, y, ...)
 
-\S4method{speed_plot}{cfWind,missing}(x, y, ggtheme = c("grey", "gray", "bw",
-  "linedraw", "light", "minimal", "classic"), scales = c("fixed", "free_x",
-  "free_y", "free"), n_col = 1, ...)
+\S4method{speed_plot}{cfWind,missing}(x, y, ggtheme = c("grey", "gray",
+  "bw", "linedraw", "light", "minimal", "classic"), scales = c("fixed",
+  "free_x", "free_y", "free"), n_col = 1, ...)
 
 \S4method{speed_plot}{cfDataList,missing}(x, y, ...)
 

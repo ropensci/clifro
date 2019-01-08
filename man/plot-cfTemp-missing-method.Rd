@@ -7,8 +7,8 @@
 \title{Plot Temperature Range}
 \usage{
 \S4method{plot}{cfTemp,missing}(x, y, ggtheme = c("grey", "gray", "bw",
-  "linedraw", "light", "minimal", "classic"), scales = c("fixed", "free_x",
-  "free_y", "free"), n_col = 1, ...)
+  "linedraw", "light", "minimal", "classic"), scales = c("fixed",
+  "free_x", "free_y", "free"), n_col = 1, ...)
 }
 \arguments{
 \item{x}{a cfTemp object.}

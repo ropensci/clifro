@@ -4,8 +4,6 @@
 \alias{valid_cfuser}
 \alias{cf_login}
 \alias{cf_logout}
-\alias{cf_logout}
-\alias{valid_cfuser}
 \title{Validation Functions For The \code{cfUser} Class}
 \usage{
 cf_login(object)

@@ -6,9 +6,9 @@
 \alias{plot.cfSunshine}
 \title{Plot Sunshine Hours}
 \usage{
-\S4method{plot}{cfSunshine,missing}(x, y, ggtheme = c("grey", "gray", "bw",
-  "linedraw", "light", "minimal", "classic"), scales = c("fixed", "free_x",
-  "free_y", "free"), n_col = 1, ...)
+\S4method{plot}{cfSunshine,missing}(x, y, ggtheme = c("grey", "gray",
+  "bw", "linedraw", "light", "minimal", "classic"), scales = c("fixed",
+  "free_x", "free_y", "free"), n_col = 1, ...)
 }
 \arguments{
 \item{x}{a cfSunshine object.}
