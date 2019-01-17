@@ -48,7 +48,7 @@ cf_region = function(region){
 # and the closed stations as red markers.
 #
 # see also cf_save_kml.
-#' @importFrom xml2 xml_new_root xml_add_child xml_add_sibling xml_parent 
+#' @importFrom xml2 xml_new_root xml_add_child xml_add_sibling xml_parent
 #'                  xml_root write_xml
 #' @importFrom magrittr %>%
 
@@ -56,133 +56,133 @@ save_KML = function(df, file_name, file_path){
   df$hoverstate = "#hoverStateClosed"
   df$hoverstate[df$open] = "#hoverStateOpen"
   df$name = as.character(df$name)
-  
+
   doc = xml_new_root("kml",
                      xmlns = "http://www.opengis.net/kml/2.2",
                      "xmlns:gx" = "http://www.google.com/kml/ext/2.2",
                      "xmlns:kml" = "http://www.opengis.net/kml/2.2",
-                     "xmlns:atom" = "http://w3.org/2005/Atom") %>% 
-    xml_add_child("Document") %>% 
-    xml_add_child("name", gsub("_", " ", strsplit(file_name, ".kml")[[1]])) %>% 
-    xml_add_sibling("open", 1) %>% 
-    
+                     "xmlns:atom" = "http://w3.org/2005/Atom") %>%
+    xml_add_child("Document") %>%
+    xml_add_child("name", gsub("_", " ", strsplit(file_name, ".kml")[[1]])) %>%
+    xml_add_sibling("open", 1) %>%
+
     ## Define the hover state for open stations
-    xml_add_sibling("StyleMap", id = "hoverStateOpen") %>% 
-    xml_add_child("Pair") %>% 
-    xml_add_child("key", "normal") %>% 
-    xml_add_sibling("styleUrl", "#normalStateOpen") %>% 
-    xml_parent() %>% 
-    xml_add_sibling("Pair") %>% 
-    xml_add_child("key", "highlight") %>% 
-    xml_add_sibling("styleUrl", "#highlightStateOpen") %>% 
-    xml_parent() %>% 
-    xml_parent() %>% 
-    
-    ## Define the hover state for closed stations
-    xml_add_sibling("StyleMap", id = "hoverStateClosed") %>% 
-    xml_add_child("Pair") %>% 
-    xml_add_child("key", "normal") %>% 
-    xml_add_sibling("styleUrl", "#normalStateClosed") %>% 
-    xml_parent() %>% 
-    xml_add_sibling("Pair") %>% 
-    xml_add_child("key", "highlight") %>% 
-    xml_add_sibling("styleUrl", "#highlightStateClosed") %>% 
-    xml_parent() %>% 
-    xml_parent() %>% 
-    
-    ## Define the highlight state for open stations
-    xml_add_sibling("Style", id = "highlightStateOpen") %>% 
-    xml_add_child("IconStyle") %>% 
-    xml_add_child("scale", "1.3") %>% 
-    xml_add_sibling("Icon") %>% 
-    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png") %>% 
-    xml_parent() %>% 
-    xml_parent() %>% 
-    xml_add_sibling("LabelStyle") %>% 
-    xml_add_child("scale", "1.3") %>% 
-    xml_parent() %>% 
-    xml_parent() %>% 
-    
-    ## Define the highlight state for closed stations
-    xml_add_sibling("Style", id = "highlightStateClosed") %>% 
-    xml_add_child("IconStyle") %>% 
-    xml_add_child("scale", "1.3") %>% 
-    xml_add_sibling("Icon") %>% 
-    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/red-circle.png") %>% 
-    xml_parent() %>% 
-    xml_parent() %>% 
-    xml_add_sibling("LabelStyle") %>% 
-    xml_add_child("scale", "1.3") %>% 
-    xml_parent() %>% 
-    xml_parent() %>% 
-    
-    ## Define the normal state for open stations
-    xml_add_sibling("Style", id = "normalStateOpen") %>% 
-    xml_add_child("IconStyle") %>% 
-    xml_add_child("scale", "0.9") %>% 
-    xml_add_sibling("Icon") %>% 
-    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png") %>% 
-    xml_parent() %>% 
-    xml_parent() %>% 
-    xml_add_sibling("LabelStyle") %>% 
-    xml_add_child("scale", "0.7") %>% 
-    xml_parent() %>% 
-    xml_parent() %>% 
-    
-    ## Define the normal state for closed stations
-    xml_add_sibling("Style", id = "normalStateClosed") %>% 
-    xml_add_child("IconStyle") %>% 
-    xml_add_child("scale", "0.9") %>% 
-    xml_add_sibling("Icon") %>% 
-    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/red-circle.png") %>% 
-    xml_parent() %>% 
-    xml_parent() %>% 
-    xml_add_sibling("LabelStyle") %>% 
-    xml_add_child("scale", "0.7") %>% 
-    xml_parent() %>% 
+    xml_add_sibling("StyleMap", id = "hoverStateOpen") %>%
+    xml_add_child("Pair") %>%
+    xml_add_child("key", "normal") %>%
+    xml_add_sibling("styleUrl", "#normalStateOpen") %>%
     xml_parent() %>%
-    
-    xml_add_sibling("Folder") %>% 
+    xml_add_sibling("Pair") %>%
+    xml_add_child("key", "highlight") %>%
+    xml_add_sibling("styleUrl", "#highlightStateOpen") %>%
+    xml_parent() %>%
+    xml_parent() %>%
+
+    ## Define the hover state for closed stations
+    xml_add_sibling("StyleMap", id = "hoverStateClosed") %>%
+    xml_add_child("Pair") %>%
+    xml_add_child("key", "normal") %>%
+    xml_add_sibling("styleUrl", "#normalStateClosed") %>%
+    xml_parent() %>%
+    xml_add_sibling("Pair") %>%
+    xml_add_child("key", "highlight") %>%
+    xml_add_sibling("styleUrl", "#highlightStateClosed") %>%
+    xml_parent() %>%
+    xml_parent() %>%
+
+    ## Define the highlight state for open stations
+    xml_add_sibling("Style", id = "highlightStateOpen") %>%
+    xml_add_child("IconStyle") %>%
+    xml_add_child("scale", "1.3") %>%
+    xml_add_sibling("Icon") %>%
+    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png") %>%
+    xml_parent() %>%
+    xml_parent() %>%
+    xml_add_sibling("LabelStyle") %>%
+    xml_add_child("scale", "1.3") %>%
+    xml_parent() %>%
+    xml_parent() %>%
+
+    ## Define the highlight state for closed stations
+    xml_add_sibling("Style", id = "highlightStateClosed") %>%
+    xml_add_child("IconStyle") %>%
+    xml_add_child("scale", "1.3") %>%
+    xml_add_sibling("Icon") %>%
+    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/red-circle.png") %>%
+    xml_parent() %>%
+    xml_parent() %>%
+    xml_add_sibling("LabelStyle") %>%
+    xml_add_child("scale", "1.3") %>%
+    xml_parent() %>%
+    xml_parent() %>%
+
+    ## Define the normal state for open stations
+    xml_add_sibling("Style", id = "normalStateOpen") %>%
+    xml_add_child("IconStyle") %>%
+    xml_add_child("scale", "0.9") %>%
+    xml_add_sibling("Icon") %>%
+    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png") %>%
+    xml_parent() %>%
+    xml_parent() %>%
+    xml_add_sibling("LabelStyle") %>%
+    xml_add_child("scale", "0.7") %>%
+    xml_parent() %>%
+    xml_parent() %>%
+
+    ## Define the normal state for closed stations
+    xml_add_sibling("Style", id = "normalStateClosed") %>%
+    xml_add_child("IconStyle") %>%
+    xml_add_child("scale", "0.9") %>%
+    xml_add_sibling("Icon") %>%
+    xml_add_child("href", "http://maps.google.com/mapfiles/kml/paddle/red-circle.png") %>%
+    xml_parent() %>%
+    xml_parent() %>%
+    xml_add_sibling("LabelStyle") %>%
+    xml_add_child("scale", "0.7") %>%
+    xml_parent() %>%
+    xml_parent() %>%
+
+    xml_add_sibling("Folder") %>%
     xml_add_child("name", "Closed")
-  
+
   for (i in which(!df$open)) {
-    doc = doc %>% 
-      xml_add_sibling("Placemark") %>% 
-      xml_add_child("name", df$name[i]) %>% 
+    doc = doc %>%
+      xml_add_sibling("Placemark") %>%
+      xml_add_child("name", df$name[i]) %>%
       xml_add_sibling("description", paste0("Agent:     ", df$agent[i], "\n",
                                             "Network:    ", df$network[i], "\n",
                                             "Start date: ", df$start[i], "\n",
-                                            "End date:   ", df$end[i], "\n")) %>% 
-      xml_add_sibling("styleUrl", df$hoverstate[i]) %>% 
-      xml_add_sibling("Point") %>% 
-      xml_add_child("coordinates", paste(df$lon[i], df$lat[i], 0, sep = ",")) %>% 
-      xml_parent() %>% 
+                                            "End date:   ", df$end[i], "\n")) %>%
+      xml_add_sibling("styleUrl", df$hoverstate[i]) %>%
+      xml_add_sibling("Point") %>%
+      xml_add_child("coordinates", paste(df$lon[i], df$lat[i], 0, sep = ",")) %>%
+      xml_parent() %>%
       xml_parent()
   }
-  
-  doc = doc %>% 
-    xml_parent() %>% 
-    xml_add_sibling("Folder") %>% 
+
+  doc = doc %>%
+    xml_parent() %>%
+    xml_add_sibling("Folder") %>%
     xml_add_child("name", "Open")
-  
+
   for (i in which(df$open)) {
-    doc = doc %>% 
-      xml_add_sibling("Placemark") %>% 
-      xml_add_child("name", df$name[i]) %>% 
+    doc = doc %>%
+      xml_add_sibling("Placemark") %>%
+      xml_add_child("name", df$name[i]) %>%
       xml_add_sibling("description", paste0("Agent:     ", df$agent[i], "\n",
                                             "Network:    ", df$network[i], "\n",
                                             "Start date: ", df$start[i], "\n",
-                                            "End date:   ", df$end[i], "\n")) %>% 
-      xml_add_sibling("styleUrl", df$hoverstate[i]) %>% 
-      xml_add_sibling("Point") %>% 
-      xml_add_child("coordinates", paste(df$lon[i], df$lat[i], 0, sep = ",")) %>% 
-      xml_parent() %>% 
+                                            "End date:   ", df$end[i], "\n")) %>%
+      xml_add_sibling("styleUrl", df$hoverstate[i]) %>%
+      xml_add_sibling("Point") %>%
+      xml_add_child("coordinates", paste(df$lon[i], df$lat[i], 0, sep = ",")) %>%
+      xml_parent() %>%
       xml_parent()
   }
-  
-  doc = doc %>% 
+
+  doc = doc %>%
     xml_root()
-  
+
   if (file_name == "my_stations_"){
     xml_file = tempfile(file_name, file_path, ".kml")
     write_xml(doc, file = xml_file)
@@ -192,7 +192,7 @@ save_KML = function(df, file_name, file_path){
     xml_file = file.path(file_path, file_name)
     write_xml(doc, file = xml_file)
   }
-  
+
   message(paste("output KML file:", xml_file))
 }
 
@@ -456,45 +456,49 @@ cf_find_station = function(...,
                          .opts = cf_parallel[["curl_opts"]])
     param.list = c(param.list, ccomb_dt = combine)
     my_form = postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",
-                       .params = param.list, curl = curl, 
+                       .params = param.list, curl = curl,
                        .opts = list(cainfo = cert))
-    
+
     if (is.raw(my_form))
       my_form = rawToChar(my_form)
-    
+
     doc = read_html(my_form)
-    
+
   } else
     my_form = postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_nodt",
                        .params = param.list, .opts = list(cainfo = cert))
-  
+
   if (is.raw(my_form))
     my_form = rawToChar(my_form)
-  
+
   doc = read_html(my_form)
-  
-  agent_name_xml = 
-    xml_find_all(doc, 
+
+  agent_name_xml =
+    xml_find_all(doc,
                  "//a[contains(@href, 'wstn.stn_details?') and @class = 'st']")
 
   if (length(agent_name_xml) == 0)
     stop("no climate stations were found matching your search criteria",
          call. = FALSE)
 
-  network_xml = 
+  network_xml =
     xml_find_all(
-      doc, 
+      doc,
       "//a[contains(@href, 'wstn.data_availibility') and @class = 'st']")
-  
-  lat_long_xml = 
-    xml_find_all(doc, 
+
+  lat_long_xml =
+    xml_find_all(doc,
                  "//a[contains(@href, '?cstype=') and @class = 'st']")
-  
-  start_end = distances = xml_text(
+
+  start_end = xml_text(
     xml_find_all(doc, "//td[@class = 'stnextdata' and not(.//a)]"))
-  start_end = replace(start_end, start_end == "-", 
+  start_end = distances = replace(start_end, start_end == "-",
                       format(Sys.Date(), "%d-%b-%Y"))
   start_end = na.exclude(dmy(start_end, quiet = TRUE, tz = "Pacific/Auckland"))
+  distance_index = which(!is.na(as.Date(distances, "%d-%b-%Y")))
+  distance_index = distance_index[seq(2, length(distance_index), by = 2)]
+  distances = distances[distance_index + 2]
+
 
   if (include_distances){
     distances = suppressWarnings(as.numeric(distances))
@@ -508,8 +512,7 @@ cf_find_station = function(...,
 
   ## Open stations in clifro have end dates less than 4 weeks ago
   span = end_dates %--% now()
-  open_station = (as.numeric(dseconds(span)) / (604800 * 4) < 4)
-
+  open_station = (as.numeric(dseconds(span)) / (604800) < 4)
 
   ## Account for CliFlo giving outdated stations for certain datatypes
   if ((status == "open" && !any(open_station)) || (status == "closed" &&
