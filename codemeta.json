@@ -1,21 +1,23 @@
 {
-  "@context": ["https://doi.org/doi:10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/doi:10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "clifro",
   "description": "CliFlo is a web portal to the New Zealand National Climate\n    Database and provides public access (via subscription) to around 6,500\n    various climate stations (see <https://cliflo.niwa.co.nz/> for more\n    information). Collating and manipulating data from CliFlo\n    (hence clifro) and importing into R for further analysis, exploration and\n    visualisation is now straightforward and coherent. The user is required to\n    have an internet connection, and a current CliFlo subscription (free) if\n    data from stations, other than the public Reefton electronic weather\n    station, is sought.",
   "name": "clifro: Easily Download and Visualise Climate Data from CliFlo",
   "codeRepository": "https://github.com/ropensci/clifro",
   "issueTracker": "https://github.com/ropensci/clifro/issues",
-  "datePublished": "2017-10-04",
   "license": "https://spdx.org/licenses/GPL-2.0",
-  "version": "3.1-5",
+  "version": "3.2.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.3.2",
+    "version": "3.5.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.3.2 (2016-10-31)",
+  "runtimePlatform": "R version 3.5.3 (2019-03-11)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -31,14 +33,28 @@
       "@id": "http://orcid.org/0000-0001-6841-4312"
     }
   ],
-  "maintainer": {
-    "@type": "Person",
-    "givenName": "Blake",
-    "familyName": "Seers",
-    "email": "blake.seers@gmail.com",
-    "@id": "http://orcid.org/0000-0001-6841-4312"
-  },
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Blake",
+      "familyName": "Seers",
+      "email": "blake.seers@gmail.com",
+      "@id": "http://orcid.org/0000-0001-6841-4312"
+    }
+  ],
   "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "spelling",
+      "name": "spelling",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=spelling"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "knitr",
@@ -46,9 +62,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
     },
     {
       "@type": "SoftwareApplication",
@@ -57,21 +74,23 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
     },
     {
       "@type": "SoftwareApplication",
       "identifier": "ggmap",
       "name": "ggmap",
-      "version": "2.6",
+      "version": ">= 2.6",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ggmap"
     },
     {
       "@type": "SoftwareApplication",
@@ -80,9 +99,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=pander"
     },
     {
       "@type": "SoftwareApplication",
@@ -91,9 +111,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
     }
   ],
   "softwareRequirements": [
@@ -109,31 +130,34 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "XML",
-      "name": "XML",
+      "identifier": "xml2",
+      "name": "xml2",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=xml2"
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "selectr",
-      "name": "selectr",
+      "identifier": "magrittr",
+      "name": "magrittr",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=magrittr"
     },
     {
       "@type": "SoftwareApplication",
@@ -142,9 +166,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=RCurl"
     },
     {
       "@type": "SoftwareApplication",
@@ -155,13 +180,14 @@
       "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
-      "version": "2.0.0",
+      "version": ">= 2.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     },
     {
       "@type": "SoftwareApplication",
@@ -170,9 +196,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=scales"
     },
     {
       "@type": "SoftwareApplication",
@@ -181,9 +208,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=RColorBrewer"
     },
     {
       "@type": "SoftwareApplication",
@@ -192,18 +220,19 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=reshape2"
     }
   ],
   "applicationCategory": "DataAccess",
-  "keywords": ["r", "opensci", "zealand", "weather", "climate", "cliflo", "data", "api", "windrose", "rain", "wind", "temperature"],
-  "isPartOf": "https://ropensci.org",
+  "keywords": ["r", "opensci", "zealand", "weather", "climate", "cliflo", "data", "api", "windrose", "rain", "wind", "temperature", "climate-data", "climate-stations", "national-climate-database", "kml", "rstats", "r-package"],
+  "isPartOf": "\"https://ropensci.org\"",
   "contIntegration": "https://travis-ci.org/ropensci/clifro",
   "releaseNotes": "https://github.com/ropensci/clifro/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/clifro/blob/master/README.md",
-  "fileSize": "1721.161KB",
+  "fileSize": "2382.937KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -223,5 +252,10 @@
       "name": "New Zealand's Climate Data in R --- An Introduction to clifro",
       "url": "http://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/"
     }
-  ]
+  ],
+  "contributor": {},
+  "copyrightHolder": {},
+  "funder": {},
+  "relatedLink": "https://CRAN.R-project.org/package=clifro",
+  "developmentStatus": "https://www.repostatus.org/#active"
 }
