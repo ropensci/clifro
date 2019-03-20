@@ -2,7 +2,7 @@
 Enhancing the National Climate Database with *clifro*
 =====================================================
 
-[![Build Status](https://travis-ci.org/ropensci/clifro.svg)](https://travis-ci.org/ropensci/clifro) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/clifro)](https://cran.r-project.org/package=clifro) [![](https://cranlogs.r-pkg.org/badges/clifro)](https://cran.r-project.org/package=clifro) [![codecov.io](https://codecov.io/github/ropensci/clifro/coverage.svg?branch=master)](https://codecov.io/github/ropensci/clifro?branch=master)
+[![Build Status](https://travis-ci.org/ropensci/clifro.svg)](https://travis-ci.org/ropensci/clifro) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/clifro)](https://cran.r-project.org/package=clifro) [![](https://cranlogs.r-pkg.org/badges/clifro)](https://cran.r-project.org/package=clifro) [![codecov.io](https://codecov.io/github/ropensci/clifro/coverage.svg?branch=master)](https://codecov.io/github/ropensci/clifro?branch=master) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 New Zealand's National Climate Database, [CliFlo](http://cliflo.niwa.co.nz/) holds data from about 6500 climate stations, with observations dating back to 1850. CliFlo returns raw data at ten minute, hourly, and daily frequencies. CliFlo also returns statistical summaries, inclusive of about eighty different types of monthly and annual statistics and six types of thirty−year normals.
 
@@ -78,7 +78,7 @@ daily.datalist = cf_query(user = public.cfuser,
 #> Number of charged rows output = 0
 #> Number of free rows output = 732
 #> Total number of rows output = 732
-#> Copyright NIWA 2018 Subject to NIWA's Terms and Conditions
+#> Copyright NIWA 2019 Subject to NIWA's Terms and Conditions
 #> See: http://clifloecd1.niwa.co.nz/pls/niwp/doc/terms.html
 #> Comments to: cliflo@niwa.co.nz
 
