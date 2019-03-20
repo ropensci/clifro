@@ -1,3 +1,10 @@
+clifro 3.2-2 (20-Mar-2019)
+==========
+### Bug Fixes
+* The `cf_find_station` function no longer returns an error when searching
+for CliFlo stations based on proximity to a geographical coordinate (using 
+the 'latlon' search) and when using a datatype (fixes issue #21).
+
 clifro 3.2-1 (08-Jan-2019)
 ==========
 ### Bug Fixes
