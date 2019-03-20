@@ -91,7 +91,7 @@ with(wind_df, windrose(wind_speeds, wind_dirs,
                        legend.title.align = .5,
                        ggtheme = "bw",
                        col_pal = "Greys"))
-                       
+
 # Note that underscore-separated arguments come from the windrose method, and
 # period-separated arguments come from ggplot2::theme().
 

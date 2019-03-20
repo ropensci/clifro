@@ -19,6 +19,7 @@ Imports:
     RColorBrewer,
     reshape2
 Suggests:
+    spelling,
     knitr,
     rmarkdown,
     ggmap (>= 2.6),
@@ -51,3 +52,4 @@ RoxygenNote: 6.1.1
 X-schema.org-keywords: r, opensci, zealand, weather, climate, cliflo, data, api, windrose, rain, wind, temperature
 X-schema.org-applicationCategory: Data Access
 X-schema.org-isPartOf: "https://ropensci.org"
+Language: en-GB

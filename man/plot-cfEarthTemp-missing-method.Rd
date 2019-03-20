@@ -27,7 +27,7 @@ in the \code{link[ggplot2]{facet_wrap}} function.}
 \item{...}{further arguments passed to \code{\link[ggplot2]{theme}}.}
 }
 \description{
-Plot the earth temperature for a given depth (degrees celsuis) through time,
+Plot the earth temperature for a given depth (degrees celsius) through time,
 for each chosen CliFlo station.
 }
 \examples{

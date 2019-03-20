@@ -55,7 +55,7 @@ suburbs or maybe even streets and parks. The network ID is a number that is
 assigned to the stations which makes this search useful to look up stations 
 where these are known.
 
-These searches are used when part or all of the station name or netword ID is 
+These searches are used when part or all of the station name or network ID is 
 known. For example, consider we are looking for open stations located in Takaka, 
 at the southeastern end of Golden Bay at the northern end of the South Island, 
 New Zealand. The default for the `cf_find_station` function is to search *open* 
@@ -298,7 +298,7 @@ is available is at the Takaka Ews station.
 Since the `cf_find_station` function returns `cfStation` objects, any of these 
 methods work on objects created from the `cf_station` function (see the 
 [working with clifro stations vignette][clifrostation] for more details). We can 
-conduct two or more seaches at a time using the addition sign, just like we did 
+conduct two or more searches at a time using the addition sign, just like we did 
 for `cfDatatype`s (see the [choose datatypes vignette][chooseDatatype]).
 
 We would like to return all open stations within a 10km radius of the Takaka 

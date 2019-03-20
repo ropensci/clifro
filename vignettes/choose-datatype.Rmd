@@ -12,7 +12,7 @@ vignette: >
 
 The `cf_datatype` function is all that is required to select `clifro` datatypes.
 This function can be called without any arguments that takes the user through
-interactive menus, otherwise the datatypes may be chosen programatically if the 
+interactive menus, otherwise the datatypes may be chosen programmatically if the 
 menu options are known in advance. Whether the intention is to choose one 
 datatype or many, this vignette details the various methods in choosing them.
 
@@ -89,7 +89,7 @@ menu.opts("Surface wind options", c("WindRun", "HlyWind", "3HlyWind", "9amWind")
 The next menu is the options for the chosen datatype, for which we may choose 
 more than one. If more than one option for a given datatype is sought, options 
 must be chosen one at a time. This is made possible by a menu prompting whether 
-or not we would like to select another datatype everytime an option is chosen.
+or not we would like to select another datatype every time an option is chosen.
 
 ```{r, echo=FALSE}
 menu.opts("Choose another option?", c("yes", "no"))
@@ -119,7 +119,7 @@ surfaceWind.dt
 The bold numbers in the minimal example above are emphasised specifically to 
 show the menu order and selections needed to choose the strength of the 9am 
 surface wind in knots datatype, i.e. **2** --> **1** --> **4** --> **3**. In 
-genreal, if we know the selections needed for each of the four menus then we can 
+general, if we know the selections needed for each of the four menus then we can 
 choose any datatype without using the menus making datatype selection 
 a lot faster and a much less tedious.
 

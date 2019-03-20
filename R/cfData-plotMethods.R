@@ -69,7 +69,7 @@ NULL
 #'                        legend.title.align = .5,
 #'                        ggtheme = "bw",
 #'                        col_pal = "Greys"))
-#'                        
+#'
 #' # Note that underscore-separated arguments come from the windrose method, and
 #' # period-separated arguments come from ggplot2::theme().
 #'
@@ -1022,7 +1022,7 @@ setMethod("plot",
 
 #' Plot Earth Temperatures
 #'
-#' Plot the earth temperature for a given depth (degrees celsuis) through time,
+#' Plot the earth temperature for a given depth (degrees celsius) through time,
 #' for each chosen CliFlo station.
 #'
 #' @importFrom ggplot2 ggplot aes_string geom_line ylab theme element_blank

@@ -24,7 +24,7 @@ the user has [subscribed](http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro) and
 accepted NIWA's [terms and conditions](http://cliflo.niwa.co.nz/doc/terms.html).
 
 The `clifro` package is designed to make CliFlo queries much simpler and
-provide extensions that are currenly not offered by CliFlo. The intention is 
+provide extensions that are currently not offered by CliFlo. The intention is 
 to simplify the data extraction, manipulation, exploration and visualisation
 processes and easily create publication-worthy graphics for some of the primary 
 datatypes, especially for users with limited or non-existent previous R 
