@@ -312,9 +312,9 @@ cf_save_kml = function(station, file_name = "my_stations_",
 #'
 #' @export
 #' @importFrom RCurl getCurlHandle postForm
-#' @importFrom xml2 read_html xml_find_all xml_text xml_double
-#' @importFrom lubridate with_tz now round_date %--% dseconds
-#' @importFrom stats na.exclude
+#' @importFrom xml2 read_html
+#' @importFrom lubridate now %--% dseconds
+#' @importFrom rvest html_table
 #' @seealso \code{\link{cf_save_kml}} for saving the resulting stations as a KML
 #' file, \code{\link{cf_station}} for creating \code{\link{cfStation}} objects
 #' when the agent numbers are known, \code{vignette("choose-station")} for a
@@ -458,104 +458,56 @@ cf_find_station = function(...,
     my_form = postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",
                        .params = param.list, curl = curl,
                        .opts = list(cainfo = cert))
-
-    if (is.raw(my_form))
-      my_form = rawToChar(my_form)
-
-    doc = read_html(my_form)
-
-  } else
+  } else {
     my_form = postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_nodt",
                        .params = param.list, .opts = list(cainfo = cert))
+  }
 
   if (is.raw(my_form))
     my_form = rawToChar(my_form)
 
   doc = read_html(my_form)
 
-  agent_name_xml =
-    xml_find_all(doc,
-                 "//a[contains(@href, 'wstn.stn_details?') and @class = 'st']")
+  doc_table = tail(html_table(doc, header = TRUE), 1)[[1]]
 
-  if (length(agent_name_xml) == 0)
-    stop("no climate stations were found matching your search criteria",
-         call. = FALSE)
-
-  network_xml =
-    xml_find_all(
-      doc,
-      "//a[contains(@href, 'wstn.data_availibility') and @class = 'st']")
-
-  lat_long_xml =
-    xml_find_all(doc,
-                 "//a[contains(@href, '?cstype=') and @class = 'st']")
-
-  start_end = xml_text(
-    xml_find_all(doc, "//td[@class = 'stnextdata' and not(.//a)]"))
-  start_end = distances = replace(start_end, start_end == "-",
-                      format(Sys.Date(), "%d-%b-%Y"))
-  start_end = na.exclude(dmy(start_end, quiet = TRUE, tz = "Pacific/Auckland"))
-  distance_index = which(!is.na(as.Date(distances, "%d-%b-%Y")))
-  distance_index = distance_index[seq(2, length(distance_index), by = 2)]
-  distances = distances[distance_index + 2]
-
-
-  if (include_distances){
-    distances = suppressWarnings(as.numeric(distances))
-    distances = distances[!is.na(distances)]
-  } else {
-    distances = numeric(length(network_xml))
-  }
-
-  start_dates = start_end[seq(1, length(start_end), by = 2)]
-  end_dates = start_end[seq(2, length(start_end), by = 2)]
+  doc_table$Start = dmy(doc_table$Start, tz = "NZ")
+  doc_table$End[doc_table$End == "-"] = format(Sys.Date(), "%d-%m-%Y")
+  doc_table$End = dmy(doc_table$End, tz = "NZ")
 
   ## Open stations in clifro have end dates less than 4 weeks ago
-  span = end_dates %--% now()
+  span = doc_table$End %--% now(tz = "NZ")
   open_station = (as.numeric(dseconds(span)) / (604800) < 4)
 
   ## Account for CliFlo giving outdated stations for certain datatypes
   if ((status == "open" && !any(open_station)) || (status == "closed" &&
-                                                     all(open_station)))
+                                                   all(open_station)))
     stop("no climate stations were found matching your search criteria",
          call. = FALSE)
 
-  if (status == "open" && any(!open_station)){
-    start_dates = start_dates[open_station]
-    end_dates = end_dates[open_station]
-    keep_2 = rep(open_station, each = 2)
-    agent_name_xml = agent_name_xml[keep_2]
-    network_xml = network_xml[open_station]
-    lat_long_xml = lat_long_xml[keep_2]
-    distances = distances[open_station]
+  if (status == "open"){
+    doc_table = doc_table[open_station, ]
     open_station = open_station[open_station]
   }
 
-  if (status == "closed" && any(open_station)){
-    start_dates = start_dates[!open_station]
-    end_dates = end_dates[!open_station]
-    keep_2 = rep(!open_station, each = 2)
-    agent_name_xml = agent_name_xml[keep_2]
-    network_xml = network_xml[!open_station]
-    lat_long_xml = lat_long_xml[keep_2]
-    distances = distances[!open_station]
-    open_station = open_station[!open_station]
-  }
-
-  agent_name = xml_text(agent_name_xml)
-  lat_long = xml_double(lat_long_xml)
+  if (status == "closed")
+    doc_table = doc_table[!open_station, ]
 
   new("cfStation",
       data.frame(
-          name = agent_name[seq(2, length(agent_name), by = 2)],
-          network = xml_text(network_xml),
-          agent = as.numeric(agent_name[seq(1, length(agent_name), by = 2)]),
-          start_date = start_dates,
-          end_date = end_dates,
-          open_station = open_station,
-          distances = distances,
-          latitude = lat_long[seq(1, length(agent_name), by = 2)],
-          longitude = lat_long[seq(2, length(agent_name), by = 2)],
-          stringsAsFactors = FALSE, check.names = TRUE
+        name = doc_table$Name,
+        network = doc_table$NetworkNumber,
+        agent = doc_table$AgentNumber,
+        start_date = doc_table$Start,
+        end_date = doc_table$End,
+        open_station = switch(status,
+                              open = TRUE,
+                              closed = FALSE,
+                              all = open_station),
+        distances = ifelse(include_distances,
+                           doc_table$DistKm,
+                           seq_along(doc_table$Name)),
+        latitude = doc_table$`Lat(dec deg)`,
+        longitude = doc_table$`Long(dec deg)`,
+        stringsAsFactors = FALSE, check.names = TRUE
       ))
 }
