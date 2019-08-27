@@ -475,7 +475,7 @@ cf_find_station = function(...,
   doc_table$End = dmy(doc_table$End, tz = "NZ")
 
   ## Open stations in clifro have end dates less than 4 weeks ago
-  span = doc_table$End %--% now(tz = "NZ")
+  span = doc_table$End %--% now(tzone = "NZ")
   open_station = (as.numeric(dseconds(span)) / (604800) < 4)
 
   ## Account for CliFlo giving outdated stations for certain datatypes
