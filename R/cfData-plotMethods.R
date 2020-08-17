@@ -18,7 +18,7 @@ NULL
 #' in journal articles for example, recommended \code{ggtheme}s are \code{'bw'},
 #' \code{'linedraw'}, \code{'minimal'} or \code{'classic'} and
 #' the \code{col_pal} should be \code{'Greys'}. Otherwise, any of the sequential
-#' \code{\link[RColorBrewer]{brewer.pal.info}} colour palettes are recommended for
+#' \code{RColorBrewer} colour palettes are recommended for
 #' colour plots.
 #'
 #' @return a \code{ggplot} object.
@@ -38,7 +38,7 @@ NULL
 #' @param variable_wind numeric code for variable winds (if applicable).
 #' @param legend_title character string to be used for the legend title.
 #' @param col_pal character string indicating the name of the
-#'                \code{\link[RColorBrewer]{brewer.pal.info}} colour palette to be
+#'                \code{RColorBrewer} colour palette to be
 #'                used for plotting, see 'Theme Selection' below.
 #' @param ggtheme character string (partially) matching the
 #'                \code{\link[ggplot2]{ggtheme}} to be used for plotting, see
@@ -268,7 +268,7 @@ if (!isGeneric("plot"))
 #' in journal articles for example, recommended \code{ggtheme}s are \code{'bw'},
 #' \code{'linedraw'}, \code{'minimal'} or \code{'classic'} and
 #' the \code{col_pal} should be \code{'Greys'}. Otherwise, any of the sequential
-#' \code{\link[RColorBrewer]{brewer.pal.info}} colour palettes are recommended for
+#' \code{RColorBrewer} colour palettes are recommended for
 #' colour plots.
 #'
 #' @param x a \code{cfWind} or \code{cfDataList} object.
@@ -282,7 +282,7 @@ if (!isGeneric("plot"))
 #' @param speed_cuts numeric vector containing the cut points for the wind speed
 #'                 intervals, or NA (default).
 #' @param col_pal character string indicating the name of the
-#'                \code{\link[RColorBrewer]{brewer.pal.info}} colour palette to be
+#'                \code{RColorBrewer} colour palette to be
 #'                used for plotting, see 'Theme Selection' below.
 #' @param ggtheme character string (partially) matching the
 #'                \code{\link[ggplot2]{ggtheme}} to be used for plotting, see
