@@ -4,7 +4,7 @@ author: "Blake Seers"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{An introduction to clifro}
+  %\VignetteIndexEntry{From CliFlo to *clifro*: An Introduction}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
