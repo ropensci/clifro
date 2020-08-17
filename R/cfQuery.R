@@ -239,6 +239,11 @@ cf_query = function(user, datatype, station, start_date, end_date = now(tz),
   table_constant[grepl("ls_f301", datatype@dt_param, fixed = TRUE)] = 3
 
   table_names = all_lines[tables_start - table_constant]
+  
+  # CliFlo doesn't have a table name for the soil moisture datatype. Create
+  # one manually:
+  table_names[which(grepl("soilm", datatype@dt_param))] = "Soil Moisture (20cm)"
+  
   dt_names = sapply(strsplit(table_names, ":"), "[", 1)
   dt_types = sapply(strsplit(table_names, ":"), "[", 2)
   tail_msg = paste(all_lines[seq(grep("^UserName", all_lines), length(all_lines))],
