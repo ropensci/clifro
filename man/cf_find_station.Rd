@@ -4,9 +4,13 @@
 \alias{cf_find_station}
 \title{Search for Clifro Stations}
 \usage{
-cf_find_station(..., search = c("name", "region", "network", "latlong"),
-  datatype, combine = c("all", "any"), status = c("open", "closed",
-  "all"))
+cf_find_station(
+  ...,
+  search = c("name", "region", "network", "latlong"),
+  datatype,
+  combine = c("all", "any"),
+  status = c("open", "closed", "all")
+)
 }
 \arguments{
 \item{...}{arguments to pass into the search, these differ depending on

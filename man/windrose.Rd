@@ -4,11 +4,21 @@
 \alias{windrose}
 \title{Plot a windrose}
 \usage{
-windrose(speed, direction, facet, n_directions = 12, n_speeds = 5,
-  speed_cuts = NA, col_pal = "GnBu", ggtheme = c("grey", "gray",
-  "bw", "linedraw", "light", "minimal", "classic"),
-  legend_title = "Wind Speed", calm_wind = 0, variable_wind = 990,
-  n_col = 1, ...)
+windrose(
+  speed,
+  direction,
+  facet,
+  n_directions = 12,
+  n_speeds = 5,
+  speed_cuts = NA,
+  col_pal = "GnBu",
+  ggtheme = c("grey", "gray", "bw", "linedraw", "light", "minimal", "classic"),
+  legend_title = "Wind Speed",
+  calm_wind = 0,
+  variable_wind = 990,
+  n_col = 1,
+  ...
+)
 }
 \arguments{
 \item{speed}{numeric vector of wind speeds.}
@@ -28,7 +38,7 @@ used if \code{speed_cuts} is \code{NA} (default 5).}
 intervals, or \code{NA} (default).}
 
 \item{col_pal}{character string indicating the name of the
-\code{\link[RColorBrewer]{brewer.pal.info}} colour palette to be
+\code{RColorBrewer} colour palette to be
 used for plotting, see 'Theme Selection' below.}
 
 \item{ggtheme}{character string (partially) matching the
@@ -67,7 +77,7 @@ For black and white windroses that may be preferred if plots are to be used
 in journal articles for example, recommended \code{ggtheme}s are \code{'bw'},
 \code{'linedraw'}, \code{'minimal'} or \code{'classic'} and
 the \code{col_pal} should be \code{'Greys'}. Otherwise, any of the sequential
-\code{\link[RColorBrewer]{brewer.pal.info}} colour palettes are recommended for
+\code{RColorBrewer} colour palettes are recommended for
 colour plots.
 }
 
@@ -87,7 +97,7 @@ with(wind_df, windrose(wind_speeds, wind_dirs))
 # Create custom speed bins, add a legend title, and change to a B&W theme
 with(wind_df, windrose(wind_speeds, wind_dirs,
                        speed_cuts = c(3, 6, 9, 12),
-                       legend_title = "Wind Speed\\n(m/s)",
+                       legend_title = "Wind Speed\n(m/s)",
                        legend.title.align = .5,
                        ggtheme = "bw",
                        col_pal = "Greys"))

@@ -6,8 +6,13 @@
 \alias{cfDatatype}
 \title{The Clifro Datatype Object}
 \usage{
-cf_datatype(select_1 = NA, select_2 = NA, check_box = NA,
-  combo_box = NA, graphics = FALSE)
+cf_datatype(
+  select_1 = NA,
+  select_2 = NA,
+  check_box = NA,
+  combo_box = NA,
+  graphics = FALSE
+)
 }
 \arguments{
 \item{select_1}{a numeric vector of first node selections}

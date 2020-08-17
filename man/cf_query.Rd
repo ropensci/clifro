@@ -4,8 +4,16 @@
 \alias{cf_query}
 \title{Retrieve Data from the National Climate Database}
 \usage{
-cf_query(user, datatype, station, start_date, end_date = now(tz),
-  date_format = "ymd_h", tz = "Pacific/Auckland", quiet = FALSE)
+cf_query(
+  user,
+  datatype,
+  station,
+  start_date,
+  end_date = now(tz),
+  date_format = "ymd_h",
+  tz = "Pacific/Auckland",
+  quiet = FALSE
+)
 }
 \arguments{
 \item{user}{a \code{\link{cfUser}} object.}
