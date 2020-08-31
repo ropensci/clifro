@@ -98,13 +98,12 @@ my.stations[, 1:5]
 ```
 
 ```
-##                name network agent      start        end
-## 1 Invercargill Aero  I68433  5814 1939-09-01 2018-07-26
-## 2       Nelson Aero  G13222  4241 1940-07-01 2018-07-26
-## 3     Auckland Aero  C74082  1962 1962-05-01 2018-07-26
-## 4      Hamilton Aws  C75834  2112 1989-11-30 2018-07-26
+##                name network agent      start                 end
+## 1 Invercargill Aero  I68433  5814 1939-09-01 2020-08-18 02:00:00
+## 2       Nelson Aero  G13222  4241 1940-07-01 2020-08-18 02:00:00
+## 3     Auckland Aero  C74082  1962 1962-05-01 2020-08-18 02:00:00
+## 4      Hamilton Aws  C75834  2112 1989-11-30 2020-08-18 02:00:00
 ```
-
 # Retrieve the CliFlo Data
 
 Now that we have a valid `clifro` user and the datatypes and stations of 
@@ -123,10 +122,10 @@ cf.datalist
 ```
 ## List containing clifro data frames:
 ##               data      type              start                end rows
-## df 1)     Pressure  9am only (2012-01-01  8:00) (2013-01-01  8:00) 1468
-## df 2)      Max_min     Daily (2012-01-01  8:00) (2013-12-31  8:00) 2923
-## df 3)         Rain     Daily (2012-01-01  8:00) (2013-12-31  8:00) 2923
-## df 4) Surface Wind  9am only (2012-01-01  8:00) (2013-01-01  8:00) 1468
+## df 1)     Pressure  9am only (2012-01-01  9:00) (2013-01-01  9:00) 1468
+## df 2)      Max_min     Daily (2012-01-01  9:00) (2013-12-31  9:00) 2923
+## df 3)         Rain     Daily (2012-01-01  9:00) (2013-12-31  9:00) 2923
+## df 4) Surface Wind  9am only (2012-01-01  9:00) (2013-01-01  9:00) 1468
 ```
 
 We can see that the pressure and surface wind data only span one year.
