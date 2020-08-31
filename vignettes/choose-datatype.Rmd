@@ -118,7 +118,7 @@ surfaceWind.dt
 # Choosing a datatype without the menus
 The bold numbers in the minimal example above are emphasised specifically to 
 show the menu order and selections needed to choose the strength of the 9am 
-surface wind in knots datatype, i.e. **2** --> **1** --> **4** --> **3**. In 
+surface wind in knots datatype, i.e. **2** $\rightarrow$ **1** $\rightarrow$ **4** $\rightarrow$ **3**. In 
 general, if we know the selections needed for each of the four menus then we can 
 choose any datatype without using the menus making datatype selection 
 a lot faster and a much less tedious.
@@ -277,7 +277,7 @@ d = data.frame(Menu = c("First selection", "Second selection",
                `Surface wind` = c(2, 1, "2 & 4", 3),
                Rainfall = c(3, 1, "1 & 2", NA),
                Lightning = c(6, 1, 1, NA),
-               Temperature = c(4, 2, "5 & 6", NA))
+               Temperature = c(4, 2, "5 & 6", NA), check.names = FALSE)
 pandoc.table(d, style = "simple")
 ```
 

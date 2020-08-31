@@ -49,21 +49,22 @@ lake.tekapo.st[, c("name", "agent", "start", "end", "open")]
 ```
 
 ```
-##                      name agent      start        end  open
-## 1         Coal @ Skifield 12709 1989-02-01 2018-07-26  TRUE
-## 2      Macaulay@Mt Gerald 35567 1990-07-04 2018-07-26  TRUE
-## 3         Lake Tekapo Ews 24945 2003-06-18 2018-07-26  TRUE
-## 4 South Opua @ South Opua 39557 2011-09-28 2018-07-26  TRUE
-## 5        Lilybank Station  4602 1950-01-01 1992-09-30 FALSE
-## 6                 Mt John  4630 1962-10-01 1988-01-01 FALSE
-## 7    Godley Peaks, Tekapo  4616 1914-01-01 1976-06-01 FALSE
+##                      name agent      start                 end  open
+## 1         Coal @ Skifield 12709 1989-02-01 2020-09-01 02:00:00  TRUE
+## 2      Macaulay@Mt Gerald 35567 1990-07-04 2020-09-01 02:00:00  TRUE
+## 3         Lake Tekapo Ews 24945 2003-06-18 2020-09-01 02:00:00  TRUE
+## 4 South Opua @ South Opua 39557 2011-09-28 2020-09-01 02:00:00  TRUE
+## 5        Lilybank Station  4602 1950-01-01 1992-09-30 00:00:00 FALSE
+## 6                 Mt John  4630 1962-10-01 1988-01-01 00:00:00 FALSE
+## 7    Godley Peaks, Tekapo  4616 1914-01-01 1976-06-01 00:00:00 FALSE
 ```
 
 We can see that subsetting `lake.tekapo.st` acts just like a `data.frame` 
-object, although it is technically a `cfStation` object. All the usual 
-`data.frame` methods work on `cfStation` objects to maximise usability.
+object, although it is technically a `cfStation` object. Most of the common 
+`data.frame` methods work on `cfStation` objects.
 
 ## Adding more stations
+
 To add more stations to this list the addition sign is used. Any repeated 
 stations are removed and the resulting list is ordered by the end dates first 
 and then by the stations' start dates.
@@ -77,25 +78,29 @@ added.stations.st[, c("name", "agent", "start", "end", "open")]
 
 ```
 ##                       name agent      start        end  open
-## 1              Reefton Ews  3925 1960-08-01 2018-07-26  TRUE
-## 2          Coal @ Skifield 12709 1989-02-01 2018-07-26  TRUE
-## 3       Macaulay@Mt Gerald 35567 1990-07-04 2018-07-26  TRUE
-## 4          Lake Tekapo Ews 24945 2003-06-18 2018-07-26  TRUE
-## 5  South Opua @ South Opua 39557 2011-09-28 2018-07-26  TRUE
-## 6     Tiri Tiri Lighthouse  1401 1946-02-01 2018-07-25  TRUE
-## 7  Kapoaiaia At Lighthouse 42673 1998-05-17 2018-07-25  TRUE
-## 8         Lilybank Station  4602 1950-01-01 1992-09-30 FALSE
-## 9                  Mt John  4630 1962-10-01 1988-01-01 FALSE
-## 10   Cape Brett Lighthouse  1197 1934-11-01 1978-10-01 FALSE
-## 11     Nugget Lighthouse B  5894 1975-03-01 1977-08-31 FALSE
-## 12     Nugget Lighthouse A  5895 1975-03-01 1977-08-31 FALSE
-## 13    Godley Peaks, Tekapo  4616 1914-01-01 1976-06-01 FALSE
-## 14      Moeraki Lighthouse  5325 1935-10-01 1975-06-01 FALSE
+## 1              Reefton Ews  3925 1960-08-01 2020-09-01  TRUE
+## 2          Coal @ Skifield 12709 1989-02-01 2020-09-01  TRUE
+## 3       Macaulay@Mt Gerald 35567 1990-07-04 2020-09-01  TRUE
+## 4          Lake Tekapo Ews 24945 2003-06-18 2020-09-01  TRUE
+## 5  South Opua @ South Opua 39557 2011-09-28 2020-09-01  TRUE
+## 6     Tiri Tiri Lighthouse  1401 1946-02-01 2020-08-31  TRUE
+## 7  Kapoaiaia At Lighthouse 42673 1998-05-17 2020-08-31  TRUE
+## 8        Orakei Lighthouse 44394 2020-05-01 2020-08-31  TRUE
+## 9     Rangitoto Lighthouse 44400 2020-05-01 2020-08-31  TRUE
+## 10        Lilybank Station  4602 1950-01-01 1992-09-30 FALSE
+## 11                 Mt John  4630 1962-10-01 1988-01-01 FALSE
+## 12   Cape Brett Lighthouse  1197 1934-11-01 1978-10-01 FALSE
+## 13     Nugget Lighthouse B  5894 1975-03-01 1977-08-31 FALSE
+## 14     Nugget Lighthouse A  5895 1975-03-01 1977-08-31 FALSE
+## 15    Godley Peaks, Tekapo  4616 1914-01-01 1976-06-01 FALSE
+## 16      Moeraki Lighthouse  5325 1935-10-01 1975-06-01 FALSE
 ```
 
 The above code chunk adds the 7 stations around Lake Tekapo, the 
-subscription-free reefton EWS station (`cf_station()`), and all stations located 
-(currently or historically) on a lighthouse. Allowing multiple searches is not
+subscription-free reefton EWS station (`cf_station()`), and all stations presumably located 
+(currently or historically) on or near a lighthouse.
+
+Allowing multiple searches is not
 currently available using the web portal, CliFlo, but the above code 
 demonstrates how easy it can be in `clifro`.
 
