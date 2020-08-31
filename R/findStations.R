@@ -491,23 +491,27 @@ cf_find_station = function(...,
 
   if (status == "closed")
     doc_table = doc_table[!open_station, ]
+  
+  station_df = data.frame(
+    name = doc_table$Name,
+    network = doc_table$NetworkNumber,
+    agent = doc_table$AgentNumber,
+    start_date = doc_table$Start,
+    end_date = doc_table$End,
+    open_station = switch(status,
+                          open = TRUE,
+                          closed = FALSE,
+                          all = open_station),
+    distances = NA,
+    latitude = doc_table$`Lat(dec deg)`,
+    longitude = doc_table$`Long(dec deg)`,
+    stringsAsFactors = FALSE, check.names = TRUE
+  )
+  
+  if (include_distances) {
+    station_df$distances = doc_table$DistKm
+  }
 
   new("cfStation",
-      data.frame(
-        name = doc_table$Name,
-        network = doc_table$NetworkNumber,
-        agent = doc_table$AgentNumber,
-        start_date = doc_table$Start,
-        end_date = doc_table$End,
-        open_station = switch(status,
-                              open = TRUE,
-                              closed = FALSE,
-                              all = open_station),
-        distances = ifelse(include_distances,
-                           doc_table$DistKm,
-                           seq_along(doc_table$Name)),
-        latitude = doc_table$`Lat(dec deg)`,
-        longitude = doc_table$`Long(dec deg)`,
-        stringsAsFactors = FALSE, check.names = TRUE
-      ))
+      station_df)
 }
