@@ -1,3 +1,14 @@
+clifro 3.2-3 (01-Sep-2020)
+==========
+## Bug Fixes
+* Issue #21.
+* Issue #22.
+* Fixed broken links in documentation.
+* Fixed a minor timezone bug in `cf_station`.
+
+## Dependencies
+* Remove dependency suggestion on `ggmap`. The `ggmap` library was used in the 'Working with clifro Stations' vignette to show how to plot a map of the station locations in **R**. This section of the vignette has been removed.
+
 clifro 3.2-2 (20-Mar-2019)
 ==========
 ### Bug Fixes
