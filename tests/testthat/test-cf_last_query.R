@@ -13,6 +13,6 @@ test_that("cf_last_query", {
   expect_is(tt2$`Date(local)`, "POSIXct")
   expect_is(tt2$`Amount(MJ/m2)`, "numeric")
   expect_is(tt2$`Period(Hrs)`, "integer")
-  expect_is(tt2$Type, "factor")
-  expect_is(tt2$Freq, "factor")
+  expect_is(tt2$Type, "character")
+  expect_is(tt2$Freq, "character")
 })
