@@ -111,54 +111,6 @@ The `cf_save_kml` functionality was introduced in the
 `added.stations.st` object we just run `cf_save_kml(added.stations.st)` in R
 and the KML file is returned.
 
-## Showing station locations within R
-Many useRs may prefer to plot the locations directly in R, or 
-export the station information for use in another software. The 
-`as(object, "data.frame")` function call is used for returning the station 
-information as an R dataframe that can then be used for plotting or exporting.
-
-This example is only one of the many ways to plot GIS data in R, and the 
-[ggmap](https://cran.r-project.org/package=ggmap)
-package is chosen for it's usability and quality plots. In this example we will 
-plot all the past and present Auckland climate stations to assess the density 
-of open and closed stations across the region.
-
-```{r, echo = FALSE}
-auckland.df = dget(system.file("extdata", "auckStations", package = "clifro"))
-auckland.st = new("cfStation", auckland.df)
-```
-
-```{r, eval = FALSE}
-# Conduct the search
-auckland.st = cf_find_station("auckland", search = "region", status = "all")
-```
-
-```{r, eval = FALSE}
-library(ggmap)
-
-# Add a column to colour the open and closed stations
-auckland.st$colour = factor(auckland.st$open, labels = c("Closed", "Open"))
-
-# Coerce to a data.frame and reverse the rows so the open stations get plotted 
-# on top of the closed stations
-auckland.df = as(auckland.st, "data.frame")[nrow(auckland.st):1, ]
-
-# Obtain the map of the greater Auckland suitably scaled to fit the stations
-auckland.map = ggmap(get_map("Auckland", maptype = "hybrid", zoom = 8))
-
-# Plot the resulting map with the stations and station density
-auckland.map %+% auckland.df + 
-  stat_density2d(aes(colour = colour), alpha = .8) +
-  geom_point(aes(colour = colour), alpha = .5) +
-  scale_colour_discrete("Status", c("Closed", "Open")) +
-  theme(legend.title = element_text(face = "bold"))
-```
-
-![Density of open and closed climate stations in the greater Auckland region.](figures/ggmap.png)
-
-Remembering that closed stations in clifro are the ones that have end dates 
-over four weeks ago. It appears that the open stations are reasonably confined 
-to the city centre, whereas the more historic stations were placed further out
-in the rural areas.
+![Climate stations in the greater Auckland region.](figures/map.png)
 
 [chooseStations]: choose-station.html
