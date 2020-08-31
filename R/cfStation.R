@@ -102,7 +102,7 @@ setMethod("initialize", "cfStation", function(.Object, df){
 #'
 #' @importFrom xml2 read_html xml_text xml_find_all
 #' @importFrom methods new
-#' @importFrom lubridate dmy with_tz round_date now
+#' @importFrom lubridate dmy floor_date now
 #' @rdname cfStation-class
 #' @name cfStation-class
 #' @aliases cfStation
@@ -183,8 +183,8 @@ cf_station = function(...){
   end_date = as.character(sapply(station_details, "[", 7))
 
   open_station = end_date == "-"
-  final_date = rep(with_tz(round_date(now(), "day"),
-                           tzone = "Pacific/Auckland"), length(station_details))
+  final_date = rep(floor_date(now(tzone = "Pacific/Auckland"), "day"), 
+                   length(station_details))
 
   if (any(!open_station))
     final_date[!open_station] = dmy(end_date[!open_station],
