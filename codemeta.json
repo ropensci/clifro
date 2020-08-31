@@ -10,14 +10,13 @@
   "codeRepository": "https://github.com/ropensci/clifro",
   "issueTracker": "https://github.com/ropensci/clifro/issues",
   "license": "https://spdx.org/licenses/GPL-2.0",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.5.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.5.3 (2019-03-11)",
+  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -78,19 +77,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "ggmap",
-      "name": "ggmap",
-      "version": ">= 2.6",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=ggmap"
     },
     {
       "@type": "SoftwareApplication",
@@ -224,18 +210,29 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=reshape2"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rvest",
+      "name": "rvest",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rvest"
     }
   ],
   "applicationCategory": "DataAccess",
   "keywords": ["r", "opensci", "zealand", "weather", "climate", "cliflo", "data", "api", "windrose", "rain", "wind", "temperature", "climate-data", "climate-stations", "national-climate-database", "kml", "rstats", "r-package"],
   "isPartOf": "\"https://ropensci.org\"",
-  "contIntegration": "https://travis-ci.org/ropensci/clifro",
+  "contIntegration": ["https://travis-ci.org/ropensci/clifro", "https://codecov.io/github/ropensci/clifro?branch=master"],
   "releaseNotes": "https://github.com/ropensci/clifro/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/clifro/blob/master/README.md",
-  "fileSize": "2382.937KB",
+  "fileSize": "2398.08KB",
   "citation": [
     {
-      "@type": "ScholarlyArticle",
       "datePublished": "2015",
       "author": [
         {
@@ -256,6 +253,6 @@
   "contributor": {},
   "copyrightHolder": {},
   "funder": {},
-  "relatedLink": "https://CRAN.R-project.org/package=clifro",
+  "relatedLink": ["https://CRAN.R-project.org/package=clifro", "https://docs.ropensci.org/clifro/"],
   "developmentStatus": "https://www.repostatus.org/#active"
 }
