@@ -34,7 +34,7 @@ Description: CliFlo is a web portal to the New Zealand National Climate
     have an internet connection, and a current CliFlo subscription (free) if
     data from stations, other than the public Reefton electronic weather
     station, is sought.
-URL: https://docs.ropensci.org/clifro, https://github.com/ropensci/clifro
+URL: https://docs.ropensci.org/clifro/, https://github.com/ropensci/clifro
 BugReports: https://github.com/ropensci/clifro/issues
 License: GPL-2
 Encoding: UTF-8

@@ -22,11 +22,11 @@ knitr::opts_chunk$set(
 [![codecov.io](https://codecov.io/github/ropensci/clifro/coverage.svg?branch=master)](https://codecov.io/github/ropensci/clifro?branch=master)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-New Zealand's National Climate Database, [CliFlo](http://cliflo.niwa.co.nz/) holds data from about 6500 climate stations, with observations dating back to 1850. CliFlo returns raw data at ten minute, hourly, and daily frequencies. CliFlo also returns statistical summaries, inclusive of about eighty different types of monthly and annual statistics and six types of thirty−year normals.
+New Zealand's National Climate Database, [CliFlo](https://cliflo.niwa.co.nz/) holds data from about 6500 climate stations, with observations dating back to 1850. CliFlo returns raw data at ten minute, hourly, and daily frequencies. CliFlo also returns statistical summaries, inclusive of about eighty different types of monthly and annual statistics and six types of thirty−year normals.
 
 The *clifro* package is designed to minimise the hassle in downloading data from CliFlo. It does this by providing functions for the user to log in, easily choose the appropriate datatypes and stations, and then query the database. Once the data have been downloaded, they are stored as specific objects in **R** with the primary aim to ensure data visualisation and exploration is done with minimal effort and maximum efficiency.
 
-This package extends the functionality of [CliFlo](http://cliflo.niwa.co.nz/) by
+This package extends the functionality of [CliFlo](https://cliflo.niwa.co.nz/) by
 returning stations resulting from simultaneous searches, the ability to 
 visualise where these climate stations are by exporting to KML files, and elegant
 plotting of the climate data. The vignettes and help files are written with the 
@@ -35,7 +35,7 @@ climate data from **R** is fairly easy and for more experienced useRs, automated
 updating of spreadsheets or databases can be made much easier.
 
 ## Free CliFlo Subscription
-A current [CliFlo subscription](http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro)
+A current [CliFlo subscription](https://cliflo.niwa.co.nz/pls/niwp/wsubform.intro)
 is recommended for *clifro*, otherwise data from only one station is available. 
 The subscription is free and lasts for 2 years or 2,000,000 rows without renewal, 
 which enables access to around 6,500 climate stations around New Zealand and the 
@@ -113,7 +113,7 @@ plot(daily.datalist, 2)  # For the second dataframe (Rain)
 ```
 
 For more details and reproducible examples, see the 
-[technical report](http://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/) 
+[technical report](https://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/) 
 for how to use 
 *clifro*, including choosing datatypes, stations, saving locations as KML files 
 and easy, elegant plotting for various different climate and weather data.
@@ -137,7 +137,7 @@ The *clifro* package is released with a [contributor code of conduct](./CONDUCT.
 To cite package ‘clifro’ in publications use:
 
 Seers B and Shears N (2015). “New Zealand's Climate Data in R - An Introduction to clifro.” The University of Auckland, Auckland, New
-Zealand. <URL: http://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/>.
+Zealand. <URL: https://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/>.
 
 A BibTeX entry for LaTeX users is
 
@@ -147,7 +147,7 @@ A BibTeX entry for LaTeX users is
     institution = {The University of Auckland},
     address = {Auckland, New Zealand},
     year = {2015},
-    url = {http://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/},
+    url = {https://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/},
   }
 ```
 

@@ -21,7 +21,7 @@ library(clifro)
 Choosing `clifro` stations is made easy with the single `cf_find_station`
 function. This function is all that is required to find `clifro` stations. This
 function is equivalent to conducting the same search on the 
-[find stations](http://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html) page when 
+[find stations](https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html) page when 
 conducting a query online at CliFlo, except without some of the errors and bugs. 
 This means that the searches and the types of searches possible are exactly the 
 same however, `clifro` extends functionality to exploring the spatial nature of 
@@ -217,7 +217,7 @@ The latitude and longitude must be given in decimal degrees.
 
 We are (still) interested in finding all open stations around the small town of
 Takaka. From 
-[GeoHack](http://tools.wmflabs.org/geohack/geohack.php?pagename=Takaka%2C_New_Zealand&params=40_51_S_172_48_E_type:city%281149%29_region:NZ)
+[GeoHack](https://tools.wmflabs.org/geohack/geohack.php?pagename=Takaka%2C_New_Zealand&params=40_51_S_172_48_E_type:city%281149%29_region:NZ)
 we can see that the latitude is -40.85 and the longitude is 172.8. We are 
 interested in all open stations within a 10km radius of the main township.
 
@@ -358,7 +358,7 @@ search for stations instead of the
 However, the real advantage of using clifro is to visualise the station 
 locations on a map by returning a KML file, particularly when there are lots of 
 stations returned by the search. This Keyhole Markup Language 
-([KML](http://resources.arcgis.com/en/help/main/10.1/index.html#//00s20000000m000000)) 
+([KML](https://resources.arcgis.com/en/help/main/10.1/index.html#//00s20000000m000000)) 
 is an XML-based language provided by Google(TM) for defining the graphic display 
 of spatial data in applications such as Google Earth(TM) and Google Maps(TM).
 

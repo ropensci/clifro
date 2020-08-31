@@ -17,11 +17,11 @@ library(clifro)
 The National Climate Database holds climate data from around 6,500 climate 
 stations around New Zealand including some offshore and Pacific Islands. Over
 600 stations are currently active and are still receiving valuable climate data.
-[CliFlo](http://cliflo.niwa.co.nz/) is a web interface to the database managed 
-by [NIWA](http://www.niwa.co.nz/), allowing users to submit queries and retrieve 
+[CliFlo](https://cliflo.niwa.co.nz/) is a web interface to the database managed 
+by [NIWA](https://www.niwa.co.nz/), allowing users to submit queries and retrieve 
 ten-minute, hourly, daily or summary data. The use of CliFlo is free given that 
-the user has [subscribed](http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro) and 
-accepted NIWA's [terms and conditions](http://cliflo.niwa.co.nz/doc/terms.html).
+the user has [subscribed](https://cliflo.niwa.co.nz/pls/niwp/wsubform.intro) and 
+accepted NIWA's [terms and conditions](https://cliflo.niwa.co.nz/doc/terms.html).
 
 The `clifro` package is designed to make CliFlo queries much simpler and
 provide extensions that are currently not offered by CliFlo. The intention is 
@@ -40,7 +40,7 @@ the `clifro` package, `help(package = "clifro")`.
 # Create a clifro User
 As stated above, if the intention is to extract data from any station other than
 Reefton Ews (subscription-free) and to maximise the potential of `clifro`, a 
-valid [subscription](http://cliflo.niwa.co.nz/pls/niwp/wsubform.intro) is 
+valid [subscription](https://cliflo.niwa.co.nz/pls/niwp/wsubform.intro) is 
 needed.
 
 The `cf_user` function is all that is required to create a valid `clifro` user,
