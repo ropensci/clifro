@@ -159,7 +159,7 @@ Contributor Code of Conduct
 ===========================
 
 The *clifro* package is released with a [contributor code of
-conduct](./CONDUCT.md). By participating in this project you agree to
+conduct](CONDUCT.md). By participating in this project you agree to
 abide by its terms.
 
 Citation
