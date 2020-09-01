@@ -142,7 +142,7 @@ plot(daily.datalist, 2)  # For the second dataframe (Rain)
 ![](tools/README-rain-wind-example-2.png)
 
 For more details and reproducible examples, see the [technical
-report](https://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/)
+report](https://stattech.wordpress.fos.auckland.ac.nz/2015/03/25/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/)
 for how to use *clifro*, including choosing datatypes, stations, saving
 locations as KML files and easy, elegant plotting for various different
 climate and weather data.
@@ -170,7 +170,7 @@ Citation
 To cite package ‘clifro’ in publications use:
 
 Seers B and Shears N (2015). “New Zealand's Climate Data in R - An Introduction to clifro.” The University of Auckland, Auckland, New
-Zealand. <URL: https://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/>.
+Zealand. <URL: https://stattech.wordpress.fos.auckland.ac.nz/2015/03/25/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/>.
 
 A BibTeX entry for LaTeX users is
 
@@ -180,7 +180,7 @@ A BibTeX entry for LaTeX users is
     institution = {The University of Auckland},
     address = {Auckland, New Zealand},
     year = {2015},
-    url = {https://stattech.wordpress.fos.auckland.ac.nz/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/},
+    url = {https://stattech.wordpress.fos.auckland.ac.nz/2015/03/25/2015-02-new-zealands-climate-data-in-r-an-introduction-to-clifro/},
   }
 ```
 
