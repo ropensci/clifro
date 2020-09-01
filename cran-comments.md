@@ -20,3 +20,14 @@ There were no ERRORs or WARNINGs.
 ## Downstream dependencies
 I have also run R CMD CHECK on macleish, the only downstream dependency of 
 clifro, without any problems.
+
+## Resubmission
+
+This is a resubmission. In this version, I have:
+
+- Changed **http**://ropensci.org to **https**://ropensci.org/ in `README.md`.
+- Changed https://**www.**niwa.co.nz to https://niwa.co.nz/ in the `clifro` vignette.
+- Included a fully-specified URL to `CONDUCT.md`.
+
+These changes have been made to remove the 'Found the following (possibly) 
+invalid URLs' NOTE in the CRAN checks.
