@@ -18,7 +18,7 @@ The National Climate Database holds climate data from around 6,500 climate
 stations around New Zealand including some offshore and Pacific Islands. Over
 600 stations are currently active and are still receiving valuable climate data.
 [CliFlo](https://cliflo.niwa.co.nz/) is a web interface to the database managed 
-by [NIWA](https://www.niwa.co.nz/), allowing users to submit queries and retrieve 
+by [NIWA](https://niwa.co.nz/), allowing users to submit queries and retrieve 
 ten-minute, hourly, daily or summary data. The use of CliFlo is free given that 
 the user has [subscribed](https://cliflo.niwa.co.nz/pls/niwp/wsubform.intro) and 
 accepted NIWA's [terms and conditions](https://cliflo.niwa.co.nz/doc/terms.html).

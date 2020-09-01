@@ -159,8 +159,8 @@ Contributor Code of Conduct
 ===========================
 
 The *clifro* package is released with a [contributor code of
-conduct](CONDUCT.md). By participating in this project you agree to
-abide by its terms.
+conduct](https://github.com/ropensci/clifro/blob/master/CONDUCT.md). By
+participating in this project you agree to abide by its terms.
 
 Citation
 ========
@@ -184,4 +184,4 @@ A BibTeX entry for LaTeX users is
   }
 ```
 
-[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)
