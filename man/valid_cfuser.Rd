@@ -6,14 +6,16 @@
 \alias{cf_logout}
 \title{Validation Functions For The \code{cfUser} Class}
 \usage{
-cf_login(object)
+cf_login(object, ...)
 
-cf_logout(object, msg = TRUE)
+cf_logout(object, msg = TRUE, ...)
 
 valid_cfuser(object)
 }
 \arguments{
 \item{object}{S4 object which inherits the \code{cfUser} class}
+
+\item{...}{Other options passed to the \code{\link[httr]{GET}} or \code{\link[httr]{POST}} functions.}
 
 \item{msg}{Display a 'successful logout' message, defaults to
 \code{TRUE}.}

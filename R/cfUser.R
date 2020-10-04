@@ -12,8 +12,6 @@ cf_parallel = new.env()
 #' @param ... a name-value pairs that are passed to \code{\link[RCurl]{curlOptions}}
 #' @param .opts a named list or \code{CURLOptions} object that are passed to \code{\link[RCurl]{curlOptions}}
 #'
-#' @importFrom RCurl curlOptions
-#' @importFrom utils packageVersion
 #' @export
 #'
 #' @examples
@@ -30,11 +28,7 @@ cf_parallel = new.env()
 #'              ssl.verifypeer = FALSE)
 #' }
 cf_curl_opts = function(..., .opts = list()){
-  curl_opts = curlOptions(..., .opts = .opts)
-  curl_opts[["followlocation"]] = TRUE
-  curl_opts[["useragent"]] = paste("clifro", packageVersion("clifro"))
-  curl_opts[["timeout"]] = 100
-  cf_parallel[["curl_opts"]] = curl_opts
+  .Deprecated(new = "httr::set_config()", package = "clifro")
 }
 
 #  ------------------------------------------------------------------------
@@ -161,9 +155,13 @@ NULL
 #'
 #'@param msg Display a 'successful logout' message, defaults to
 #' \code{TRUE}.
+#' 
+#' @param ... Other options passed to the \code{\link[httr]{GET}} or \code{\link[httr]{POST}} functions.
 #'
-#' @importFrom RCurl getCurlHandle postForm getURL
-#' @importFrom xml2 read_html xml_text xml_find_all
+#' @importFrom httr POST modify_url stop_for_status user_agent timeout
+#' @importFrom rvest html_node html_text
+#' @importFrom xml2 read_html
+#' @importFrom utils packageVersion
 #' @keywords internal
 #' @aliases cf_logout cf_login
 #' @name valid_cfuser
@@ -173,64 +171,35 @@ NULL
 #' cf_user("public")                    # Returns a valid object
 #' cf_user("bad_name", "bad_password")    # Bad Login
 #' }
-
-cf_login = function(object){
-  cookies = file.path(tempdir(), object@username)
-  curl = getCurlHandle(cookiejar = cookies,
-                       cookiefile = cookies,
-                       .opts = cf_parallel[["curl_opts"]])
-  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
-  if (object@username == "public"){
-    login_html = read_html(getURL(
-      "https://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1",
-      curl = curl, cainfo = cert
-    ))
-    result = "Info"
-  }
-  else{
-    my_form = postForm(
-      "https://cliflo.niwa.co.nz/pls/niwp/wa.logindb",
-      cusername = object@username,
-      cpwd = rot(object@password, 3),
-      ispopup = "false",
-      submit = "login",
-      curl = curl,
-      .opts = list(cainfo = cert))
-    
-    if (is.raw(my_form))
-      my_form = rawToChar(my_form)
-    
-    login_html = read_html(my_form)
-    result = xml_text(xml_find_all(login_html, ".//title"), trim = TRUE)
-  }
-  rm(curl)
-  gc()
-  return(grepl("Info", result))
+cf_login = function(object, ...) {
+  r = POST(modify_url("https://cliflo.niwa.co.nz", 
+                      path = "/pls/niwp/wa.logindb"),
+           body = list(cusername = object@username,
+                       cpwd = rot(object@password, 3),
+                       submit = "login"),
+           user_agent(paste("clifro", packageVersion("clifro"), sep = "/")),
+           timeout(10), ...)
+  
+  stop_for_status(r)
+  
+  html_title = html_text(html_node(read_html(r), "title"))
+  return(html_title != "Bad Login")
 }
 
 #' @rdname valid_cfuser
-#' @importFrom RCurl getCurlHandle getURLContent getURL
-cf_logout = function(object, msg = TRUE){
-  cookies = file.path(tempdir(), object@username)
-  curl = getCurlHandle(cookiejar = cookies,
-                       cookiefile = cookies,
-                       .opts = cf_parallel[["curl_opts"]])
-  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
+#' @importFrom httr warn_for_status GET modify_url
+#' @importFrom utils packageVersion
 
-  header = getURLContent("https://cliflo.niwa.co.nz/pls/niwp/wa.logout",
-                         curl = curl, header = TRUE, cainfo = cert)
+cf_logout = function(object, msg = TRUE, ...) {
+  r = GET(modify_url("https://cliflo.niwa.co.nz", 
+                     path = "/pls/niwp/wa.logout"),
+          user_agent(paste("clifro", packageVersion("clifro"), sep = "/")),
+          timeout(10), ...)
+
+  warn_for_status(r)
   
-  if (header$header["status"] != 200){
-    file.remove(cookies)
-    warning("HTTP status was not '200' when logging out")
-  } else {
-    getURL("https://cliflo.niwa.co.nz/pls/niwp/wa.logout",
-           curl = curl, cainfo = cert)
-    
-    file.remove(cookies)
-    if (msg)
-      message("Logout successful")
-  }
+  if (msg)
+    message("logout successful")
 }
 
 #' @rdname valid_cfuser
@@ -340,9 +309,10 @@ if (!isGeneric("summary"))
 #'
 #' @param object an object of class \code{cfUser}.
 #'
-#' @importFrom RCurl getCurlHandle getForm
-#' @importFrom xml2 xml_find_all read_html xml_text
-#' @importFrom lubridate dmy round_date now with_tz
+#' @importFrom httr GET modify_url
+#' @importFrom xml2 read_html
+#' @importFrom rvest html_nodes html_text
+#' @importFrom lubridate dmy now with_tz
 #' @aliases summary,cfUser-method
 #' @export
 setMethod("summary", signature(object = "cfUser"),
@@ -351,42 +321,27 @@ setMethod("summary", signature(object = "cfUser"),
     return(object)
   cf_login(object)
   on.exit(cf_logout(object, msg = FALSE))
-  cookies = file.path(tempdir(), object@username)
-  curl = getCurlHandle(cookiejar = cookies,
-                       cookiefile = cookies,
-                       .opts = cf_parallel[["curl_opts"]])
-  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
-  user_info_xml =
-    getForm("https://cliflo.niwa.co.nz/pls/niwp/wa.subscr_info",
-            sub = "t",
-            curl = curl,
-            .opts = list(cainfo = cert))
   
-  user_info_html = xml_find_all(read_html(user_info_xml), ".//div")
-  info = gsub("  |   |    |     ", " ", 
-              xml_text(user_info_html, trim = TRUE))
-  rows = xml_text(xml_find_all(user_info_html[3], ".//b"), 
-                  trim = TRUE)
-  rows = gsub(",", "", rows)
-  subscription_level = xml_text(xml_find_all(user_info_html[5], "b"))
-  expiry = strsplit(info[2], ": ")[[1]][2]
-  rows_used = as.numeric(rows[1])
-  total_rows = as.numeric(rows[3])
-  time_diff = dmy(expiry, tz = "Pacific/Auckland") -
-    with_tz(round_date(now(), "month"), "Pacific/Auckland")
+  user_info = GET(modify_url("https://cliflo.niwa.co.nz",
+                             path = "pls/niwp/wa.subscr_info?sub=t"))
   
-  cat(paste0("Username is: ", object@username, "\n",
-               "Subscription status:\n\n",
-               "Your subscription expires on: ", expiry, " (", format(time_diff),
-               ")\n", "You have used ",
-               format(rows_used, big.mark = ",", scientific = FALSE),
-               " rows (", round(rows_used / total_rows * 100, 1), "%)\n",
-               "from a subscription total of ",
-               format(total_rows, big.mark = ",", scientific = FALSE), " rows.\n",
-               "Remaining rows: ",
-               format(total_rows - rows_used, big.mark = ",",
-                      scientific = FALSE), ".\n",
-               "Your subscription level is: ", subscription_level, "\n"))
+  user_info_text = html_text(html_nodes(read_html(user_info), "div"))
+  subscription_expiry = dmy(user_info_text[2], tz = "Pacific/Auckland")
+  
+  user_info_numbers = html_text(html_nodes(read_html(user_info), "div b"), trim = TRUE)
+  
+  time_diff = subscription_expiry - with_tz(now(), "Pacific/Auckland")
+  
+  cat(paste0(user_info_text[1], "\n",
+             "Subscription status:\n\n",
+             "Your subscription expires on: ", format(subscription_expiry, "%d-%B-%Y"), " (", format(round(time_diff, 1)),
+             ")\n", "You have used ", user_info_numbers[1],
+             " rows (", user_info_numbers[2], ") ",
+             "from a subscription total of ",
+             user_info_numbers[3], " rows.\n",
+             "Remaining rows: ",
+             user_info_numbers[4], ".\n",
+             "Your subscription level is: ", user_info_numbers[5], "\n"))
 })
 
 # Show
