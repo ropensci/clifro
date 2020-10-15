@@ -84,13 +84,14 @@ setMethod("initialize", "cfDatatype", function(.Object, dt_name, dt_type,
 #
 # doc: the XML to extract the information for the datatypes
 # ...: passed to menu
-#' @importFrom xml2 xml_text xml_attr
+#' @importFrom rvest html_text html_attr
 #' @importFrom utils menu
-dt_href = function(doc, ...){
-  # "cloud \n          cover" --> "cloud cover"
-  choices = xml_text(doc, trim = TRUE)
-  hrefs = xml_attr(doc, "href")
+dt_href = function(doc, ...) {
+  choices = html_text(doc, trim = TRUE)
+  hrefs = html_attr(doc, "href")
+  
   dt = menu(choices, ...)
+  
   if (dt)
     c(hrefs[dt], choices[dt])
 }
@@ -102,28 +103,31 @@ dt_href = function(doc, ...){
 #
 # selection: passed from the select_1 argument
 # g        : logical passed to the graphics argument of the menu function
-#' @importFrom xml2 xml_find_all read_html xml_text xml_attr
-#' @importFrom RCurl getURL
+#' @importFrom rvest html_text html_attr html_nodes
+#' @importFrom xml2 read_html
+#' @importFrom httr GET modify_url user_agent timeout
+#' @importFrom utils packageVersion
 first_stage_selection = function(selection, g, iter){
-  domain = "https://cliflo.niwa.co.nz/pls/niwp/"
-  full_path = paste0(domain, "wgenf.choose_datatype?cat=cat1")
-  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
-
-  datatypes_xml = 
-    xml_find_all(read_html(getURL(full_path, cainfo = cert)), 
-                 "//table[@class='header']//td[@class='popup']//a[@class='top']")
-
+  datatypes_doc = GET(modify_url("https://cliflo.niwa.co.nz", 
+                                 path = "/pls/niwp/wgenf.choose_datatype"),
+                      
+                      query = list(cat = "cat1"),
+                      user_agent(paste("clifro", packageVersion("clifro"), sep = "/")),
+                      timeout(10))
+  
+  datatypes_html = html_nodes(read_html(datatypes_doc), "td.popup>a.top")
+  
   if (!is.na(selection) && selection > 9){
     stop(paste("the first selection can only be between 1 and 9 for datatype",
                iter), call. = FALSE)
   }
-
+  
   if (is.na(selection)){
-    dt_href(datatypes_xml, graphics = g,
+    dt_href(datatypes_html, graphics = g,
             title = "Daily and Hourly Observations")
   } else {
-    dt_name = xml_text(datatypes_xml, trim = TRUE)[selection]
-    c(xml_attr(datatypes_xml, "href")[selection], dt_name)
+    dt_name = html_text(datatypes_html, trim = TRUE)[selection]
+    c(html_attr(datatypes_html, "href")[selection], dt_name)
   }
 }
 
@@ -137,23 +141,26 @@ first_stage_selection = function(selection, g, iter){
 # dt_name   : the name of the datatype from the first stage selection. This is
 #             used for menu titles and warnings
 # g         : logical passed to the graphics argument of the menu function
-#' @importFrom xml2 xml_find_all read_html xml_text xml_attr
+#' @importFrom rvest html_text html_attr html_nodes
+#' @importFrom xml2 read_html
+#' @importFrom httr GET modify_url user_agent timeout
+#' @importFrom utils packageVersion
 second_stage_selection = function(href_1, selection, dt_name, g){
-  domain = "https://cliflo.niwa.co.nz/pls/niwp/"
-  full_path = paste0(domain, href_1)
-  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
-
-  datatypes_xml = xml_find_all(read_html(getURL(full_path, cainfo = cert)), 
-                               "//a[@class='dt']")
-
+  datatypes_doc = GET(modify_url("https://cliflo.niwa.co.nz", 
+                                      path = paste0("/pls/niwp/", href_1)),
+                           user_agent(paste("clifro", packageVersion("clifro"), sep = "/")),
+                           timeout(10))
+  
+  datatypes_html = html_nodes(read_html(datatypes_doc), "td.datatype>a.dt")
+  
   if (is.na(selection)){
-    dt_href(datatypes_xml, g, dt_name)
+    dt_href(datatypes_html, g, dt_name)
   } else {
-    if (selection > length(datatypes_xml))
-      stop(paste("second selection (select_2) is out of range for",
+    if (selection > length(datatypes_html))
+      stop(paste("Second selection (select_2) is out of range for",
                  dt_name), call. = FALSE)
-    dt_name = xml_text(datatypes_xml, trim = TRUE)[selection]
-    c(xml_attr(datatypes_xml, "href")[selection], dt_name)
+    dt_name = html_text(datatypes_html, trim = TRUE)[selection]
+    c(html_attr(datatypes_html, "href")[selection], dt_name)
   }
 }
 
@@ -199,81 +206,86 @@ choose_dt_options = function(datatype_name, datatype_options, g){
 # dt_type         : the datatype from the second stage selection. This is
 #                   used for menu titles and warnings
 # g               : logical passed to the graphics argument of the menu function
-#' @importFrom xml2 xml_find_all read_html xml_attr xml_text
-#' @importFrom RCurl getURL
+#' @importFrom rvest html_attr html_text html_nodes
+#' @importFrom xml2 read_html
+#' @importFrom httr GET modify_url
 #' @importFrom utils menu
 option_selections = function(href_2, selection_check, selection_combo,
                              dt_type, g){
   selection_check = unique(selection_check)
-  domain = "https://cliflo.niwa.co.nz/pls/niwp/"
-  full_path = paste0(domain, href_2)
-  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
   
-  dt_options_xml = 
-    xml_find_all(read_html(getURL(full_path, cainfo = cert)), 
-                 "//td[@class='selected']//table//tr//td[@class='selected']")
-  dt_params_xml = 
-    xml_find_all(read_html(getURL(full_path, cainfo = cert)), 
-                 "//td[@class='selected']//table//tr//td//input")
-  dt_param_values = xml_attr(dt_params_xml, "value")
-  dt_combo_xml = xml_find_all(read_html(getURL(full_path, cainfo = cert)), 
-                              "//td[@class='selected']//table//tr//td//select//option")
+  datatypes_doc = GET(modify_url("https://cliflo.niwa.co.nz", 
+                                 path = paste0("/pls/niwp/", href_2)),
+                      user_agent(paste("clifro", packageVersion("clifro"), sep = "/")),
+                      timeout(10))
   
-  if (length(dt_combo_xml) == 0)
-    dt_options = xml_text(dt_options_xml, trim = TRUE)
-  else{
-    dt_options_inc_combo = xml_text(dt_options_xml, trim = TRUE)
+  dt_options_html = html_nodes(read_html(datatypes_doc), "td.selected>table>tr>td.selected")
+  dt_params_html = html_nodes(read_html(datatypes_doc), "td.selected>table>tr>td>input")
+  dt_param_values = html_attr(dt_params_html, "value")
+  dt_combo_html = html_nodes(read_html(datatypes_doc), "td.selected>table>tr>td>select>option")
+  
+  
+  
+  if (length(dt_combo_html) == 0) {
+    dt_options = html_text(dt_options_html, trim = TRUE)
+  } else {
+    dt_options_inc_combo = html_text(dt_options_html, trim = TRUE)
     dt_options_inc_combo = dt_options_inc_combo[dt_options_inc_combo != ""]
     combo_name = tail(dt_options_inc_combo, 1)
     dt_options = head(dt_options_inc_combo, -1)
-    dt_combo_param_names = xml_text(dt_combo_xml, trim = TRUE)
-    dt_combo_param_values = xml_attr(dt_combo_xml, "value")
+    dt_combo_param_names = html_text(dt_combo_html, trim = TRUE)
+    dt_combo_param_values = html_attr(dt_combo_html, "value")
   }
-
-  if (any(is.na(selection_check)))
+  
+  if (any(is.na(selection_check))) {
     selected_options = choose_dt_options(dt_type, dt_options, g)
-  else{
-    if (length(selection_check) > length(dt_options))
+  } else {
+    if (length(selection_check) > length(dt_options)) {
       stop(paste("the number of check box options is too many for datatype",
                  dt_type), call. = FALSE)
-
-    if (any(selection_check > length(dt_options)))
+    }
+    
+    if (any(selection_check > length(dt_options))) {
       stop(paste("the check box options for datatype", dt_type,
                  "must be between 1 and", length(dt_options)), call. = FALSE)
+    }
+    
     selected_options = selection_check
   }
-
+  
   selected_params = dt_param_values[selected_options]
   selected_param_names = dt_options[selected_options]
-
+  
   combo_names = NA
-  if (length(dt_combo_xml) != 0){
-    if (is.na(selection_combo))
+  if (length(dt_combo_html) != 0){
+    if (is.na(selection_combo)) {
       combo_selected = menu(dt_combo_param_names, g, combo_name)
-    else{
-      if (length(selection_combo) != 1)
+    } else {
+      
+      if (length(selection_combo) != 1) {
         stop(paste("you can only choose one combo box option for datatype",
                    dt_type), call. = FALSE)
-
+      }
+      
       if (selection_combo > length(dt_combo_param_names))
         stop(paste("the combo box option for datatype", dt_type,
                    "must be between 1 and", length(dt_combo_param_names)),
              call. = FALSE)
       combo_selected = selection_combo
     }
-
+    
     selected_params = c(selected_params, dt_combo_param_values[combo_selected])
-    selected_options = c(selected_options, length(dt_options_xml))
+    selected_options = c(selected_options, length(dt_options_html))
     combo_names = dt_combo_param_names[combo_selected]
   } else
     if (!is.na(selection_combo))
       message(paste("combo options are not required for", dt_type))
-
+  
   dt_param = gsub("wgenf.genform1\\?cdt=|\\&.*", "", href_2)
-
+  
   list(dt_param,
        selected_params, selected_param_names, combo_names,
-       selected_options, length(dt_options_xml))
+       selected_options, length(dt_options_html))
 }
 
 # Add selected datatypes to the curl session.
