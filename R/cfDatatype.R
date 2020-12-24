@@ -208,7 +208,7 @@ choose_dt_options = function(datatype_name, datatype_options, g){
 # g               : logical passed to the graphics argument of the menu function
 #' @importFrom rvest html_attr html_text html_nodes
 #' @importFrom xml2 read_html
-#' @importFrom httr GET modify_url
+#' @importFrom httr GET modify_url handle_reset
 #' @importFrom utils menu
 option_selections = function(href_2, selection_check, selection_combo,
                              dt_type, g){
@@ -216,6 +216,7 @@ option_selections = function(href_2, selection_check, selection_combo,
   
   datatypes_doc = GET(modify_url("https://cliflo.niwa.co.nz", 
                                  path = paste0("/pls/niwp/", href_2)),
+                      handle = handle_reset("https://cliflo.niwa.co.nz"),
                       user_agent(paste("clifro", packageVersion("clifro"), sep = "/")),
                       timeout(10))
   
