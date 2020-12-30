@@ -93,8 +93,7 @@ cf_last_query = function() cf_parallel[["last_cf_query"]]
 #'
 #' @importFrom lubridate with_tz force_tz ymd_h mdy_h ydm_h dmy_h is.POSIXt year
 #' month day hour
-#' @importFrom RCurl getCurlHandle postForm
-#' @importFrom xml2 xml_find_first read_html xml_text
+#' @importFrom stringr str_replace
 #' @importFrom utils read.table
 #' @return a \code{cfData} or \code{cfDataList} object.
 #' @seealso \code{\link{cf_user}}, \code{\link{cf_datatype}} and
@@ -248,7 +247,13 @@ cf_query = function(user, datatype, station, start_date, end_date = now(tz),
   dt_types = sapply(strsplit(table_names, ":"), "[", 2)
   tail_msg = paste(all_lines[seq(grep("^UserName", all_lines), length(all_lines))],
                    collapse = "\n")
+  
+  # Fix the bad terms and conditions link in the tail message
+  tail_msg = str_replace(tail_msg, 
+                         "http://clifloecd1.niwa.co.nz/pls/niwp/doc/terms.html", 
+                         "https://cliflo.niwa.co.nz/doc/terms.html")
 
+  # Read the tab-delimited text into a list of dataframes
   data_list = lapply(table_indices, function(x)
     read.table(textConnection(all_lines[x]), sep = "\t", header = TRUE,
                na.strings = "-", check.names = FALSE))
