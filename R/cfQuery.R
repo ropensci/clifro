@@ -94,7 +94,8 @@ cf_last_query = function() cf_parallel[["last_cf_query"]]
 #' @importFrom lubridate with_tz force_tz ymd_h mdy_h ydm_h dmy_h is.POSIXt year
 #' month day hour
 #' @importFrom stringr str_replace
-#' @importFrom utils read.table
+#' @importFrom utils read.table head tail
+#' @importFrom httr POST stop_for_status content
 #' @return a \code{cfData} or \code{cfDataList} object.
 #' @seealso \code{\link{cf_user}}, \code{\link{cf_datatype}} and
 #'   \code{\link{cf_station}} for creating the objects needed for a query. See
@@ -172,64 +173,71 @@ cf_query = function(user, datatype, station, start_date, end_date = now(tz),
 
   if (!(is.POSIXt(start_date) || is.POSIXt(end_date)))
     stop("start and end dates must be either character or POSIXt objects")
+  
+  # Force the timezones to match the 'tz' argument.
+  start_date = force_tz(start_date, tz)
+  end_date = force_tz(end_date, tz)
+  
+  # Create local (NZ local timezone) start and end dates
+  start_date = with_tz(start_date, "Pacific/Auckland")
+  end_date = with_tz(end_date, "Pacific/Auckland")
 
-  cf_login(user)
-  on.exit(cf_logout(user, msg = FALSE))
-  cookies = file.path(tempdir(), user@username)
-  curl = getCurlHandle(cookiejar = cookies,
-                       cookiefile = cookies,
-                       .opts = cf_parallel[["curl_opts"]])
-  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
+  if (user@username != "public") {
+    cf_login(user)
+    on.exit(cf_logout(user, msg = FALSE))
+  }
+  
   all_dt_params = c(datatype@dt_param, unlist(datatype@dt_sel_option_params))
+  
   if (!quiet)
     message("connecting to CliFlo...")
   if (nrow(station) > 20){
     station = station[1:20]
     message("using the first 20 stations")
   }
-  doc = postForm("https://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1_proc",
-                 cselect = "wgenf.genform1?fset=defdtype",
-                 auswahl = "wgenf.genform1?fset=defagent",
-                 agents = paste(station$agent, collapse = ","),
-                 dateauswahl = "wgenf.genform1?fset=defdate",
-                 date1_1=year(start_date),
-                 date1_2=month(start_date),
-                 date1_3=day(start_date),
-                 date1_4=hour(start_date),
-                 date2_1=year(end_date),
-                 date2_2=month(end_date),
-                 date2_3=day(end_date),
-                 date2_4=hour(end_date),
-                 formatselection = "wgenf.genform1?fset=deffmt",
-                 TSselection = "local",
-                 dateformat = "0",
-                 Splitdate = "N",
-                 mimeselection = "texttab",
-                 cstn_id = "N",
-                 cdata_order = "SD",
-                 submit_sq = "Send Query",
-                 .params = all_dt_params,
-                 curl = curl,
-                 .opts = list(cainfo = cert))
+  doc = POST(url = "https://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1_proc",
+             query = as.list(c(
+               cselect = "wgenf.genform1?fset=defdtype",
+               auswahl = "wgenf.genform1?fset=defagent",
+               agents = paste(station$agent, collapse = ","),
+               dateauswahl = "wgenf.genform1?fset=defdate",
+               date1_1=year(start_date),
+               date1_2=month(start_date),
+               date1_3=day(start_date),
+               date1_4=hour(start_date),
+               date2_1=year(end_date),
+               date2_2=month(end_date),
+               date2_3=day(end_date),
+               date2_4=hour(end_date),
+               formatselection = "wgenf.genform1?fset=deffmt",
+               TSselection = "local",
+               dateformat = "0",
+               Splitdate = "N",
+               mimeselection = "tabplain",
+               cstn_id = "N",
+               cdata_order = "SD",
+               submit_sq = "Send Query",
+               all_dt_params
+               ))
+             )
   
-  if (is.raw(doc))
-    doc = rawToChar(doc)
-
-  is_HTML = grepl("<!DOCTYPE HTML PUBLIC", doc, fixed = TRUE)
-  if (is_HTML){
-    error_msg = xml_text(xml_find_first(read_html(doc), "//h3"))
-    if (!is.na(error_msg))
-      stop(error_msg)
-  }
+  stop_for_status(doc)
 
   if (!quiet)
     message("reading data...")
 
-  all_lines = readLines(textConnection(doc))
+  all_lines = readLines(textConnection(content(doc, as = "text")))
+  
+  # If any line starts with the text 'No rows' then return an error.
   if (any(grepl("^No rows", all_lines)))
     stop(all_lines[grep("^No rows", all_lines)], call. = FALSE)
 
+  # Search for lines that start with 'Station' so we know when the 
+  # data begins.
   tables_start = tail(grep("^Station", all_lines), -1)
+  
+  # The data tables end with a blank line, but not the first 
+  # nor the last 2...
   tables_end = tail(head(which(all_lines == ""), -2), -1)
 
   table_indices = mapply(seq, tables_start, tables_end, SIMPLIFY = FALSE)
