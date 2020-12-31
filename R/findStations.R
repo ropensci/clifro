@@ -7,32 +7,33 @@
 # is prompted for a selection using menu.
 #
 # region: a string to be partially matched to the available regions
-#' @importFrom xml2 read_html xml_text xml_find_all xml_attr
+#' @importFrom xml2 read_html
+#' @importFrom httr GET
+#' @importFrom rvest html_nodes html_text html_attr
 #' @importFrom utils menu
 cf_region = function(region){
-  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
-  regions = read_html(getURL("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html",
-                             cainfo = cert))
-  region.xml = xml_find_all(regions, "//option[contains(@value, '-')]")
-  region.names = xml_text(region.xml, trim = TRUE)
-
+  
+  get_stn_html = GET("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_html")
+  region_xml = html_nodes(read_html(get_stn_html), "td.p_selected select.general option")[-1]
+  region_names = html_text(region_xml)
+  
   if (!missing(region)){
-    region.names.lower = tolower(region.names)
+    region_names_lower = tolower(region_names)
     region = tolower(region)
-    region.choice = pmatch(region, region.names.lower)
+    region.choice = pmatch(region, region_names_lower)
 
     if (is.na(region.choice)){
       warning("region not matched - ignoring", immediate. = TRUE)
-      region.choice = menu(region.names, title = "Regions")
+      region.choice = menu(region_names, title = "Regions")
       if (region.choice)
-        return(xml_attr(region.xml[region.choice], "value"))
+        return(html_attr(region_xml[region.choice], "value"))
     } else {
-      return(xml_attr(region.xml[region.choice], "value"))
+      return(html_attr(region_xml[region.choice], "value"))
     }
   } else {
-    region.choice = menu(region.names, title = "Regions")
+    region.choice = menu(region_names, title = "Regions")
     if (region.choice)
-      return(xml_attr(region.xml[region.choice], "value"))
+      return(html_attr(region_xml[region.choice], "value"))
   }
 }
 
@@ -311,7 +312,7 @@ cf_save_kml = function(station, file_name = "my_stations_",
 #' the 'OR query Search' example below.
 #'
 #' @export
-#' @importFrom RCurl getCurlHandle postForm
+#' @importFrom httr GET modify_url
 #' @importFrom xml2 read_html
 #' @importFrom lubridate now %--% dseconds
 #' @importFrom rvest html_table
@@ -426,18 +427,23 @@ cf_find_station = function(...,
                search_region = cf_region(search_string)
 
              search_string = unlist(strsplit(search_region, ","))[3]
-             list(cstype = "region", cRegion = search_region)
+             list(cstype = "region",
+                  cRegion = search_region)
            },
            network = list(cstype = "net", cNet = search_string),
            latlong = {
              include_distances = TRUE
-             list(cstype = "latlongc", clat1 = lat, clong1 = long,
+             list(cstype = "latlongc", 
+                  clat1 = lat, 
+                  clong1 = long,
                   crad = rad)
            }
     )
 
-  param.list = c(param.list, mimeselection = "htmltable",
-                 Submit = "Get Station List", status = status)
+  param.list = c(param.list, 
+                 mimeselection = "htmltable",
+                 Submit = "Get Station List", 
+                 status = status)
 
   if (!missing(datatype)){
     if (!is(datatype, "cfDatatype"))
@@ -450,17 +456,12 @@ cf_find_station = function(...,
                      all = "and",
                      any = "or")
     cf_update_dt(datatype)
-    cookies = file.path(tempdir(), user@username)
-    curl = getCurlHandle(cookiejar = cookies,
-                         cookiefile = cookies,
-                         .opts = cf_parallel[["curl_opts"]])
     param.list = c(param.list, ccomb_dt = combine)
-    my_form = postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn",
-                       .params = param.list, curl = curl,
-                       .opts = list(cainfo = cert))
+    my_form = GET(modify_url(url = "https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn", 
+                             query = param.list))
   } else {
-    my_form = postForm("https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_nodt",
-                       .params = param.list, .opts = list(cainfo = cert))
+    my_form = GET(modify_url(url = "https://cliflo.niwa.co.nz/pls/niwp/wstn.get_stn_nodt", 
+                             query = param.list))
   }
 
   if (is.raw(my_form))
@@ -468,7 +469,7 @@ cf_find_station = function(...,
 
   doc = read_html(my_form)
 
-  doc_table = tail(html_table(doc, header = TRUE), 1)[[1]]
+  doc_table = tail(html_table(doc, header = TRUE, fill = TRUE), 1)[[1]]
 
   doc_table$Start = dmy(doc_table$Start, tz = "NZ")
   doc_table$End[doc_table$End == "-"] = format(Sys.Date(), "%d-%m-%Y")
