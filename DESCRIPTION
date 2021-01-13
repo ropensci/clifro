@@ -19,7 +19,8 @@ Imports:
     RColorBrewer,
     reshape2,
     rvest,
-    httr
+    httr,
+    stringr
 Suggests:
     spelling,
     knitr,
