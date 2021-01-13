@@ -7,8 +7,8 @@ test_that("cf_find_station", {
   tt = cf_find_station("island")
 
   expect_is(tt, "cfStation")
-  expect_is(tt$name, "factor")
-  expect_is(tt$network, "factor")
+  expect_is(tt$name, "character")
+  expect_is(tt$network, "character")
   expect_is(tt$agent, "integer")
   expect_is(tt$start, "POSIXct")
   expect_is(tt$end, "POSIXct")

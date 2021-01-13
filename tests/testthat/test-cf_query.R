@@ -8,10 +8,10 @@ test_that("cf_query", {
                 "2012-01-01 00", "2012-01-02 00")
 
   expect_is(tt, "cfSunshine")
-  expect_is(tt$Station, "factor")
+  expect_is(tt$Station, "character")
   expect_is(tt$`Date(local)`, "POSIXct")
   expect_is(tt$`Amount(MJ/m2)`, "numeric")
   expect_is(tt$`Period(Hrs)`, "integer")
-  expect_is(tt$Type, "factor")
-  expect_is(tt$Freq, "factor")
+  expect_is(tt$Type, "character")
+  expect_is(tt$Freq, "character")
 })
