@@ -9,7 +9,7 @@ test_that("cf_last_query", {
   tt2 = cf_last_query()
 
   expect_is(tt2, "cfSunshine")
-  expect_is(tt2$Station, "character")
+  expect_is(tt2$Station, "factor")
   expect_is(tt2$`Date(local)`, "POSIXct")
   expect_is(tt2$`Amount(MJ/m2)`, "numeric")
   expect_is(tt2$`Period(Hrs)`, "integer")
