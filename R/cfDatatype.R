@@ -297,39 +297,37 @@ option_selections = function(href_2, selection_check, selection_combo,
 #
 # object : a cfDatatype object
 # user   : a cfUser object
-#' @importFrom RCurl getCurlHandle
+#' @importFrom httr GET POST modify_url
 cf_update_dt = function(object, user = cf_user()){
-  cookies = file.path(tempdir(), user@username)
-  curl = getCurlHandle(cookiejar = cookies,
-                       cookiefile = cookies,
-                       .opts = cf_parallel[["curl_opts"]])
-  cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
-
+  
   all_dt_params = c(object@dt_param, unlist(object@dt_sel_option_params))
-
-  postForm("https://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1_proc",
-           cselect = "wgenf.genform1?fset=defdtype",
-           auswahl = "wgenf.genform1?fset=defagent",
-           agents = "",
-           dateauswahl = "wgenf.genform1?fset=defdate",
-           date1_1="2014",
-           date1_2="05",
-           date1_3="25",
-           date1_4="00",
-           date2_1="2014",
-           date2_2="05",
-           date2_3="28",
-           date2_4="00",
-           formatselection = "wgenf.genform1?fset=deffmt",
-           TSselection = "NZST",
-           dateformat = "0",
-           Splitdate = "N",
-           mimeselection = "htmltable",
-           cstn_id = "A",
-           cdata_order = "DS",
-           .params = all_dt_params,
-           curl = curl,
-           .opts = list(cainfo = cert))
+  GET(modify_url("https://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1", 
+                 query = as.list(c(cdt = strsplit(object@dt_param, ",")[[1]][1], 
+                                   cadd = 't'))))
+  
+  POST("https://cliflo.niwa.co.nz/pls/niwp/wgenf.genform1_proc",
+       query = as.list(c(
+         cselect = "wgenf.genform1?fset=defdtype",
+         all_dt_params,
+         auswahl = "wgenf.genform1?fset=defagent",
+         agents = "3925",
+         dateauswahl = "wgenf.genform1?fset=defdate",
+         date1_1="2014",
+         date1_2="05",
+         date1_3="25",
+         date1_4="00",
+         date2_1="2014",
+         date2_2="05",
+         date2_3="28",
+         date2_4="00",
+         formatselection = "wgenf.genform1?fset=deffmt",
+         TSselection = "NZST",
+         dateformat = "0",
+         Splitdate = "N",
+         mimeselection = "htmltable",
+         cstn_id = "A",
+         cdata_order = "DS"
+       )))
 }
 
 
