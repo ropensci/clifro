@@ -1,28 +1,6 @@
 #' @include dataFrame.R
 # Internals ---------------------------------------------------------------
 #
-# This is a function to process multiple HTTP requests concurrently to speed up
-# elapsed time.
-#' @importFrom RCurl getCurlHandle basicTextGatherer curlOptions curlSetOpt push
-#' complete getCurlMultiHandle
-getURIs = function(uris, multiHandle = getCurlMultiHandle()) {
-    content = vector("list", length(uris))
-    curls = vector("list", length(uris))
-    cert = system.file("CurlSSL/cacert.pem", package = "RCurl")
-
-    for(i in seq_along(uris)) {
-        curl = getCurlHandle()
-        content[[i]] = basicTextGatherer()
-        opts = curlOptions(URL = uris[i], writefunction = content[[i]]$update,
-                           cainfo = cert, .opts = cf_parallel[["curl_opts"]])
-        curlSetOpt(.opts = opts, curl = curl)
-        multiHandle = push(multiHandle, curl)
-    }
-
-    complete(multiHandle)
-    lapply(content, function(x) x$value())
-}
-
 # Create tidy names
 #
 # This function is used for the show method to create nicer looking row names
@@ -152,30 +130,27 @@ cf_station = function(...){
     uris = uris[!duplicated(agent)]
     agent = agent[!duplicated(agent)]
   }
-
-  stations_xml = getURIs(uris)
-  station_details = lapply(lapply(stations_xml, read_html),
-                           function(x){
-                             station_details_xml = 
-                               xml_find_all(x, "//td[@class='extrdata' and position()=2]")
-                             if(length(station_details_xml) == 0)
-                               NA
-                             else
-                               xml_text(station_details_xml)[c(1:5, 10:12)]
-                           })
-
-  which.na = as.numeric(which(is.na(station_details)))
-  if (length(which.na) == length(agent))
+  
+  stations_response = lapply(uris, GET)
+  stations_html = lapply(stations_response, read_html)
+  
+  station_details = lapply(stations_html, function(x) {
+    html_text(html_nodes(x, "td.extrdata"))[c(2, 4, 6, 8, 10, 20, 22, 24)]
+  })
+  
+  which.na = sapply(station_details, function(x) all(is.na(x)))
+  
+  if (sum(which.na) == length(agent))
     stop("the agent numbers do not represent any CliFlo stations")
 
   if (length(which.na) != 0){
-    if (length(which.na) == 1){
+    if (sum(which.na) == 1){
       message(paste("agent number", agent[which.na], "does not exist - ignoring"))
     } else {
       message(paste("agent numbers", paste(agent[which.na], collapse = ", "),
                     "do not exist - ignoring"))
     }
-    station_details = station_details[-which.na]
+    station_details = station_details[!which.na]
   }
 
   start_date = dmy(as.character(sapply(station_details, "[", 6)),
@@ -187,7 +162,7 @@ cf_station = function(...){
                    length(station_details))
 
   if (any(!open_station))
-    final_date[!open_station] = dmy(end_date[!open_station],
+    final_date[!open_station & !is.na(open_station)] = dmy(end_date[!open_station & !is.na(open_station)],
                                     tz = "Pacific/Auckland")
 
   ## options(stringsAsFactors = FALSE)
