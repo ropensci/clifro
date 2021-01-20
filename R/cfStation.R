@@ -143,7 +143,7 @@ cf_station = function(...){
   if (sum(which.na) == length(agent))
     stop("the agent numbers do not represent any CliFlo stations")
 
-  if (length(which.na) != 0){
+  if (sum(which.na) != 0){
     if (sum(which.na) == 1){
       message(paste("agent number", agent[which.na], "does not exist - ignoring"))
     } else {
