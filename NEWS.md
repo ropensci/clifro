@@ -1,3 +1,15 @@
+clifro 3.2.5 (18-Mar-2021)
+==========
+## Minor Improvements
+* The `cf_query()` function now includes the `output_tz` argument that allows you to choose the output timezone as either "local" (default), "NZST", or "UTC" (issue #28).
+
+##Bug Fixes
+* Issue #27
+
+## Dependencies
+* Remove the RCurl dependency entirely from *clifro* and replace with the more modern `httr` / `rvest` / `xml2` packages.
+
+
 clifro 3.2-3 (01-Sep-2020)
 ==========
 ## Bug Fixes
