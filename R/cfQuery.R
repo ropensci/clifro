@@ -65,6 +65,8 @@ cf_last_query = function() cf_parallel[["last_cf_query"]]
 #'           to Pacific/Auckland time is done automatically through the
 #'           \code{\link[lubridate]{with_tz}} function. Defaults to
 #'           "Pacific/Auckland".
+#' @param output_tz the timezone of the output. This can be one of either "local",
+#'                  "UTC", or "NZST".
 #' @param quiet logical. When \code{TRUE} the function evaluates without
 #'              displaying customary messages. Messages from CliFlo are still
 #'              displayed.
@@ -147,7 +149,8 @@ cf_last_query = function() cf_parallel[["last_cf_query"]]
 #' @export
 cf_query = function(user, datatype, station, start_date, end_date = now(tz),
                     date_format = "ymd_h",
-                    tz = "Pacific/Auckland", quiet = FALSE){
+                    tz = "Pacific/Auckland", output_tz = c("local", "NZST", "UTC"), 
+                    quiet = FALSE){
 
   if (!is(user, "cfUser"))
     stop("user must be a cfUser")
@@ -177,6 +180,8 @@ cf_query = function(user, datatype, station, start_date, end_date = now(tz),
   # Force the timezones to match the 'tz' argument.
   start_date = force_tz(start_date, tz)
   end_date = force_tz(end_date, tz)
+  
+  output_tz = match.arg(output_tz)
   
   # Create local (NZ local timezone) start and end dates
   start_date = with_tz(start_date, "Pacific/Auckland")
@@ -210,7 +215,7 @@ cf_query = function(user, datatype, station, start_date, end_date = now(tz),
                date2_3=day(end_date),
                date2_4=hour(end_date),
                formatselection = "wgenf.genform1?fset=deffmt",
-               TSselection = "local",
+               TSselection = output_tz,
                dateformat = "0",
                Splitdate = "N",
                mimeselection = "tabplain",

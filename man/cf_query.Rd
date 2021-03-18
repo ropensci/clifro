@@ -12,6 +12,7 @@ cf_query(
   end_date = now(tz),
   date_format = "ymd_h",
   tz = "Pacific/Auckland",
+  output_tz = c("local", "NZST", "UTC"),
   quiet = FALSE
 )
 }
@@ -41,6 +42,9 @@ date parsing function.}
 to Pacific/Auckland time is done automatically through the
 \code{\link[lubridate]{with_tz}} function. Defaults to
 "Pacific/Auckland".}
+
+\item{output_tz}{the timezone of the output. This can be one of either "local",
+"UTC", or "NZST".}
 
 \item{quiet}{logical. When \code{TRUE} the function evaluates without
 displaying customary messages. Messages from CliFlo are still
