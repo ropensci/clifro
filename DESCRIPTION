@@ -9,6 +9,8 @@ Authors@R: person("Blake", "Seers", role = c("aut", "cre"),
 VignetteBuilder: knitr
 Imports:
     methods,
+    stats,
+    graphics,
     lubridate,
     xml2,
     magrittr,
