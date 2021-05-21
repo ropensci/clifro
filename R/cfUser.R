@@ -9,8 +9,8 @@ cf_parallel = new.env()
 #' The \code{cf_curl_opts} function stores specific curl options that are used
 #' for all the \pkg{clifro} queries.
 #'
-#' @param ... a name-value pairs that are passed to \code{\link[RCurl]{curlOptions}}
-#' @param .opts a named list or \code{CURLOptions} object that are passed to \code{\link[RCurl]{curlOptions}}
+#' @param ... a name-value pairs that are passed to \code{RCurl curlOptions}
+#' @param .opts a named list or \code{CURLOptions} object that are passed to \code{RCurl curlOptions}
 #'
 #' @export
 #'

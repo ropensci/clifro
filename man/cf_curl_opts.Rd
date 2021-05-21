@@ -7,9 +7,9 @@
 cf_curl_opts(..., .opts = list())
 }
 \arguments{
-\item{...}{a name-value pairs that are passed to \code{\link[RCurl]{curlOptions}}}
+\item{...}{a name-value pairs that are passed to \code{RCurl curlOptions}}
 
-\item{.opts}{a named list or \code{CURLOptions} object that are passed to \code{\link[RCurl]{curlOptions}}}
+\item{.opts}{a named list or \code{CURLOptions} object that are passed to \code{RCurl curlOptions}}
 }
 \description{
 The \code{cf_curl_opts} function stores specific curl options that are used
