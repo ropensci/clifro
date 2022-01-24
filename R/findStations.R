@@ -470,10 +470,16 @@ cf_find_station = function(...,
   doc = read_html(my_form)
 
   doc_table = tail(html_table(doc, header = TRUE, fill = TRUE), 1)[[1]]
-
-  doc_table$Start = dmy(doc_table$Start, tz = "NZ")
-  doc_table$End[doc_table$End == "-"] = format(Sys.Date(), "%d-%m-%Y")
-  doc_table$End = dmy(doc_table$End, tz = "NZ")
+  
+  if (missing(datatype)) {
+    doc_table$Start = dmy(doc_table$Start, tz = "NZ")
+    doc_table$End[doc_table$End == "-"] = format(Sys.Date(), "%d-%m-%Y")
+    doc_table$End = dmy(doc_table$End, tz = "NZ")
+  } else {
+    doc_table$Start = dmy(doc_table$`Start Date`, tz = "NZ")
+    doc_table$`End Date`[doc_table$`End Date` == "-"] = format(Sys.Date(), "%d-%m-%Y")
+    doc_table$End = dmy(doc_table$`End Date`, tz = "NZ")
+  }
 
   ## Open stations in clifro have end dates less than 4 weeks ago
   span = doc_table$End %--% now(tzone = "NZ")
