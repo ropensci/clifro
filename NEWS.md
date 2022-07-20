@@ -1,3 +1,9 @@
+clifro 3.2.6 
+==========
+
+## Bug fixes
+* Issue #32
+
 clifro 3.2.5 (18-Mar-2021)
 ==========
 ## Minor Improvements

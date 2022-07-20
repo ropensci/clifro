@@ -472,17 +472,17 @@ cf_find_station = function(...,
   doc_table = tail(html_table(doc, header = TRUE, fill = TRUE), 1)[[1]]
   
   if (missing(datatype)) {
-    doc_table$Start = dmy(doc_table$Start, tz = "NZ")
-    doc_table$End[doc_table$End == "-"] = format(Sys.Date(), "%d-%m-%Y")
-    doc_table$End = dmy(doc_table$End, tz = "NZ")
-  } else {
-    doc_table$Start = dmy(doc_table$`Start Date`, tz = "NZ")
+    doc_table$`Start Date` = dmy(doc_table$`Start Date`, tz = "NZ")
     doc_table$`End Date`[doc_table$`End Date` == "-"] = format(Sys.Date(), "%d-%m-%Y")
-    doc_table$End = dmy(doc_table$`End Date`, tz = "NZ")
+    doc_table$`End Date` = dmy(doc_table$`End Date`, tz = "NZ")
+  } else {
+    doc_table$`Start Date` = dmy(doc_table$`Start Date`, tz = "NZ")
+    doc_table$`End Date`[doc_table$`End Date` == "-"] = format(Sys.Date(), "%d-%m-%Y")
+    doc_table$`End Date` = dmy(doc_table$`End Date`, tz = "NZ")
   }
 
   ## Open stations in clifro have end dates less than 4 weeks ago
-  span = doc_table$End %--% now(tzone = "NZ")
+  span = doc_table$`End Date` %--% now(tzone = "NZ")
   open_station = (as.numeric(dseconds(span)) / (604800) < 4)
 
   ## Account for CliFlo giving outdated stations for certain datatypes
@@ -503,8 +503,8 @@ cf_find_station = function(...,
     name = doc_table$Name,
     network = doc_table$NetworkNumber,
     agent = doc_table$AgentNumber,
-    start_date = doc_table$Start,
-    end_date = doc_table$End,
+    start_date = doc_table$`Start Date`,
+    end_date = doc_table$`End Date`,
     open_station = switch(status,
                           open = TRUE,
                           closed = FALSE,
