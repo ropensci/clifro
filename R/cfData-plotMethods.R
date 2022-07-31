@@ -529,7 +529,7 @@ setMethod("direction_plot",
                              size = 1) +
               facet_wrap(~facet, ncol = n_col) +
               eval(call(paste0("theme_", ggtheme))) +
-              scale_alpha_continuous(guide = FALSE) +
+              scale_alpha_continuous(guide = "none") +
               scale_y_continuous(breaks = seq(0, 360, by = 90),
                                  labels = c("N", "E", "S", "W", "N")) +
               theme(axis.title.x = element_blank(), ...)
