@@ -1,20 +1,22 @@
 #' @include cfDataList.R
 NULL
 
-#' Plot a windrose
+#' Plot a Wind Rose
 #'
-#' Plot a windrose showing the wind speed and direction for given facets using
+#' Plot a wind rose showing the wind speed and direction for given facets using
 #' \pkg{ggplot2}.
 #'
 #' This is intended to be used as a stand-alone function for any wind dataset. A
-#' different windrose is plotted for each level of the faceting variable which
+#' different wind rose is plotted for each level of the faceting variable which
 #' is coerced to a factor if necessary. The facets will generally be the station
 #' where the data were collected, seasons or dates. Currently only one faceting
 #' variable is allowed and is passed to \code{\link[ggplot2]{facet_wrap}} with
 #' the formula \code{~facet}.
+#' 
+#' Note that calm winds are excluded from the wind rose.
 #'
 #' @section Theme Selection:
-#' For black and white windroses that may be preferred if plots are to be used
+#' For black and white wind roses that may be preferred if plots are to be used
 #' in journal articles for example, recommended \code{ggtheme}s are \code{'bw'},
 #' \code{'linedraw'}, \code{'minimal'} or \code{'classic'} and
 #' the \code{col_pal} should be \code{'Greys'}. Otherwise, any of the sequential
@@ -26,15 +28,16 @@ NULL
 #' @param speed numeric vector of wind speeds.
 #' @param direction numeric vector of wind directions.
 #' @param facet character or factor vector of the facets used to plot the various
-#'              windroses.
+#'              wind roses.
 #' @param n_directions the number of direction bins to plot (petals on the rose).
 #'                     The number of directions defaults to 12.
 #' @param n_speeds the number of equally spaced wind speed bins to plot. This is
 #'                 used if \code{speed_cuts} is \code{NA} (default 5).
 #' @param speed_cuts numeric vector containing the cut points for the wind speed
-#'                 intervals, or \code{NA} (default).
-#' @param calm_wind the upper limit for wind speed that is considered calm
-#'                  (default 0).
+  #'                 intervals, or \code{NA} (default).
+#' @param calm_wind the direction of wind that is considered calm. Following 
+#'                  convention of the National Weather Service, winds with a 
+#'                  direction of 0 are considered calm by default.
 #' @param variable_wind numeric code for variable winds (if applicable).
 #' @param legend_title character string to be used for the legend title.
 #' @param col_pal character string indicating the name of the
@@ -59,7 +62,7 @@ NULL
 #'                      station = rep(rep(c("Station A", "Station B"), 2),
 #'                                    rep(c(40, 10), each = 2)))
 #'
-#' # Plot a simple windrose using all the defaults, ignoring any facet variable
+#' # Plot a simple wind rose using all the defaults, ignoring any facet variable
 #' with(wind_df, windrose(wind_speeds, wind_dirs))
 #'
 #' # Create custom speed bins, add a legend title, and change to a B&W theme

@@ -51,7 +51,7 @@ Collate:
     'cfQuery.R'
     'cfUser.R'
     'findStations.R'
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 X-schema.org-keywords: r, opensci, zealand, weather, climate, cliflo, data, api, windrose, rain, wind, temperature
 X-schema.org-applicationCategory: Data Access
 X-schema.org-isPartOf: "https://ropensci.org"

@@ -2,7 +2,7 @@
 % Please edit documentation in R/cfData-plotMethods.R
 \name{windrose}
 \alias{windrose}
-\title{Plot a windrose}
+\title{Plot a Wind Rose}
 \usage{
 windrose(
   speed,
@@ -26,7 +26,7 @@ windrose(
 \item{direction}{numeric vector of wind directions.}
 
 \item{facet}{character or factor vector of the facets used to plot the various
-windroses.}
+wind roses.}
 
 \item{n_directions}{the number of direction bins to plot (petals on the rose).
 The number of directions defaults to 12.}
@@ -47,8 +47,9 @@ used for plotting, see 'Theme Selection' below.}
 
 \item{legend_title}{character string to be used for the legend title.}
 
-\item{calm_wind}{the upper limit for wind speed that is considered calm
-(default 0).}
+\item{calm_wind}{the direction of wind that is considered calm. Following 
+convention of the National Weather Service, winds with a 
+direction of 0 are considered calm by default.}
 
 \item{variable_wind}{numeric code for variable winds (if applicable).}
 
@@ -60,20 +61,22 @@ used for plotting, see 'Theme Selection' below.}
 a \code{ggplot} object.
 }
 \description{
-Plot a windrose showing the wind speed and direction for given facets using
+Plot a wind rose showing the wind speed and direction for given facets using
 \pkg{ggplot2}.
 }
 \details{
 This is intended to be used as a stand-alone function for any wind dataset. A
-different windrose is plotted for each level of the faceting variable which
+different wind rose is plotted for each level of the faceting variable which
 is coerced to a factor if necessary. The facets will generally be the station
 where the data were collected, seasons or dates. Currently only one faceting
 variable is allowed and is passed to \code{\link[ggplot2]{facet_wrap}} with
 the formula \code{~facet}.
+
+Note that calm winds are excluded from the wind rose.
 }
 \section{Theme Selection}{
 
-For black and white windroses that may be preferred if plots are to be used
+For black and white wind roses that may be preferred if plots are to be used
 in journal articles for example, recommended \code{ggtheme}s are \code{'bw'},
 \code{'linedraw'}, \code{'minimal'} or \code{'classic'} and
 the \code{col_pal} should be \code{'Greys'}. Otherwise, any of the sequential
@@ -91,7 +94,7 @@ wind_df = data.frame(wind_speeds = c(rweibull(80, 2, 4), rweibull(20, 3, 9)),
                      station = rep(rep(c("Station A", "Station B"), 2),
                                    rep(c(40, 10), each = 2)))
 
-# Plot a simple windrose using all the defaults, ignoring any facet variable
+# Plot a simple wind rose using all the defaults, ignoring any facet variable
 with(wind_df, windrose(wind_speeds, wind_dirs))
 
 # Create custom speed bins, add a legend title, and change to a B&W theme
