@@ -1,8 +1,8 @@
 Package: clifro
 Type: Package
 Title: Easily Download and Visualise Climate Data from CliFlo
-Version: 3.2-5.9002
-Date: 2022-07-20
+Version: 3.2-5.9003
+Date: 2023-03-09
 Authors@R: person("Blake", "Seers", role = c("aut", "cre"),
     email = "blake.seers@gmail.com",
     comment = c(ORCID = "http://orcid.org/0000-0001-6841-4312"))

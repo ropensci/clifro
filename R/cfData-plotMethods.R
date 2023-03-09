@@ -225,7 +225,7 @@ windrose = function(speed, direction, facet, n_directions = 12,
   ## (gg)Plot me
   ggwindrose = ggplot(data = ggplot_df,
                       aes_string(x = "dir_bin", fill = "spd_bin", y = "proportion")) +
-    geom_bar(stat = "identity") +
+    geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
     scale_x_discrete(breaks = levels(ggplot_df$dir_bin)[seq(1, n_directions,
                                                             n_directions / 4)],
                      labels = c("N", "E", "S", "W"), drop = FALSE) +
